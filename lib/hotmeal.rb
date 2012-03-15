@@ -1,5 +1,9 @@
-require "hotmeal/version"
-
 module Hotmeal
-  # Your code goes here...
+end
+
+require 'hotmeal/version'
+require 'hotmeal/base'
+
+def Hotmeal(html)
+  Hotmeal::Base.new(html)
 end
