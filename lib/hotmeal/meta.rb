@@ -1,25 +1,66 @@
+require 'hotmeal'
+
 module Hotmeal
   module Meta
-    def html_charset
-      @html_charset ||= begin
-                     meta = at_css('meta[charset]')
-                     meta[:charset] || 'utf-8'
-                   end
-    end
-
-    def html_meta
-      @html_meta ||= css('meta[content]').inject({}) do |result, meta|
-        result[(meta[:name] || meta[:'http-equiv']).to_sym] = meta[:content].to_s
-        result
+    class MetaData
+      def initialize(doc)
+        @doc = doc
       end
+
+      # @return [String] given charset
+      def charset
+        @charset ||= begin
+                       charset = doc.at_css('meta[charset]')
+                       charset[:charset] || 'utf-8'
+                     end
+      end
+
+      # @return [Array<String>] keywords
+      def keywords
+        data[:keywords].split(/,\s*/)
+      end
+
+      # @return [String] description
+      def description
+        data[:description]
+      end
+
+      # @return [Hash{Symbol=>String}] map of named metadata
+      def data
+        @data ||= doc.css('meta[name][content]').inject({}) do |result, node|
+          result[node[:name].to_sym] = node[:content]
+          result
+        end
+      end
+
+      # @return [Hash{Symbol=>String}] map of HTTP equiv's
+      def http_equiv
+        @data ||= doc.css('meta[http-equiv][content]').inject({}) do |result, node|
+          result[node[:'http-equiv'].to_sym] = node[:content]
+          result
+        end
+      end
+
+      # @return [Hash{String=>String}] map of properties' name to content
+      def properties
+        @properties ||= doc.css('meta[property]').inject({}) do |result, node|
+          result[node[:property]] = node[:content]
+          result
+        end
+      end
+
+      protected
+
+      attr_reader :doc
     end
 
-    def keywords
-      html_meta[:keywords].split(/,\s*/)
+    # @return [MetaData] metadata object
+    def meta
+      @meta ||= MetaData.new(self)
     end
+  end
 
-    def description
-      html_meta[:description]
-    end
+  class Base
+    include Meta
   end
 end

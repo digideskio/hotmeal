@@ -10,4 +10,17 @@ describe Hotmeal::Base do
   its(:inner_html)  { should == '<h1>Basic HTML file example</h1>' }
 
   its(:title)       { should == 'Basic HTML file' }
+
+  its(:html_prefix) { should == {} }
+
+  context '#html_prefix' do
+    let(:html) { fixture(:open_graph) }
+
+    its(:html_prefix) do
+      should == {
+        'http://ogp.me/ns#' => 'og',
+        'http://www.facebook.com/2008/fbml' => 'fb'
+      }
+    end
+  end
 end
