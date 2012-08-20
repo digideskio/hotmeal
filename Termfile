@@ -18,11 +18,6 @@ tab(:guard) do
   run 'guard'
 end
 
-tab(:console) do
-  title 'Console'
-  run './console'
-end
-
 #window do
   #tab "echo 'first tab'", "echo 'of window'"
   #tab "named tab", :settings => "Ocean" do
