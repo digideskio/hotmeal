@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.version       = Hotmeal::VERSION
 
   gem.add_dependency 'nokogiri', '~> 1.5.0'
+  gem.add_dependency 'activesupport', '~> 3.0'
   gem.add_development_dependency 'yard', '~> 0.8.2'
   gem.add_development_dependency 'rspec', '~> 2.11.0'
 end

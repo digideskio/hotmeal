@@ -44,7 +44,12 @@ module Hotmeal
       # @return [Hash{String=>String}] map of properties' name to content
       def properties
         @properties ||= doc.css('meta[property]').inject({}) do |result, node|
-          result[node[:property]] = node[:content]
+          if result[node[:property]]
+            result[node[:property]] = [result[node[:property]]] unless result[node[:property]].is_a?(Array)
+            result[node[:property]] << node[:content]
+          else
+            result[node[:property]] = node[:content]
+          end
           result
         end
       end
