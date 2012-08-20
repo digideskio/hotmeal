@@ -1,8 +1,11 @@
 require 'nokogiri'
+require 'hotmeal/meta'
 
 module Hotmeal
   class Base
     attr_reader :html
+
+    include Meta
 
     def initialize(html)
       html = Nokogiri::HTML(html) unless html.is_a?(Nokogiri::XML::Node)
@@ -11,13 +14,6 @@ module Hotmeal
 
     def html_title
       @html_title ||= at_css('head title').content.to_s
-    end
-
-    def html_meta
-      @html_meta ||= css('meta[content]').inject({}) do |result, meta|
-        result[(meta[:name] || meta[:'http-equiv']).to_sym] = meta[:content].to_s
-        result
-      end
     end
 
     def inner_text
@@ -30,14 +26,6 @@ module Hotmeal
 
     def title
       html_title
-    end
-
-    def keywords
-      html_meta[:keywords].split(/,\s*/)
-    end
-
-    def description
-      html_meta[:description]
     end
 
     protected
