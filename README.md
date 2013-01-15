@@ -2,6 +2,15 @@
 
 TODO: Write a gem description
 
+## Project links
+
+* [Sources](https://github.com/alsemyonov/hotmeal)
+* [Documentation](http://rubydoc.info/gems/hotmeal)
+* [Issue Tracker](https://github.com/alsemyonov/hotmeal/issues)
+* [Wiki](https://github.com/alsemyonov/hotmeal/wiki)
+* [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/alsemyonov/hotmeal)
+* [![Build Status](https://travis-ci.org/alsemyonov/hotmeal.png?branch=master)](http://travis-ci.org/alsemyonov/hotmeal)
+
 ## Installation
 
 Add this line to your application's Gemfile:
