@@ -8,8 +8,9 @@ TODO: Write a gem description
 * [Documentation](http://rubydoc.info/gems/hotmeal)
 * [Issue Tracker](https://github.com/alsemyonov/hotmeal/issues)
 * [Wiki](https://github.com/alsemyonov/hotmeal/wiki)
-* [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/alsemyonov/hotmeal)
+* [![Code Climate](https://codeclimate.com/github/alsemyonov/hotmeal.png)](https://codeclimate.com/github/alsemyonov/hotmeal)
 * [![Build Status](https://travis-ci.org/alsemyonov/hotmeal.png?branch=master)](http://travis-ci.org/alsemyonov/hotmeal)
+* [![Dependency Status](https://gemnasium.com/alsemyonov/hotmeal.png)](https://gemnasium.com/alsemyonov/hotmeal)
 
 ## Installation
 
