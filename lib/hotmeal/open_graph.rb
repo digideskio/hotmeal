@@ -6,6 +6,8 @@ module Hotmeal
     class GraphObject
       HREF = 'http://ogp.me/ns#'
 
+      DateTime = Time
+
       class << self
         private
 
