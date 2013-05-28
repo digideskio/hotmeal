@@ -30,6 +30,18 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## Related projects
+
+* OpenGraph:
+    * https://github.com/intridea/opengraph
+    * https://github.com/huyha85/opengraph_parser
+* Microformats:
+    * http://mofo.rubyforge.org
+    * https://github.com/mwunsch/prism
+* Microdata:
+    * https://github.com/LawrenceWoodman/mida
+
+
 ## Contributing
 
 1. Fork it
