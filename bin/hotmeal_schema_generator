@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'hotmeal/schema_generator'
+
+Hotmeal::SchemaGenerator.start if __FILE__ == $0
