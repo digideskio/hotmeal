@@ -1,4 +1,5 @@
 require 'hotmeal/micro_data/data_types'
+require 'hotmeal/micro_data/data_types/number'
 
 module Hotmeal
   module MicroData

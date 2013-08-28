@@ -15,9 +15,11 @@ module Hotmeal
     self.types = {}
 
     class BasicObject < MicroData::Object
+      self.vocab = 'http://schema.org/'
+
       def self.inherited(child)
         super
-        child.url = "http://schema.org/#{child.name.demodulize}"
+        child.typeof = child.name.demodulize
         Schema.types[child.url] = child
       end
     end

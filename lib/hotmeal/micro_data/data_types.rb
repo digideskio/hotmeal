@@ -2,17 +2,20 @@ require 'hotmeal/micro_data'
 
 module Hotmeal
   module MicroData
-    extend ActiveSupport::Autoload
+    module DataTypes
+      extend ActiveSupport::Autoload
 
-    autoload :Boolean
-    autoload :DataType
-    autoload :Date
-    autoload :DateTime
-    autoload :Float
-    autoload :Integer
-    autoload :Number
-    autoload :Text
-    autoload :Time
-    autoload :URL
+      autoload :DataType
+
+      autoload :Boolean
+      autoload :Date
+      autoload :DateTime
+      autoload :Float
+      autoload :Integer
+      autoload :Number
+      autoload :Text
+      autoload :Time
+      autoload :URL
+    end
   end
 end

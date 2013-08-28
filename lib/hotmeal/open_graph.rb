@@ -225,7 +225,7 @@ module Hotmeal
       end
 
       def prefix
-        @prefix ||= if prefix = @doc.html_prefix.key(HREF)
+        @prefix ||= if (prefix = @doc.html_prefix.key(HREF))
                       prefix
                     else
                       'og'
@@ -239,7 +239,6 @@ module Hotmeal
                             result[property.gsub(prefix, '').to_sym] = content if property =~ prefix
                             result
                           end
-
                         end
       end
     end

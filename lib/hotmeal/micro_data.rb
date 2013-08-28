@@ -1,21 +1,11 @@
 require 'hotmeal'
-require 'active_support/core_ext/class/attribute'
 
 module Hotmeal
   module MicroData
-    class Object
-      class_attribute :url
-      class_attribute :properties
-      self.properties = {}
+    extend ActiveSupport::Autoload
 
-      def self.inherited(child)
-        super
-        child.properties = properties.dup
-      end
-
-      def self.property(name, options={})
-        properties[name] = options.merge(from: self)
-      end
-    end
+    autoload :Object
+    autoload :Property
+    autoload :DataTypes
   end
 end

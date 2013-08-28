@@ -1,4 +1,12 @@
+require 'active_support'
 module Hotmeal
+  extend ActiveSupport::Autoload
+
+  autoload :Base
+  autoload :Meta
+  autoload :MicroData
+  autoload :OpenGraph
+  autoload :Schema
 end
 
 require 'hotmeal/version'

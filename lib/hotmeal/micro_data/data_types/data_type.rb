@@ -17,6 +17,13 @@ module Hotmeal
       # @see Text
       # @see Time
       class DataType < SimpleDelegator
+        def self.from_microdata(value)
+          new(value.to_s)
+        end
+
+        def to_microdata
+          __getobj__.to_s
+        end
       end
     end
   end
