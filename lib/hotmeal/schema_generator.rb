@@ -11,7 +11,6 @@ module Hotmeal
     def generate_schema
       schema = JSON.parse(File.read('data/schema.org.json'))
 
-      class_template = load_template('class')
       schema['types'].each do |type_name, type|
         generate_file('class', File.join('lib/hotmeal/schema', "#{type['id'].underscore}.rb"), binding)
       end
