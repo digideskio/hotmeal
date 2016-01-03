@@ -3,18 +3,19 @@ $:.push File.expand_path('../lib', __FILE__)
 require 'hotmeal/version'
 
 Gem::Specification.new do |gem|
-  gem.authors       = ['Alexander Semyonov']
-  gem.email         = %w(al@semyonov.us)
-  gem.description   = %q{Hotmeal helps to discover meta-information from your html pages: Atom and RSS feeds, Microformats, Microdata, RDFa, etc}
-  gem.summary       = %q{HTML meta-information discoverer}
-  gem.homepage      = 'http://github.com/alsemyonov/hotmeal'
+  gem.name = 'hotmeal'
+  gem.version = Hotmeal::VERSION
+  gem.authors = ['Alexander Semyonov']
+  gem.email = %w(al@semyonov.us)
+  gem.description = %q{Hotmeal helps to discover meta-information from your html pages: Atom and RSS feeds, Microformats, Microdata, RDFa, etc}
+  gem.summary = %q{HTML meta-information discoverer}
+  gem.homepage = 'http://github.com/alsemyonov/hotmeal'
 
-  gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  gem.files         = `git ls-files`.split("\n")
-  gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  gem.name          = 'hotmeal'
+  gem.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  gem.bindir = 'exe'
+  gem.executables = gem.files.grep(%r{^exe/}) { |f| File.basename(f) }
   gem.require_paths = %w(lib)
-  gem.version       = Hotmeal::VERSION
+  gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
 
   gem.add_dependency 'nokogiri', '~> 1.6.7.1'
   gem.add_dependency 'activesupport', '~> 4.2.5'
