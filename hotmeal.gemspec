@@ -16,11 +16,12 @@ Gem::Specification.new do |gem|
   gem.require_paths = %w(lib)
   gem.version       = Hotmeal::VERSION
 
-  gem.add_dependency 'nokogiri', '~> 1.6.0'
-  gem.add_dependency 'activesupport', '>= 3.0'
+  gem.add_dependency 'nokogiri', '~> 1.6.7.1'
+  gem.add_dependency 'activesupport', '~> 4.2.5'
   gem.add_dependency 'thor'
   gem.add_development_dependency 'yard', '~> 0.8.2'
   gem.add_development_dependency 'redcarpet'
-  gem.add_development_dependency 'rspec', '~> 2.11'
+  gem.add_development_dependency 'rspec', '~> 3.4'
+  gem.add_development_dependency 'rspec-its'
   gem.add_development_dependency 'rake'
 end
