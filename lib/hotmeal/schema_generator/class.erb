@@ -32,7 +32,7 @@ module Hotmeal
           type['specific_properties'].each do |property_name|
             property = schema['properties'][property_name]
             type_definition = if property['ranges'].size > 1
-              "class_names: %w[#{property['ranges'].join(' ')}]"
+              "class_names: %w(#{property['ranges'].join(' ')})"
             else
               "class_name: '#{property['ranges'].first}'"
             end
@@ -54,4 +54,3 @@ module Hotmeal
     end
   end
 end
-
