@@ -43,7 +43,7 @@ module Hotmeal
       # The subject matter of the content.
       property :about, class_name: 'Thing', as: 'about', label: 'About'
       # Indicates that the resource is compatible with the referenced accessibility API (WebSchemas wiki lists possible values).
-      #      
+      #
       property :accessibility_api, class_name: 'Text', as: 'accessibilityAPI', label: 'Accessibility API'
       # Identifies input methods that are sufficient to fully control the described resource (WebSchemas wiki lists possible values).
       property :accessibility_control, class_name: 'Text', as: 'accessibilityControl', label: 'Accessibility Control'

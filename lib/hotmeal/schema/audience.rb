@@ -18,7 +18,7 @@ module Hotmeal
       # The target group associated with a given audience (e.g. veterans, car owners, musicians, etc.)
       #       domain: Audience
       #       Range: Text
-      #     
+      #
       property :audience_type, class_name: 'Text', as: 'audienceType', label: 'Audience Type'
       # The geographic area associated with the audience.
       property :geographic_area, class_name: 'AdministrativeArea', as: 'geographicArea', label: 'Geographic Area'
