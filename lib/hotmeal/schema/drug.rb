@@ -60,8 +60,7 @@ module Hotmeal
       # Any other drug related to this one, for example commonly-prescribed alternatives.
       property :related_drug, class_name: 'Drug', as: 'relatedDrug', label: 'Related Drug'
       # Any FDA or other warnings about the drug (text or URL).
-      property :warning, class_names: %w[Text URL], as: 'warning', label: 'Warning'
+      property :warning, class_names: %w(Text URL), as: 'warning', label: 'Warning'
     end
   end
 end
-

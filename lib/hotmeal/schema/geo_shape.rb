@@ -14,7 +14,7 @@ module Hotmeal
       # A circle is the circular region of a specified radius centered at a specified latitude and longitude. A circle is expressed as a pair followed by a radius in meters.
       property :circle, class_name: 'Text', as: 'circle', label: 'Circle'
       # The elevation of a location.
-      property :elevation, class_names: %w[Text Number], as: 'elevation', label: 'Elevation'
+      property :elevation, class_names: %w(Text Number), as: 'elevation', label: 'Elevation'
       # A line is a point-to-point path consisting of two or more points. A line is expressed as a series of two or more point objects separated by space.
       property :line, class_name: 'Text', as: 'line', label: 'Line'
       # A polygon is the area enclosed by a point-to-point path for which the starting and ending points are the same. A polygon is expressed as a series of four or more spacedelimited points where the first and final points are identical.
@@ -22,4 +22,3 @@ module Hotmeal
     end
   end
 end
-

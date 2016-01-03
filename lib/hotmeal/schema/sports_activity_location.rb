@@ -23,4 +23,3 @@ module Hotmeal
     end
   end
 end
-

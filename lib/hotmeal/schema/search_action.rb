@@ -10,8 +10,7 @@ module Hotmeal
     # @see http://schema.org/SearchAction
     class SearchAction < Action
       # A sub property of instrument. The query used on this action.
-      property :query, class_names: %w[Class Text], as: 'query', label: 'Query'
+      property :query, class_names: %w(Class Text), as: 'query', label: 'Query'
     end
   end
 end
-

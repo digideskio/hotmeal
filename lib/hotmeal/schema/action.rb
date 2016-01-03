@@ -25,17 +25,17 @@ module Hotmeal
     # @see UpdateAction
     class Action < Thing
       # The direct performer or driver of the action (animate or inanimate). e.g. *John* wrote a book.
-      property :agent, class_names: %w[Organization Person], as: 'agent', label: 'Agent'
+      property :agent, class_names: %w(Organization Person), as: 'agent', label: 'Agent'
       # When the Action was performed: end time. This is for actions that span a period of time. e.g. John wrote a book from January to *December*.
       property :end_time, class_name: 'DateTime', as: 'endTime', label: 'End Time'
       # The object that helped the agent perform the action. e.g. John wrote a book with *a pen*.
       property :instrument, class_name: 'Thing', as: 'instrument', label: 'Instrument'
       # The location of the event, organization or action.
-      property :location, class_names: %w[PostalAddress Place], as: 'location', label: 'Location'
+      property :location, class_names: %w(PostalAddress Place), as: 'location', label: 'Location'
       # The object upon the action is carried out, whose state is kept intact or changed. Also known as the semantic roles patient, affected or undergoer (which change their state) or theme (which doesn't). e.g. John read *a book*.
       property :object, class_name: 'Thing', as: 'object', label: 'Object'
       # Other co-agents that participated in the action indirectly. e.g. John wrote a book with *Steve*.
-      property :participant, class_names: %w[Organization Person], as: 'participant', label: 'Participant'
+      property :participant, class_names: %w(Organization Person), as: 'participant', label: 'Participant'
       # The result produced in the action. e.g. John wrote *a book*.
       property :result, class_name: 'Thing', as: 'result', label: 'Result'
       # When the Action was performed: start time. This is for actions that span a period of time. e.g. John wrote a book from *January* to December.
@@ -43,4 +43,3 @@ module Hotmeal
     end
   end
 end
-

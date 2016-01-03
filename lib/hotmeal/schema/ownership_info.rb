@@ -10,7 +10,7 @@ module Hotmeal
     # @see http://schema.org/OwnershipInfo
     class OwnershipInfo < StructuredValue
       # The organization or person from which the product was acquired.
-      property :acquired_from, class_names: %w[Organization Person], as: 'acquiredFrom', label: 'Acquired From'
+      property :acquired_from, class_names: %w(Organization Person), as: 'acquiredFrom', label: 'Acquired From'
       # The date and time of obtaining the product.
       property :owned_from, class_name: 'DateTime', as: 'ownedFrom', label: 'Owned From'
       # The date and time of giving up ownership on the product.
@@ -20,4 +20,3 @@ module Hotmeal
     end
   end
 end
-

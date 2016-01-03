@@ -10,8 +10,7 @@ module Hotmeal
     # @see http://schema.org/Brand
     class Brand < Intangible
       # A logo associated with an organization.
-      property :logo, class_names: %w[URL ImageObject], as: 'logo', label: 'Logo'
+      property :logo, class_names: %w(URL ImageObject), as: 'logo', label: 'Logo'
     end
   end
 end
-

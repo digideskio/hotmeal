@@ -8,6 +8,7 @@ require 'active_support/core_ext/string'
 module Hotmeal
   class SchemaGenerator < Thor
     desc 'generate_schema', 'Generates schema.org classes from json'
+
     def generate_schema
       schema = JSON.parse(File.read('data/schema.org.json'))
 
@@ -17,6 +18,14 @@ module Hotmeal
 
       file_name = 'lib/hotmeal/schema/autoload.rb'
       generate_file('autoload', file_name, binding)
+    end
+
+    desc 'fetch', 'Fetch updated schema.org.json'
+
+    def fetch
+      require 'open-uri'
+      json = open('http://schema.rdfs.org/all.json')
+      File.write(File.expand_path('../../../data/schema.org.json', __FILE__), json.read)
     end
 
     protected

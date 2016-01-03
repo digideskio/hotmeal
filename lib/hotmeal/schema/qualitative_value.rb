@@ -22,8 +22,7 @@ module Hotmeal
       # This ordering relation for qualitative values indicates that the subject is not equal to the object.
       property :non_equal, class_name: 'QualitativeValue', as: 'nonEqual', label: 'Non Equal'
       # A pointer to a secondary value that provides additional information on the original value, e.g. a reference temperature.
-      property :value_reference, class_names: %w[Enumeration StructuredValue], as: 'valueReference', label: 'Value Reference'
+      property :value_reference, class_names: %w(Enumeration StructuredValue), as: 'valueReference', label: 'Value Reference'
     end
   end
 end
-

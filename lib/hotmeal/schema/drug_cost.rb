@@ -18,10 +18,9 @@ module Hotmeal
       # Additional details to capture the origin of the cost data. For example, 'Medicare Part B'.
       property :cost_origin, class_name: 'Text', as: 'costOrigin', label: 'Cost Origin'
       # The cost per unit of the drug.
-      property :cost_per_unit, class_names: %w[Number Text], as: 'costPerUnit', label: 'Cost Per Unit'
+      property :cost_per_unit, class_names: %w(Number Text), as: 'costPerUnit', label: 'Cost Per Unit'
       # The unit in which the drug is measured, e.g. '5 mg tablet'.
       property :drug_unit, class_name: 'Text', as: 'drugUnit', label: 'Drug Unit'
     end
   end
 end
-

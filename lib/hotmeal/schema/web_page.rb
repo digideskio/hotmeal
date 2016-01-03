@@ -32,7 +32,7 @@ module Hotmeal
       # A link related to this web page, for example to other related web pages.
       property :related_link, class_name: 'URL', as: 'relatedLink', label: 'Related Link'
       # People or organizations that have reviewed the content on this web page for accuracy and/or completeness.
-      property :reviewed_by, class_names: %w[Organization Person], as: 'reviewedBy', label: 'Reviewed by'
+      property :reviewed_by, class_names: %w(Organization Person), as: 'reviewedBy', label: 'Reviewed by'
       # One of the more significant URLs on the page. Typically, these are the non-navigation links that are clicked on the most.
       property :significant_link, class_name: 'URL', as: 'significantLink', label: 'Significant Link'
       # The most significant URLs on the page. Typically, these are the non-navigation links that are clicked on the most (legacy spelling; see singular form, significantLink).
@@ -42,4 +42,3 @@ module Hotmeal
     end
   end
 end
-

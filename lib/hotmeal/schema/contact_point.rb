@@ -27,10 +27,9 @@ module Hotmeal
       # The hours during which this contact point is available.
       property :hours_available, class_name: 'OpeningHoursSpecification', as: 'hoursAvailable', label: 'Hours Available'
       # The product or service this support contact point is related to (such as product support for a particular product line). This can be a specific product or product line (e.g. "iPhone") or a general category of products or services (e.g. "smartphones").
-      property :product_supported, class_names: %w[Product Text], as: 'productSupported', label: 'Product Supported'
+      property :product_supported, class_names: %w(Product Text), as: 'productSupported', label: 'Product Supported'
       # The telephone number.
       property :telephone, class_name: 'Text', as: 'telephone', label: 'Telephone'
     end
   end
 end
-

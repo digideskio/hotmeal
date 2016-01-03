@@ -13,7 +13,7 @@ module Hotmeal
     # @see InfectiousDisease
     class MedicalCondition < MedicalEntity
       # The anatomy of the underlying organ system or structures associated with this entity.
-      property :associated_anatomy, class_names: %w[AnatomicalSystem SuperficialAnatomy AnatomicalStructure], as: 'associatedAnatomy', label: 'Associated Anatomy'
+      property :associated_anatomy, class_names: %w(AnatomicalSystem SuperficialAnatomy AnatomicalStructure), as: 'associatedAnatomy', label: 'Associated Anatomy'
       # An underlying cause. More specifically, one of the causative agent(s) that are most directly responsible for the pathophysiologic process that eventually results in the occurrence.
       property :cause, class_name: 'MedicalCause', as: 'cause', label: 'Cause'
       # One of a set of differential diagnoses for the condition. Specifically, a closely-related or competing diagnosis typically considered later in the cognitive process whereby this medical condition is distinguished from others most likely responsible for a similar collection of signs and symptoms to reach the most parsimonious diagnosis or diagnoses in a patient.
@@ -47,4 +47,3 @@ module Hotmeal
     end
   end
 end
-

@@ -20,7 +20,7 @@ module Hotmeal
       # Type(s) of exercise or activity, such as strength training, flexibility training, aerobics, cardiac rehabilitation, etc.
       property :exercise_type, class_name: 'Text', as: 'exerciseType', label: 'Exercise Type'
       # A sub property of location. The original location of the object or the agent before the action.
-      property :from_location, class_names: %w[Place Number], as: 'fromLocation', label: 'From Location'
+      property :from_location, class_names: %w(Place Number), as: 'fromLocation', label: 'From Location'
       # A sub property of participant. The oponent on this action.
       property :oponent, class_name: 'Person', as: 'oponent', label: 'Oponent'
       # A sub property of location. The sports activity location where this action occurred.
@@ -30,8 +30,7 @@ module Hotmeal
       # A sub property of participant. The sports team that participated on this action.
       property :sports_team, class_name: 'SportsTeam', as: 'sportsTeam', label: 'Sports Team'
       # A sub property of location. The final location of the object or the agent after the action.
-      property :to_location, class_names: %w[Place Number], as: 'toLocation', label: 'To Location'
+      property :to_location, class_names: %w(Place Number), as: 'toLocation', label: 'To Location'
     end
   end
 end
-

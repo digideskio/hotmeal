@@ -12,8 +12,7 @@ module Hotmeal
       # A sub property of instrument. The method of delivery
       property :delivery_method, class_name: 'DeliveryMethod', as: 'deliveryMethod', label: 'Delivery Method'
       # A sub property of participant. The participant who is at the sending end of the action.
-      property :sender, class_names: %w[Audience Organization Person], as: 'sender', label: 'Sender'
+      property :sender, class_names: %w(Audience Organization Person), as: 'sender', label: 'Sender'
     end
   end
 end
-

@@ -23,7 +23,7 @@ module Hotmeal
       # The lowest price if the price is a range.
       property :min_price, class_name: 'Number', as: 'minPrice', label: 'Min Price'
       # The offer price of a product, or of a price component when attached to PriceSpecification and its subtypes.
-      property :price, class_names: %w[Text Number], as: 'price', label: 'Price'
+      property :price, class_names: %w(Text Number), as: 'price', label: 'Price'
       # The currency (in 3-letter ISO 4217 format) of the offer price or a price component, when attached to PriceSpecification and its subtypes.
       property :price_currency, class_name: 'Text', as: 'priceCurrency', label: 'Price Currency'
       # The date when the item becomes valid.
@@ -35,4 +35,3 @@ module Hotmeal
     end
   end
 end
-

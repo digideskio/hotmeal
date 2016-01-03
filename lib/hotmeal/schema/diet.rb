@@ -12,7 +12,7 @@ module Hotmeal
       # Nutritional information specific to the dietary plan. May include dietary recommendations on what foods to avoid, what foods to consume, and specific alterations/deviations from the USDA or other regulatory body's approved dietary guidelines.
       property :diet_features, class_name: 'Text', as: 'dietFeatures', label: 'Diet Features'
       # People or organizations that endorse the plan.
-      property :endorsers, class_names: %w[Organization Person], as: 'endorsers', label: 'Endorsers'
+      property :endorsers, class_names: %w(Organization Person), as: 'endorsers', label: 'Endorsers'
       # Medical expert advice related to the plan.
       property :expert_considerations, class_name: 'Text', as: 'expertConsiderations', label: 'Expert Considerations'
       # Descriptive information establishing the overarching theory/philosophy of the plan. May include the rationale for the name, the population where the plan first came to prominence, etc.
@@ -26,4 +26,3 @@ module Hotmeal
     end
   end
 end
-

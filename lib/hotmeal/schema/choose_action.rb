@@ -13,8 +13,7 @@ module Hotmeal
     # @see VoteAction
     class ChooseAction < AssessAction
       # A sub property of object. The options subject to this action.
-      property :option, class_names: %w[Text Thing], as: 'option', label: 'Option'
+      property :option, class_names: %w(Text Thing), as: 'option', label: 'Option'
     end
   end
 end
-

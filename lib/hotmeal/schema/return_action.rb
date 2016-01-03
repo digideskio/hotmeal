@@ -10,8 +10,7 @@ module Hotmeal
     # @see http://schema.org/ReturnAction
     class ReturnAction < TransferAction
       # A sub property of participant. The participant who is at the receiving end of the action.
-      property :recipient, class_names: %w[Organization Audience Person], as: 'recipient', label: 'Recipient'
+      property :recipient, class_names: %w(Organization Audience Person), as: 'recipient', label: 'Recipient'
     end
   end
 end
-

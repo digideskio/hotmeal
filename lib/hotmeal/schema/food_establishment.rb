@@ -20,12 +20,11 @@ module Hotmeal
     # @see Winery
     class FoodEstablishment < LocalBusiness
       # Either Yes/No, or a URL at which reservations can be made.
-      property :accepts_reservations, class_names: %w[Text URL], as: 'acceptsReservations', label: 'Accepts Reservations'
+      property :accepts_reservations, class_names: %w(Text URL), as: 'acceptsReservations', label: 'Accepts Reservations'
       # Either the actual menu or a URL of the menu.
-      property :menu, class_names: %w[Text URL], as: 'menu', label: 'Menu'
+      property :menu, class_names: %w(Text URL), as: 'menu', label: 'Menu'
       # The cuisine of the restaurant.
       property :serves_cuisine, class_name: 'Text', as: 'servesCuisine', label: 'Serves Cuisine'
     end
   end
 end
-

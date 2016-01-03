@@ -12,7 +12,7 @@ module Hotmeal
       # If applicable, a description of the pathophysiology associated with the anatomical system, including potential abnormal changes in the mechanical, physical, and biochemical functions of the system.
       property :associated_pathophysiology, class_name: 'Text', as: 'associatedPathophysiology', label: 'Associated Pathophysiology'
       # Anatomical systems or structures that relate to the superficial anatomy.
-      property :related_anatomy, class_names: %w[AnatomicalStructure AnatomicalSystem], as: 'relatedAnatomy', label: 'Related Anatomy'
+      property :related_anatomy, class_names: %w(AnatomicalStructure AnatomicalSystem), as: 'relatedAnatomy', label: 'Related Anatomy'
       # A medical condition associated with this anatomy.
       property :related_condition, class_name: 'MedicalCondition', as: 'relatedCondition', label: 'Related Condition'
       # A medical therapy related to this anatomy.
@@ -22,4 +22,3 @@ module Hotmeal
     end
   end
 end
-

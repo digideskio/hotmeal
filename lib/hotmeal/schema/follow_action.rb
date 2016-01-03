@@ -10,8 +10,7 @@ module Hotmeal
     # @see http://schema.org/FollowAction
     class FollowAction < InteractAction
       # A sub property of object. The person or organization being followed.
-      property :followee, class_names: %w[Organization Person], as: 'followee', label: 'Followee'
+      property :followee, class_names: %w(Organization Person), as: 'followee', label: 'Followee'
     end
   end
 end
-

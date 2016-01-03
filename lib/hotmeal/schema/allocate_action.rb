@@ -16,8 +16,7 @@ module Hotmeal
     # @see RejectAction
     class AllocateAction < OrganizeAction
       # A goal towards an action is taken. Can be concrete or abstract.
-      property :purpose, class_names: %w[Thing MedicalDevicePurpose], as: 'purpose', label: 'Purpose'
+      property :purpose, class_names: %w(Thing MedicalDevicePurpose), as: 'purpose', label: 'Purpose'
     end
   end
 end
-

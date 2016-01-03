@@ -35,7 +35,7 @@ module Hotmeal
       # Date the content expires and is no longer useful or available. Useful for videos.
       property :expires, class_name: 'Date', as: 'expires', label: 'Expires'
       # The height of the item.
-      property :height, class_names: %w[Distance QuantitativeValue], as: 'height', label: 'Height'
+      property :height, class_names: %w(Distance QuantitativeValue), as: 'height', label: 'Height'
       # Player type required—for example, Flash or Silverlight.
       property :player_type, class_name: 'Text', as: 'playerType', label: 'Player Type'
       # The production company or studio that made the movie, tv/radio series, season, or episode, or media object.
@@ -49,8 +49,7 @@ module Hotmeal
       # Date when this media object was uploaded to this site.
       property :upload_date, class_name: 'Date', as: 'uploadDate', label: 'Upload Date'
       # The width of the item.
-      property :width, class_names: %w[Distance QuantitativeValue], as: 'width', label: 'Width'
+      property :width, class_names: %w(Distance QuantitativeValue), as: 'width', label: 'Width'
     end
   end
 end
-

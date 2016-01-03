@@ -10,12 +10,11 @@ module Hotmeal
     # @see http://schema.org/AggregateOffer
     class AggregateOffer < Offer
       # The highest price of all offers available.
-      property :high_price, class_names: %w[Number Text], as: 'highPrice', label: 'High Price'
+      property :high_price, class_names: %w(Number Text), as: 'highPrice', label: 'High Price'
       # The lowest price of all offers available.
-      property :low_price, class_names: %w[Number Text], as: 'lowPrice', label: 'Low Price'
+      property :low_price, class_names: %w(Number Text), as: 'lowPrice', label: 'Low Price'
       # The number of offers for the product.
       property :offer_count, class_name: 'Integer', as: 'offerCount', label: 'Offer Count'
     end
   end
 end
-

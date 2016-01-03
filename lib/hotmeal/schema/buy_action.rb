@@ -10,10 +10,9 @@ module Hotmeal
     # @see http://schema.org/BuyAction
     class BuyAction < TradeAction
       # A sub property of participant. The seller.The participant/person/organization that sold the object.
-      property :vendor, class_names: %w[Organization Person], as: 'vendor', label: 'Vendor'
+      property :vendor, class_names: %w(Organization Person), as: 'vendor', label: 'Vendor'
       # The warranty promise(s) included in the offer.
       property :warranty_promise, class_name: 'WarrantyPromise', as: 'warrantyPromise', label: 'Warranty Promise'
     end
   end
 end
-

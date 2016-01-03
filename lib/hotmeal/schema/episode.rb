@@ -24,7 +24,7 @@ module Hotmeal
       # Position of the episode within an ordered group of episodes.
       property :episode_number, class_name: 'Integer', as: 'episodeNumber', label: 'Episode Number'
       # The composer of the movie or TV/radio soundtrack.
-      property :music_by, class_names: %w[Person MusicGroup], as: 'musicBy', label: 'Music by'
+      property :music_by, class_names: %w(Person MusicGroup), as: 'musicBy', label: 'Music by'
       # The season to which this episode belongs.
       property :part_of_season, class_name: 'Season', as: 'partOfSeason', label: 'Part of Season'
       # The series to which this episode or season belongs.
@@ -42,4 +42,3 @@ module Hotmeal
     end
   end
 end
-

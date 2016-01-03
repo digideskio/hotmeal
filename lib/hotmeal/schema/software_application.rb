@@ -14,9 +14,9 @@ module Hotmeal
     # @see WebApplication
     class SoftwareApplication < CreativeWork
       # Type of software application, e.g. "Game, Multimedia".
-      property :application_category, class_names: %w[Text URL], as: 'applicationCategory', label: 'Application Category'
+      property :application_category, class_names: %w(Text URL), as: 'applicationCategory', label: 'Application Category'
       # Subcategory of the application, e.g. "Arcade Game".
-      property :application_sub_category, class_names: %w[Text URL], as: 'applicationSubCategory', label: 'Application Sub Category'
+      property :application_sub_category, class_names: %w(Text URL), as: 'applicationSubCategory', label: 'Application Sub Category'
       # The name of the application suite to which the application belongs (e.g. Excel belongs to Office)
       property :application_suite, class_name: 'Text', as: 'applicationSuite', label: 'Application Suite'
       # Countries for which the application is not supported. You can also provide the two-letter ISO 3166-1 alpha-2 country code.
@@ -28,7 +28,7 @@ module Hotmeal
       # If the file can be downloaded, URL to download the binary.
       property :download_url, class_name: 'URL', as: 'downloadUrl', label: 'Download Url'
       # Features or modules provided by this application (and possibly required by other applications).
-      property :feature_list, class_names: %w[Text URL], as: 'featureList', label: 'Feature List'
+      property :feature_list, class_names: %w(Text URL), as: 'featureList', label: 'Feature List'
       # MIME format of the binary (e.g. application/zip).
       property :file_format, class_name: 'Text', as: 'fileFormat', label: 'File Format'
       # Size of the application / package (e.g. 18MB). In the absence of a unit (MB, KB etc.), KB will be assumed.
@@ -36,7 +36,7 @@ module Hotmeal
       # URL at which the app may be installed, if different from the URL of the item.
       property :install_url, class_name: 'URL', as: 'installUrl', label: 'Install Url'
       # Minimum memory requirements.
-      property :memory_requirements, class_names: %w[Text URL], as: 'memoryRequirements', label: 'Memory Requirements'
+      property :memory_requirements, class_names: %w(Text URL), as: 'memoryRequirements', label: 'Memory Requirements'
       # Operating systems supported (Windows 7, OSX 10.6, Android 1.6).
       property :operating_system, class_name: 'Text', as: 'operatingSystem', label: 'Operating System'
       # Permission(s) required to run the app (for example, a mobile app may require full internet access or may run only on wifi).
@@ -44,16 +44,15 @@ module Hotmeal
       # Processor architecture required to run the application (e.g. IA64).
       property :processor_requirements, class_name: 'Text', as: 'processorRequirements', label: 'Processor Requirements'
       # Description of what changed in this version.
-      property :release_notes, class_names: %w[Text URL], as: 'releaseNotes', label: 'Release Notes'
+      property :release_notes, class_names: %w(Text URL), as: 'releaseNotes', label: 'Release Notes'
       # Component dependency requirements for application. This includes runtime environments and shared libraries that are not included in the application distribution package, but required to run the application (Examples: DirectX, Java or .NET runtime).
-      property :requirements, class_names: %w[Text URL], as: 'requirements', label: 'Requirements'
+      property :requirements, class_names: %w(Text URL), as: 'requirements', label: 'Requirements'
       # A link to a screenshot image of the app.
-      property :screenshot, class_names: %w[ImageObject URL], as: 'screenshot', label: 'Screenshot'
+      property :screenshot, class_names: %w(ImageObject URL), as: 'screenshot', label: 'Screenshot'
       # Version of the software instance.
       property :software_version, class_name: 'Text', as: 'softwareVersion', label: 'Software Version'
       # Storage requirements (free space required).
-      property :storage_requirements, class_names: %w[Text URL], as: 'storageRequirements', label: 'Storage Requirements'
+      property :storage_requirements, class_names: %w(Text URL), as: 'storageRequirements', label: 'Storage Requirements'
     end
   end
 end
-

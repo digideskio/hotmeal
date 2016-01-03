@@ -10,12 +10,11 @@ module Hotmeal
     # @see http://schema.org/GeoCoordinates
     class GeoCoordinates < StructuredValue
       # The elevation of a location.
-      property :elevation, class_names: %w[Text Number], as: 'elevation', label: 'Elevation'
+      property :elevation, class_names: %w(Text Number), as: 'elevation', label: 'Elevation'
       # The latitude of a location. For example 37.42242.
-      property :latitude, class_names: %w[Number Text], as: 'latitude', label: 'Latitude'
+      property :latitude, class_names: %w(Number Text), as: 'latitude', label: 'Latitude'
       # The longitude of a location. For example -122.08585.
-      property :longitude, class_names: %w[Number Text], as: 'longitude', label: 'Longitude'
+      property :longitude, class_names: %w(Number Text), as: 'longitude', label: 'Longitude'
     end
   end
 end
-

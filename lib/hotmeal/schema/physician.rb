@@ -10,7 +10,7 @@ module Hotmeal
     # @see http://schema.org/Physician
     class Physician < MedicalOrganization
       # A medical service available from this provider.
-      property :available_service, class_names: %w[MedicalTest MedicalProcedure MedicalTherapy], as: 'availableService', label: 'Available Service'
+      property :available_service, class_names: %w(MedicalTest MedicalProcedure MedicalTherapy), as: 'availableService', label: 'Available Service'
       # A hospital with which the physician or office is affiliated.
       property :hospital_affiliation, class_name: 'Hospital', as: 'hospitalAffiliation', label: 'Hospital Affiliation'
       # A medical specialty of the provider.
@@ -18,4 +18,3 @@ module Hotmeal
     end
   end
 end
-

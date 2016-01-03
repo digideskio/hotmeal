@@ -29,9 +29,9 @@ module Hotmeal
     # @see VisualArtsEvent
     class Event < Thing
       # A person or organization attending the event.
-      property :attendee, class_names: %w[Organization Person], as: 'attendee', label: 'Attendee'
+      property :attendee, class_names: %w(Organization Person), as: 'attendee', label: 'Attendee'
       # A person attending the event (legacy spelling; see singular form, attendee).
-      property :attendees, class_names: %w[Organization Person], as: 'attendees', label: 'Attendees'
+      property :attendees, class_names: %w(Organization Person), as: 'attendees', label: 'Attendees'
       # The time admission will commence.
       property :door_time, class_name: 'DateTime', as: 'doorTime', label: 'Door Time'
       # The duration of the item (movie, audio recording, event, etc.) in ISO 8601 date format.
@@ -41,13 +41,13 @@ module Hotmeal
       # An eventStatus of an event represents its status; particularly useful when an event is cancelled or rescheduled.
       property :event_status, class_name: 'EventStatusType', as: 'eventStatus', label: 'Event Status'
       # The location of the event, organization or action.
-      property :location, class_names: %w[PostalAddress Place], as: 'location', label: 'Location'
+      property :location, class_names: %w(PostalAddress Place), as: 'location', label: 'Location'
       # An offer to transfer some rights to an item or to provide a service—for example, an offer to sell tickets to an event, to rent the DVD of a movie, to stream a TV show over the internet, to repair a motorcycle, or to loan a book.
       property :offers, class_name: 'Offer', as: 'offers', label: 'Offers'
       # A performer at the event—for example, a presenter, musician, musical group or actor.
-      property :performer, class_names: %w[Organization Person], as: 'performer', label: 'Performer'
+      property :performer, class_names: %w(Organization Person), as: 'performer', label: 'Performer'
       # The main performer or performers of the event—for example, a presenter, musician, or actor (legacy spelling; see singular form, performer).
-      property :performers, class_names: %w[Organization Person], as: 'performers', label: 'Performers'
+      property :performers, class_names: %w(Organization Person), as: 'performers', label: 'Performers'
       # Used in conjunction with eventStatus for rescheduled or cancelled events. This property contains the previously scheduled start date. For rescheduled events, the startDate property should be used for the newly scheduled start date. In the (rare) case of an event that has been postponed and rescheduled multiple times, this field may be repeated.
       property :previous_start_date, class_name: 'Date', as: 'previousStartDate', label: 'Previous Start Date'
       # The start date and time of the event or item (in ISO 8601 date format).
@@ -63,4 +63,3 @@ module Hotmeal
     end
   end
 end
-

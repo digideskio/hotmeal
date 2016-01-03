@@ -18,8 +18,7 @@ module Hotmeal
       # The value of the product characteristic.
       property :value, class_name: 'Number', as: 'value', label: 'Value'
       # A pointer to a secondary value that provides additional information on the original value, e.g. a reference temperature.
-      property :value_reference, class_names: %w[Enumeration StructuredValue], as: 'valueReference', label: 'Value Reference'
+      property :value_reference, class_names: %w(Enumeration StructuredValue), as: 'valueReference', label: 'Value Reference'
     end
   end
 end
-

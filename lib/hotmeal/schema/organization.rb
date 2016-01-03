@@ -23,7 +23,7 @@ module Hotmeal
       # The overall rating, based on a collection of reviews or ratings, of the item.
       property :aggregate_rating, class_name: 'AggregateRating', as: 'aggregateRating', label: 'Aggregate Rating'
       # The brand(s) associated with a product or service, or the brand(s) maintained by an organization or business person.
-      property :brand, class_names: %w[Organization Brand], as: 'brand', label: 'Brand'
+      property :brand, class_names: %w(Organization Brand), as: 'brand', label: 'Brand'
       # A contact point for a person or organization.
       property :contact_point, class_name: 'ContactPoint', as: 'contactPoint', label: 'Contact Point'
       # A contact point for a person or organization (legacy spelling; see singular form, contactPoint).
@@ -61,19 +61,19 @@ module Hotmeal
       # The official name of the organization, e.g. the registered company name.
       property :legal_name, class_name: 'Text', as: 'legalName', label: 'Legal Name'
       # The location of the event, organization or action.
-      property :location, class_names: %w[PostalAddress Place], as: 'location', label: 'Location'
+      property :location, class_names: %w(PostalAddress Place), as: 'location', label: 'Location'
       # A logo associated with an organization.
-      property :logo, class_names: %w[URL ImageObject], as: 'logo', label: 'Logo'
+      property :logo, class_names: %w(URL ImageObject), as: 'logo', label: 'Logo'
       # A pointer to products or services offered by the organization or person.
       property :makes_offer, class_name: 'Offer', as: 'makesOffer', label: 'Makes Offer'
       # A member of this organization.
-      property :member, class_names: %w[Organization Person], as: 'member', label: 'Member'
+      property :member, class_names: %w(Organization Person), as: 'member', label: 'Member'
       # A member of this organization (legacy spelling; see singular form, member).
-      property :members, class_names: %w[Organization Person], as: 'members', label: 'Members'
+      property :members, class_names: %w(Organization Person), as: 'members', label: 'Members'
       # The North American Industry Classification System (NAICS) code for a particular organization or business person.
       property :naics, class_name: 'Text', as: 'naics', label: 'Naics'
       # Products owned by the organization or person.
-      property :owns, class_names: %w[OwnershipInfo Product], as: 'owns', label: 'Owns'
+      property :owns, class_names: %w(OwnershipInfo Product), as: 'owns', label: 'Owns'
       # A review of the item.
       property :review, class_name: 'Review', as: 'review', label: 'Review'
       # Review of the item (legacy spelling; see singular form, review).
@@ -91,4 +91,3 @@ module Hotmeal
     end
   end
 end
-

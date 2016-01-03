@@ -64,13 +64,13 @@ module Hotmeal
       # An embedded audio object.
       property :audio, class_name: 'AudioObject', as: 'audio', label: 'Audio'
       # The author of this content. Please note that author is special in that HTML 5 provides a special mechanism for indicating authorship via the rel tag. That is equivalent to this and may be used interchangeably.
-      property :author, class_names: %w[Organization Person], as: 'author', label: 'Author'
+      property :author, class_names: %w(Organization Person), as: 'author', label: 'Author'
       # An award won by this person or for this creative work.
       property :award, class_name: 'Text', as: 'award', label: 'Award'
       # Awards won by this person or for this creative work. (legacy spelling; see singular form, award)
       property :awards, class_name: 'Text', as: 'awards', label: 'Awards'
       # A citation or reference to another creative work, such as another publication, web page, scholarly article, etc.
-      property :citation, class_names: %w[CreativeWork Text], as: 'citation', label: 'Citation'
+      property :citation, class_names: %w(CreativeWork Text), as: 'citation', label: 'Citation'
       # Comments, typically from users, on this CreativeWork.
       property :comment, class_name: 'UserComments', as: 'comment', label: 'Comment'
       # The location of the content.
@@ -78,13 +78,13 @@ module Hotmeal
       # Official rating of a piece of content—for example,'MPAA PG-13'.
       property :content_rating, class_name: 'Text', as: 'contentRating', label: 'Content Rating'
       # A secondary contributor to the CreativeWork.
-      property :contributor, class_names: %w[Organization Person], as: 'contributor', label: 'Contributor'
+      property :contributor, class_names: %w(Organization Person), as: 'contributor', label: 'Contributor'
       # The party holding the legal copyright to the CreativeWork.
-      property :copyright_holder, class_names: %w[Organization Person], as: 'copyrightHolder', label: 'Copyright Holder'
+      property :copyright_holder, class_names: %w(Organization Person), as: 'copyrightHolder', label: 'Copyright Holder'
       # The year during which the claimed copyright for the CreativeWork was first asserted.
       property :copyright_year, class_name: 'Number', as: 'copyrightYear', label: 'Copyright Year'
       # The creator/author of this CreativeWork or UserComments. This is the same as the Author property for CreativeWork.
-      property :creator, class_names: %w[Organization Person], as: 'creator', label: 'Creator'
+      property :creator, class_names: %w(Organization Person), as: 'creator', label: 'Creator'
       # The date on which the CreativeWork was created.
       property :date_created, class_name: 'Date', as: 'dateCreated', label: 'Date Created'
       # The date on which the CreativeWork was most recently modified.
@@ -126,7 +126,7 @@ module Hotmeal
       # An offer to transfer some rights to an item or to provide a service—for example, an offer to sell tickets to an event, to rent the DVD of a movie, to stream a TV show over the internet, to repair a motorcycle, or to loan a book.
       property :offers, class_name: 'Offer', as: 'offers', label: 'Offers'
       # The organization or agency that is providing the service.
-      property :provider, class_names: %w[Organization Person], as: 'provider', label: 'Provider'
+      property :provider, class_names: %w(Organization Person), as: 'provider', label: 'Provider'
       # The publisher of the creative work.
       property :publisher, class_name: 'Organization', as: 'publisher', label: 'Publisher'
       # Link to page describing the editorial principles of the organization primarily responsible for the creation of the CreativeWork.
@@ -152,4 +152,3 @@ module Hotmeal
     end
   end
 end
-

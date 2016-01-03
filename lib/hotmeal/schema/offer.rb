@@ -33,7 +33,7 @@ module Hotmeal
       # The business function (e.g. sell, lease, repair, dispose) of the offer or component of a bundle (TypeAndQuantityNode). The default is http://purl.org/goodrelations/v1#Sell.
       property :business_function, class_name: 'BusinessFunction', as: 'businessFunction', label: 'Business Function'
       # A category for the item. Greater signs or slashes can be used to informally indicate a category hierarchy.
-      property :category, class_names: %w[Text PhysicalActivityCategory Thing], as: 'category', label: 'Category'
+      property :category, class_names: %w(Text PhysicalActivityCategory Thing), as: 'category', label: 'Category'
       # The typical delay between the receipt of the order and the goods leaving the warehouse.
       property :delivery_lead_time, class_name: 'QuantitativeValue', as: 'deliveryLeadTime', label: 'Delivery Lead Time'
       # The type(s) of customers for which the given offer is valid.
@@ -43,7 +43,7 @@ module Hotmeal
       # The interval and unit of measurement of ordering quantities for which the offer or price specification is valid. This allows e.g. specifying that a certain freight charge is valid only for a certain quantity.
       property :eligible_quantity, class_name: 'QuantitativeValue', as: 'eligibleQuantity', label: 'Eligible Quantity'
       # The ISO 3166-1 (ISO 3166-1 alpha-2) or ISO 3166-2 code, or the GeoShape for the geo-political region(s) for which the offer or delivery charge specification is valid.
-      property :eligible_region, class_names: %w[Text GeoShape], as: 'eligibleRegion', label: 'Eligible Region'
+      property :eligible_region, class_names: %w(Text GeoShape), as: 'eligibleRegion', label: 'Eligible Region'
       # The transaction volume, in a monetary unit, for which the offer or price specification is valid, e.g. for indicating a minimal purchasing volume, to express free shipping above a certain order volume, or to limit the acceptance of credit cards to purchases to a certain minimal amount.
       property :eligible_transaction_volume, class_name: 'PriceSpecification', as: 'eligibleTransactionVolume', label: 'Eligible Transaction Volume'
       # The GTIN-13 code of the product, or the product to which the offer refers. This is equivalent to 13-digit ISBN codes and EAN UCC-13. Former 12-digit UPC codes can be converted into a GTIN-13 code by simply adding a preceeding zero.
@@ -63,7 +63,7 @@ module Hotmeal
       # The Manufacturer Part Number (MPN) of the product, or the product to which the offer refers.
       property :mpn, class_name: 'Text', as: 'mpn', label: 'Mpn'
       # The offer price of a product, or of a price component when attached to PriceSpecification and its subtypes.
-      property :price, class_names: %w[Text Number], as: 'price', label: 'Price'
+      property :price, class_names: %w(Text Number), as: 'price', label: 'Price'
       # The currency (in 3-letter ISO 4217 format) of the offer price or a price component, when attached to PriceSpecification and its subtypes.
       property :price_currency, class_name: 'Text', as: 'priceCurrency', label: 'Price Currency'
       # One or more detailed price specifications, indicating the unit price and delivery or payment charges.
@@ -75,7 +75,7 @@ module Hotmeal
       # Review of the item (legacy spelling; see singular form, review).
       property :reviews, class_name: 'Review', as: 'reviews', label: 'Reviews'
       # The organization or person making the offer.
-      property :seller, class_names: %w[Organization Person], as: 'seller', label: 'Seller'
+      property :seller, class_names: %w(Organization Person), as: 'seller', label: 'Seller'
       # The serial number or any alphanumeric identifier of a particular product. When attached to an offer, it is a shortcut for the serial number of the product included in the offer.
       property :serial_number, class_name: 'Text', as: 'serialNumber', label: 'Serial Number'
       # The Stock Keeping Unit (SKU), i.e. a merchant-specific identifier for a product or service, or the product to which the offer refers.
@@ -89,4 +89,3 @@ module Hotmeal
     end
   end
 end
-

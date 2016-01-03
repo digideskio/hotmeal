@@ -24,7 +24,7 @@ module Hotmeal
       # Date of birth.
       property :birth_date, class_name: 'Date', as: 'birthDate', label: 'Birth Date'
       # The brand(s) associated with a product or service, or the brand(s) maintained by an organization or business person.
-      property :brand, class_names: %w[Organization Brand], as: 'brand', label: 'Brand'
+      property :brand, class_names: %w(Organization Brand), as: 'brand', label: 'Brand'
       # A child of the person.
       property :children, class_name: 'Person', as: 'children', label: 'Children'
       # A colleague of the person.
@@ -56,7 +56,7 @@ module Hotmeal
       # Points-of-Sales operated by the organization or person.
       property :has_pos, class_name: 'Place', as: 'hasPOS', label: 'Has POS'
       # A contact location for a person's residence.
-      property :home_location, class_names: %w[ContactPoint Place], as: 'homeLocation', label: 'Home Location'
+      property :home_location, class_names: %w(ContactPoint Place), as: 'homeLocation', label: 'Home Location'
       # An honorific prefix preceding a Person's name such as Dr/Mrs/Mr.
       property :honorific_prefix, class_name: 'Text', as: 'honorificPrefix', label: 'Honorific Prefix'
       # An honorific suffix preceding a Person's name such as M.D. /PhD/MSCSW.
@@ -78,7 +78,7 @@ module Hotmeal
       # Nationality of the person.
       property :nationality, class_name: 'Country', as: 'nationality', label: 'Nationality'
       # Products owned by the organization or person.
-      property :owns, class_names: %w[OwnershipInfo Product], as: 'owns', label: 'Owns'
+      property :owns, class_names: %w(OwnershipInfo Product), as: 'owns', label: 'Owns'
       # A parent of this person.
       property :parent, class_name: 'Person', as: 'parent', label: 'Parent'
       # A parents of the person (legacy spelling; see singular form, parent).
@@ -102,10 +102,9 @@ module Hotmeal
       # The Value-added Tax ID of the organisation or person.
       property :vat_id, class_name: 'Text', as: 'vatID', label: 'Vat ID'
       # A contact location for a person's place of work.
-      property :work_location, class_names: %w[ContactPoint Place], as: 'workLocation', label: 'Work Location'
+      property :work_location, class_names: %w(ContactPoint Place), as: 'workLocation', label: 'Work Location'
       # Organizations that the person works for.
       property :works_for, class_name: 'Organization', as: 'worksFor', label: 'Works for'
     end
   end
 end
-

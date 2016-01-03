@@ -14,7 +14,7 @@ module Hotmeal
       # The time at which the UserComment was made.
       property :comment_time, class_name: 'Date', as: 'commentTime', label: 'Comment Time'
       # The creator/author of this CreativeWork or UserComments. This is the same as the Author property for CreativeWork.
-      property :creator, class_names: %w[Organization Person], as: 'creator', label: 'Creator'
+      property :creator, class_names: %w(Organization Person), as: 'creator', label: 'Creator'
       # Specifies the CreativeWork associated with the UserComment.
       property :discusses, class_name: 'CreativeWork', as: 'discusses', label: 'Discusses'
       # The URL at which a reply may be posted to the specified UserComment.
@@ -22,4 +22,3 @@ module Hotmeal
     end
   end
 end
-

@@ -34,7 +34,7 @@ module Hotmeal
       # The interval and unit of measurement of ordering quantities for which the offer or price specification is valid. This allows e.g. specifying that a certain freight charge is valid only for a certain quantity.
       property :eligible_quantity, class_name: 'QuantitativeValue', as: 'eligibleQuantity', label: 'Eligible Quantity'
       # The ISO 3166-1 (ISO 3166-1 alpha-2) or ISO 3166-2 code, or the GeoShape for the geo-political region(s) for which the offer or delivery charge specification is valid.
-      property :eligible_region, class_names: %w[Text GeoShape], as: 'eligibleRegion', label: 'Eligible Region'
+      property :eligible_region, class_names: %w(Text GeoShape), as: 'eligibleRegion', label: 'Eligible Region'
       # The transaction volume, in a monetary unit, for which the offer or price specification is valid, e.g. for indicating a minimal purchasing volume, to express free shipping above a certain order volume, or to limit the acceptance of credit cards to purchases to a certain minimal amount.
       property :eligible_transaction_volume, class_name: 'PriceSpecification', as: 'eligibleTransactionVolume', label: 'Eligible Transaction Volume'
       # The GTIN-13 code of the product, or the product to which the offer refers. This is equivalent to 13-digit ISBN codes and EAN UCC-13. Former 12-digit UPC codes can be converted into a GTIN-13 code by simply adding a preceeding zero.
@@ -56,7 +56,7 @@ module Hotmeal
       # One or more detailed price specifications, indicating the unit price and delivery or payment charges.
       property :price_specification, class_name: 'PriceSpecification', as: 'priceSpecification', label: 'Price Specification'
       # The organization or person making the offer.
-      property :seller, class_names: %w[Organization Person], as: 'seller', label: 'Seller'
+      property :seller, class_names: %w(Organization Person), as: 'seller', label: 'Seller'
       # The serial number or any alphanumeric identifier of a particular product. When attached to an offer, it is a shortcut for the serial number of the product included in the offer.
       property :serial_number, class_name: 'Text', as: 'serialNumber', label: 'Serial Number'
       # The Stock Keeping Unit (SKU), i.e. a merchant-specific identifier for a product or service, or the product to which the offer refers.
@@ -70,4 +70,3 @@ module Hotmeal
     end
   end
 end
-

@@ -16,9 +16,9 @@ module Hotmeal
       # A number that confirms the given order.
       property :confirmation_number, class_name: 'Text', as: 'confirmationNumber', label: 'Confirmation Number'
       # Party placing the order.
-      property :customer, class_names: %w[Organization Person], as: 'customer', label: 'Customer'
+      property :customer, class_names: %w(Organization Person), as: 'customer', label: 'Customer'
       # Any discount applied (to an Order).
-      property :discount, class_names: %w[Number Text], as: 'discount', label: 'Discount'
+      property :discount, class_names: %w(Number Text), as: 'discount', label: 'Discount'
       # Code used to redeem a discount.
       property :discount_code, class_name: 'Text', as: 'discountCode', label: 'Discount Code'
       # The currency (in 3-letter ISO 4217 format) of the discount.
@@ -26,7 +26,7 @@ module Hotmeal
       # Was the offer accepted as a gift for someone other than the buyer.
       property :is_gift, class_name: 'Boolean', as: 'isGift', label: 'Is Gift'
       # The party taking the order (e.g. Amazon.com is a merchant for many sellers).
-      property :merchant, class_names: %w[Organization Person], as: 'merchant', label: 'Merchant'
+      property :merchant, class_names: %w(Organization Person), as: 'merchant', label: 'Merchant'
       # Date order was placed.
       property :order_date, class_name: 'DateTime', as: 'orderDate', label: 'Order Date'
       # The item ordered.
@@ -46,4 +46,3 @@ module Hotmeal
     end
   end
 end
-

@@ -10,10 +10,9 @@ module Hotmeal
     # @see http://schema.org/Hospital
     class Hospital < CivicStructure
       # A medical service available from this provider.
-      property :available_service, class_names: %w[MedicalTest MedicalProcedure MedicalTherapy], as: 'availableService', label: 'Available Service'
+      property :available_service, class_names: %w(MedicalTest MedicalProcedure MedicalTherapy), as: 'availableService', label: 'Available Service'
       # A medical specialty of the provider.
       property :medical_specialty, class_name: 'MedicalSpecialty', as: 'medicalSpecialty', label: 'Medical Specialty'
     end
   end
 end
-

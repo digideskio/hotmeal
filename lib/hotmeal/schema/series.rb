@@ -28,7 +28,7 @@ module Hotmeal
       # An episode of a TV/radio series or season (legacy spelling; see singular form, episode)
       property :episodes, class_name: 'Episode', as: 'episodes', label: 'Episodes'
       # The composer of the movie or TV/radio soundtrack.
-      property :music_by, class_names: %w[Person MusicGroup], as: 'musicBy', label: 'Music by'
+      property :music_by, class_names: %w(Person MusicGroup), as: 'musicBy', label: 'Music by'
       # The number of episodes in this season or series.
       property :number_of_episodes, class_name: 'Number', as: 'numberOfEpisodes', label: 'Number of Episodes'
       # The number of seasons in this series.
@@ -48,4 +48,3 @@ module Hotmeal
     end
   end
 end
-

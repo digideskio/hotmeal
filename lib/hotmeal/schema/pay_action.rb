@@ -10,10 +10,9 @@ module Hotmeal
     # @see http://schema.org/PayAction
     class PayAction < TradeAction
       # A goal towards an action is taken. Can be concrete or abstract.
-      property :purpose, class_names: %w[Thing MedicalDevicePurpose], as: 'purpose', label: 'Purpose'
+      property :purpose, class_names: %w(Thing MedicalDevicePurpose), as: 'purpose', label: 'Purpose'
       # A sub property of participant. The participant who is at the receiving end of the action.
-      property :recipient, class_names: %w[Organization Audience Person], as: 'recipient', label: 'Recipient'
+      property :recipient, class_names: %w(Organization Audience Person), as: 'recipient', label: 'Recipient'
     end
   end
 end
-

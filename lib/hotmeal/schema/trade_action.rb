@@ -20,8 +20,7 @@ module Hotmeal
     # @see TipAction
     class TradeAction < Action
       # The offer price of a product, or of a price component when attached to PriceSpecification and its subtypes.
-      property :price, class_names: %w[Text Number], as: 'price', label: 'Price'
+      property :price, class_names: %w(Text Number), as: 'price', label: 'Price'
     end
   end
 end
-

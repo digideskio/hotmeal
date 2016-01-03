@@ -20,7 +20,7 @@ module Hotmeal
       # The duration of the item (movie, audio recording, event, etc.) in ISO 8601 date format.
       property :duration, class_name: 'Duration', as: 'duration', label: 'Duration'
       # The composer of the movie or TV/radio soundtrack.
-      property :music_by, class_names: %w[Person MusicGroup], as: 'musicBy', label: 'Music by'
+      property :music_by, class_names: %w(Person MusicGroup), as: 'musicBy', label: 'Music by'
       # The producer of the movie, tv/radio series, season, or episode, or video.
       property :producer, class_name: 'Person', as: 'producer', label: 'Producer'
       # The production company or studio that made the movie, tv/radio series, season, or episode, or media object.
@@ -30,4 +30,3 @@ module Hotmeal
     end
   end
 end
-

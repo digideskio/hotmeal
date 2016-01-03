@@ -24,8 +24,7 @@ module Hotmeal
       # A sub property of instrument. The languaged used on this action.
       property :language, class_name: 'Language', as: 'language', label: 'Language'
       # A sub property of participant. The participant who is at the receiving end of the action.
-      property :recipient, class_names: %w[Organization Audience Person], as: 'recipient', label: 'Recipient'
+      property :recipient, class_names: %w(Organization Audience Person), as: 'recipient', label: 'Recipient'
     end
   end
 end
-

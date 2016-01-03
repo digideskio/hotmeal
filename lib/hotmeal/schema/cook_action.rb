@@ -10,7 +10,7 @@ module Hotmeal
     # @see http://schema.org/CookAction
     class CookAction < CreateAction
       # A sub property of location. The specific food establishment where the action occurreed.
-      property :food_establishment, class_names: %w[FoodEstablishment Place], as: 'foodEstablishment', label: 'Food Establishment'
+      property :food_establishment, class_names: %w(FoodEstablishment Place), as: 'foodEstablishment', label: 'Food Establishment'
       # A sub property of location. The specific food event where the action occurred.
       property :food_event, class_name: 'FoodEvent', as: 'foodEvent', label: 'Food Event'
       # A sub property of instrument. The recipe/instructions used to perform the action.
@@ -18,4 +18,3 @@ module Hotmeal
     end
   end
 end
-

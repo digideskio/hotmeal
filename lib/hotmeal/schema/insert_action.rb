@@ -14,8 +14,7 @@ module Hotmeal
     # @see PrependAction
     class InsertAction < AddAction
       # A sub property of location. The final location of the object or the agent after the action.
-      property :to_location, class_names: %w[Place Number], as: 'toLocation', label: 'To Location'
+      property :to_location, class_names: %w(Place Number), as: 'toLocation', label: 'To Location'
     end
   end
 end
-

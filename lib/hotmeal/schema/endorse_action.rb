@@ -10,8 +10,7 @@ module Hotmeal
     # @see http://schema.org/EndorseAction
     class EndorseAction < ReactAction
       # A sub property of participant. The person/organization being supported.
-      property :endorsee, class_names: %w[Organization Person], as: 'endorsee', label: 'Endorsee'
+      property :endorsee, class_names: %w(Organization Person), as: 'endorsee', label: 'Endorsee'
     end
   end
 end
-
