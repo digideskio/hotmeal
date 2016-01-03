@@ -14,7 +14,7 @@ module Hotmeal
         child.properties = properties.dup
       end
 
-      def self.property(name, options={})
+      def self.property(name, options = {})
         properties[name] = Property.new(name, options.merge(from: self))
       end
 

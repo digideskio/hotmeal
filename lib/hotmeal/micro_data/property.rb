@@ -3,7 +3,7 @@ require 'hotmeal/micro_data'
 module Hotmeal
   module MicroData
     class Property
-      def initialize(name, options={})
+      def initialize(name, options = {})
         @name = name
         @as = options.delete(:as)
         if options[:class_name]

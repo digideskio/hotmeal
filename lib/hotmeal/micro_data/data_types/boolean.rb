@@ -16,12 +16,9 @@ module Hotmeal
             super(true)
           when 'false', 'f', 'no', 'n', '0', 0
             super(false)
-          else
-            nil
           end
         end
       end
     end
   end
 end
-

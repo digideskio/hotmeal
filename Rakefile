@@ -19,8 +19,8 @@ end
 begin
   require 'yard'
   YARD::Rake::YardocTask.new(:doc) do |t|
-    #t.files   = ['lib/**/*.rb', OTHER_PATHS]   # optional
-    #t.options = ['--any', '--extra', '--opts'] # optional
+    # t.files   = ['lib/**/*.rb', OTHER_PATHS]   # optional
+    # t.options = ['--any', '--extra', '--opts'] # optional
   end
 rescue LoadError
   task :doc do

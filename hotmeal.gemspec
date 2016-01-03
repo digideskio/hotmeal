@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path('../lib', __FILE__)
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
 require 'hotmeal/version'
 
 Gem::Specification.new do |gem|
@@ -7,8 +7,8 @@ Gem::Specification.new do |gem|
   gem.version = Hotmeal::VERSION
   gem.authors = ['Alexander Semyonov']
   gem.email = %w(al@semyonov.us)
-  gem.description = %q{Hotmeal helps to discover meta-information from your html pages: Atom and RSS feeds, Microformats, Microdata, RDFa, etc}
-  gem.summary = %q{HTML meta-information discoverer}
+  gem.description = 'Hotmeal helps to discover meta-information from your html pages: Atom and RSS feeds, Microformats, Microdata, RDFa, etc'
+  gem.summary = 'HTML meta-information discoverer'
   gem.homepage = 'http://github.com/alsemyonov/hotmeal'
 
   gem.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

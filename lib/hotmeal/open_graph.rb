@@ -13,7 +13,7 @@ module Hotmeal
 
         def ns(name, uri = nil, &block)
           if block.arity == 1
-            with_options({ns: name, uri: uri}, &block)
+            with_options({ ns: name, uri: uri }, &block)
           else
             with_options(ns: name, uri: uri) do |wo|
               wo.instance_eval(&block)
@@ -32,9 +32,7 @@ module Hotmeal
             method = name
           end
           define_method(method) { property(name, options) }
-          if block_given?
-            ns([options[:ns], name].compact.join(':'), &block)
-          end
+          ns([options[:ns], name].compact.join(':'), &block) if block_given?
         end
 
         # @macro [attach] object_types
@@ -46,7 +44,8 @@ module Hotmeal
             method = "#{ns}_#{name}?"
             type = "#{ns}.#{name}"
           else
-            ns, name = nil, ns
+            name = ns
+            ns = nil
             method = "#{name}?"
             type = name
           end
@@ -59,7 +58,7 @@ module Hotmeal
             self.type == type
           end
           if block_given?
-            with_options({ns: ns || name}, &block)
+            with_options({ ns: ns || name }, &block)
             ns(ns || name, &block)
           end
         end
@@ -207,7 +206,7 @@ module Hotmeal
 
       attr_reader :doc
 
-      def property(name, options={})
+      def property(name, options = {})
         key = if options[:ns]
                 "#{options[:ns]}:#{name}"
               else
@@ -247,7 +246,7 @@ module Hotmeal
     def open_graph
       @open_graph ||= GraphObject.new(self)
     end
-    alias og open_graph
+    alias_method :og, :open_graph
   end
 
   class Base

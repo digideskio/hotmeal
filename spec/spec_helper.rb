@@ -4,7 +4,7 @@ require 'rspec'
 require 'rspec/its'
 require 'hotmeal'
 
-Dir[File.join(SPEC_ROOT, 'spec/support/**/*.rb')].each {|f| require f}
+Dir[File.join(SPEC_ROOT, 'spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true

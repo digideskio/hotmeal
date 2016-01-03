@@ -46,9 +46,7 @@ module Hotmeal
     end
 
     # @return [Array<String>] array of keywords
-    def keywords
-      meta.keywords
-    end
+    delegate :keywords, to: :meta
 
     # @return [String] page description either from OpenGrpah or MetaData
     def description
@@ -57,15 +55,11 @@ module Hotmeal
 
     # @param path [String] css path
     # @return [Nokogiri::XML::Node] html node at given css path
-    def at_css(path)
-      html.at_css(path)
-    end
+    delegate :at_css, to: :html
 
     # @param path [String] css path
     # @return [Array<Nokogiri::XML::Node>] html node at given css path
-    def css(path)
-      html.css(path)
-    end
+    delegate :css, to: :html
   end
 end
 

@@ -13,7 +13,7 @@ describe Hotmeal::Meta do
   describe Hotmeal::Meta::MetaData do
     subject { hotmeal.meta }
 
-    its(:charset)  { should == 'utf-8' }
+    its(:charset) { should == 'utf-8' }
 
     its(:data) do
       should == {
@@ -34,7 +34,7 @@ describe Hotmeal::Meta do
           'og:type'   => 'video.movie',
           'og:url'    => 'http://www.imdb.com/title/tt0117500/',
           'og:image'  => 'http://ia.media-imdb.com/images/rock.jpg',
-          'og:description' => 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.',
+          'og:description' => 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.'
         }
       end
     end

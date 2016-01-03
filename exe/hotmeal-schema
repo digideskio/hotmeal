@@ -2,4 +2,4 @@
 
 require 'hotmeal/schema_generator'
 
-Hotmeal::SchemaGenerator.start if __FILE__ == $0
+Hotmeal::SchemaGenerator.start if __FILE__ == $PROGRAM_NAME

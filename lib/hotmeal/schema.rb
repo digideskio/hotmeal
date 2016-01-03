@@ -9,7 +9,7 @@ module Hotmeal
   module Schema
     extend ActiveSupport::Autoload
 
-    #include MicroData::DataTypes
+    # include MicroData::DataTypes
 
     mattr_accessor :types
     self.types = {}

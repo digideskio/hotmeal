@@ -19,7 +19,7 @@ describe Hotmeal::OpenGraph do
         type: 'video.movie',
         url: 'http://www.imdb.com/title/tt0117500/',
         image: 'http://ia.media-imdb.com/images/rock.jpg',
-        description: 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.',
+        description: 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.'
       }
     end
 
