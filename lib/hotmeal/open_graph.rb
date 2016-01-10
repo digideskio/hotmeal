@@ -233,12 +233,12 @@ module Hotmeal
 
       def properties
         @properties ||= begin
-                          prefix = /^#{self.prefix}:/
-                          doc.meta.properties.inject({}) do |result, (property, content)|
-                            result[property.gsub(prefix, '').to_sym] = content if property =~ prefix
-                            result
-                          end
-                        end
+          prefix = /^#{self.prefix}:/
+          doc.meta.properties.inject({}) do |result, (property, content)|
+            result[property.gsub(prefix, '').to_sym] = content if property =~ prefix
+            result
+          end
+        end
       end
     end
 
@@ -246,6 +246,7 @@ module Hotmeal
     def open_graph
       @open_graph ||= GraphObject.new(self)
     end
+
     alias_method :og, :open_graph
   end
 
