@@ -20,14 +20,13 @@ module Hotmeal
       unless @html_prefix
         prefixes = at_css('html')[:prefix]
         @html_prefix = if prefixes
-                         match_data = prefixes.scan(/([\w]+): ([^\ ]+)/).inject({}) do |result, (prefix, href)|
+                         prefixes.scan(/([\w]+): ([^ ]+)/).each_with_object({}) do |(prefix, href), result|
                            result[href] = prefix
-                           result
                          end
                        else
                          {}
                        end
-       end
+      end
       @html_prefix
     end
 

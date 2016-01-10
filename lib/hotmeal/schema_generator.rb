@@ -24,8 +24,8 @@ module Hotmeal
 
     def fetch
       require 'open-uri'
-      json = open('http://schema.rdfs.org/all.json')
-      File.write(File.expand_path('../../../data/schema.org.json', __FILE__), json.read)
+      File.write(File.expand_path('../../../data/schema.org.json', __FILE__), open('http://schema.rdfs.org/all.json').read)
+      File.write(File.expand_path('../../../data/schema.org.jsonld', __FILE__), open('http://schema.org/docs/tree.jsonld').read)
     end
 
     protected
