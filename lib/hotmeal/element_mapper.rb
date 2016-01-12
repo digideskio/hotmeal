@@ -11,23 +11,15 @@ module Hotmeal
 
     module ClassMethods
       def define_mapper(method, query, &block)
-        define_reader(method) { instance_eval(&block) }
+        define_reader(method) { read_node_content(query, &block) }
         define_writer(method) { write_node_content(query, value) }
       end
 
       def map(query, options = {}, &block)
         extending_query_by(query) do |query|
           if options.key?(:as)
-            block = ->(value) { value } unless block_given?
-            method_name = options.delete(:as)
-            define_mapper(method_name, query) do
-              result = at(query)
-              if result
-                block.call(result.content)
-              else
-                result
-              end
-            end
+            block = Hotmeal::Node::CONTENT_GETTER unless block_given?
+            define_mapper(options.delete(:as), query, &block)
           else
             block.call
           end
@@ -37,8 +29,7 @@ module Hotmeal
       def collect(query, options = {}, &block)
         extending_query_by(query) do |query|
           if options.key?(:as)
-            method = options.delete(:as)
-            attr_reader(method)
+            attr_reader(options[:as])
             block = Hotmeal::Node::CONTENT_GETTER unless block_given?
             value = search(query)
             value = if options[:by] && options[:use]
@@ -50,7 +41,7 @@ module Hotmeal
                     else
                       value.map(&block)
                     end
-            instance_variable_set("@#{method}", value)
+            instance_variable_set("@#{options[:as]}", value)
           end
         end
       end

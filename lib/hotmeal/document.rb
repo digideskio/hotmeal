@@ -12,26 +12,26 @@ module Hotmeal
       self.html = html
     end
 
-    map '/head/title', as: :document_title
+    map '/head/title/text()', as: :document_title
 
-    map 'html[@prefix]/@prefix', as: :html_prefix do |content|
-      content.scan(/([\w]+): ([^ ]+)/).each_with_object({}) do |(prefix, href), result|
+    map 'html[@prefix]/@prefix', as: :html_prefix do |prefix|
+      prefix.content.scan(/([\w]+): ([^ ]+)/).each_with_object({}) do |(prefix, href), result|
         result[href] = prefix
       end
+    end
+
+    map_each '/meta', as: :meta, class: Hotmeal::Meta
+
+    def title
+      document_title
     end
 
     def html_prefix
       super || {}
     end
 
-    map_each '/meta', as: :meta, class: Hotmeal::Meta::Meta
-
     def meta_charset
       meta.charset
-    end
-
-    def title
-      document_title
     end
   end
 end
