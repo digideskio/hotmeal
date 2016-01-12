@@ -1,34 +1,10 @@
-require 'nokogiri'
+require 'hotmeal'
+require 'hotmeal/document'
 require 'active_support/core_ext/module/delegation'
 
 module Hotmeal
-  class Base
+  class Base < Document
     attr_reader :html
-
-    def initialize(html)
-      html = Nokogiri::HTML(html) unless html.is_a?(Nokogiri::XML::Node)
-      @html = html
-    end
-
-    # @return [String] document title from html>head>title element
-    def html_title
-      @html_title ||= at_css('head title').content.to_s
-    end
-
-    # @return [Hash{}]
-    def html_prefix
-      unless @html_prefix
-        prefixes = at_css('html')[:prefix]
-        @html_prefix = if prefixes
-                         prefixes.scan(/([\w]+): ([^ ]+)/).each_with_object({}) do |(prefix, href), result|
-                           result[href] = prefix
-                         end
-                       else
-                         {}
-                       end
-      end
-      @html_prefix
-    end
 
     # @return [String] document's inner text
     def inner_text
@@ -42,24 +18,16 @@ module Hotmeal
 
     # @return [String] title either from OpenGraph data or from <title> element
     def title
-      og.title || html_title
+      og.title || document_title
     end
 
     # @return [Array<String>] array of keywords
     delegate :keywords, to: :meta
 
-    # @return [String] page description either from OpenGrpah or MetaData
+    # @return [String] page description either from OpenGraph or MetaData
     def description
       og.description || meta.description
     end
-
-    # @param path [String] css path
-    # @return [Nokogiri::XML::Node] html node at given css path
-    delegate :at_css, to: :html
-
-    # @param path [String] css path
-    # @return [Array<Nokogiri::XML::Node>] html node at given css path
-    delegate :css, to: :html
   end
 end
 

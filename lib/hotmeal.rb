@@ -3,10 +3,16 @@ module Hotmeal
   extend ActiveSupport::Autoload
 
   autoload :Base
+  autoload :CollectionMapper
+  autoload :Document
+  autoload :ElementMapper
   autoload :Meta
+  autoload :MethodsModule
   autoload :MicroData
+  autoload :Node
   autoload :OpenGraph
   autoload :Schema
+  autoload :SchemaGenerator
 end
 
 require 'hotmeal/version'

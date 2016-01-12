@@ -5,11 +5,11 @@ describe Hotmeal::Base do
   let(:hotmeal) { Hotmeal::Base.new(html) }
   subject { hotmeal }
 
-  its(:html_title)  { should == 'Basic HTML file' }
-  its(:inner_text)  { should == 'Basic HTML file example' }
-  its(:inner_html)  { should == '<h1>Basic HTML file example</h1>' }
+  its(:document_title) { should == 'HTML file' }
+  its(:inner_text) { should == 'HTML file' }
+  its(:inner_html) { should == '<h1>HTML file</h1>' }
 
-  its(:title)       { should == 'Basic HTML file' }
+  its(:title) { should == 'HTML file' }
 
   its(:html_prefix) { should == {} }
 
