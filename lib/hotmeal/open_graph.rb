@@ -1,9 +1,10 @@
 require 'hotmeal'
+require 'hotmeal/collection_mapper'
 require 'active_support/core_ext/object/with_options'
 
 module Hotmeal
   module OpenGraph
-    class GraphObject
+    class GraphObject < Hotmeal::CollectionMapper
       HREF = 'http://ogp.me/ns#'
 
       DateTime = Time

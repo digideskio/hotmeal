@@ -29,7 +29,40 @@ module Hotmeal
               end
             end
           else
-            puts 'What are you doing here?'
+            block.call
+          end
+        end
+      end
+
+      def collect(query, options = {}, &block)
+        extending_query_by(query) do |query|
+          if options.key?(:as)
+            method = options.delete(:as)
+            attr_reader(method)
+            block = Hotmeal::Node::CONTENT_GETTER unless block_given?
+            value = search(query)
+            value = if options[:by] && options[:use]
+                      result = Hash.new { |hash, key| hash[key] = [] }
+                      value.each do |element|
+                        result[element[options[:by]]] << element[options[:use]]
+                      end
+                      result
+                    else
+                      value.map(&block)
+                    end
+            instance_variable_set("@#{method}", value)
+          end
+        end
+      end
+
+      def use(query, options = {}, &block)
+        extending_query_by(query) do |query|
+          if options.key?(:as)
+            method = options.delete(:as)
+            attr_reader(method)
+            block = Hotmeal::Node::CONTENT_GETTER unless block_given?
+            value = block.call(at(query))
+            instance_variable_set("@#{method}", value)
           end
         end
       end

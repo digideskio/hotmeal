@@ -15,10 +15,12 @@ module Hotmeal
         end
       end
 
+      # @return [<String>]
       def keywords
         @keywords ||= name['keywords'].flatten.join(', ').split(/\s*,\s*/)
       end
 
+      # @return [String]
       def description
         @keywords ||= name['description'].flatten.join(' ')
       end

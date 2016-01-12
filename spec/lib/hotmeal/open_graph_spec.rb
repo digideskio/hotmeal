@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe Hotmeal::OpenGraph do
   let(:html) { fixture(:open_graph) }
-  let(:hotmeal) { Hotmeal::Base.new(html) }
-  subject { hotmeal }
+  subject(:document) { Hotmeal::Base.new(html) }
 
   it { should respond_to(:open_graph) }
   it { should respond_to(:og) }
@@ -11,7 +10,7 @@ describe Hotmeal::OpenGraph do
   its(:title) { should == 'The Rock' }
 
   describe Hotmeal::OpenGraph::GraphObject do
-    subject { hotmeal.og }
+    subject(:og) { document.open_graph }
 
     its(:properties) do
       should == {

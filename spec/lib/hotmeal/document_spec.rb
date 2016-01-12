@@ -8,14 +8,6 @@ describe Hotmeal::Document do
   its(:title) { should == 'HTML file' }
 
   it { should respond_to?(:meta) }
-  describe '#meta' do
-    subject(:meta) { document.meta }
-    its(:charset) { should == 'utf-8' }
-    its(:name) { should have_key('keywords') }
-    its(:name) { should have_key('description') }
-    it { meta.name['keywords'].should == ['HTML, Basic, keyword, another'] }
-    it { meta.name['description'].should == ['This is a basic HTML file.'] }
-  end
-
+  its(:meta) { should be_an(Hotmeal::Meta::Meta) }
   its(:meta_charset) { should == 'utf-8' }
 end

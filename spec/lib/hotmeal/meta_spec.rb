@@ -11,27 +11,28 @@ describe Hotmeal::Meta do
   its(:description) { should == 'This is a basic HTML file.' }
 
   describe Hotmeal::Meta::Meta do
-    subject { hotmeal.meta }
+    subject(:meta) { hotmeal.meta }
+
     its(:query) { should == '//meta' }
     its(:charset) { should == 'utf-8' }
 
-    its(:name) do
-      should == {
-        'keywords' => ['HTML, Basic, keyword, another'],
-        'description' => ['This is a basic HTML file.']
-      }
-    end
-
+    its(:name) { should have_key('keywords') }
+    it { meta.name['keywords'].should == ['HTML, Basic, keyword, another'] }
     its(:keywords) { should == %w(HTML Basic keyword another) }
+
+    its(:name) { should have_key('description') }
+    it { meta.name['description'].should == ['This is a basic HTML file.'] }
     its(:description) { should == 'This is a basic HTML file.' }
 
     context '#properties' do
       let(:html) { fixture(:open_graph) }
-      its(:properties) { should have_key('og:title') }
-      its(:properties) { should have_key('og:type') }
-      its(:properties) { should have_key('og:url') }
-      its(:properties) { should have_key('og:image') }
-      its(:properties) { should have_key('og:description') }
+      subject(:properties) { meta.properties }
+
+      it { should have_key('og:title') }
+      it { should have_key('og:type') }
+      it { should have_key('og:url') }
+      it { should have_key('og:image') }
+      it { should have_key('og:description') }
     end
   end
 end
