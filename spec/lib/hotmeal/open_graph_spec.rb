@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Hotmeal::OpenGraph do
   let(:html) { fixture(:open_graph) }
-  subject(:document) { Hotmeal::Base.new(html) }
+  subject(:document) { Hotmeal::Document.new(html) }
 
   it { should respond_to(:open_graph) }
   it { should respond_to(:og) }
@@ -12,14 +12,14 @@ describe Hotmeal::OpenGraph do
   describe Hotmeal::OpenGraph::GraphObject do
     subject(:og) { document.open_graph }
 
-    its(:properties) do
-      should == {
-        title: 'The Rock',
-        type: 'video.movie',
-        url: 'http://www.imdb.com/title/tt0117500/',
-        image: 'http://ia.media-imdb.com/images/rock.jpg',
-        description: 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.'
-      }
+    its(:og_properties) do
+      should == [
+        ['og:title', 'The Rock'],
+        %w(og:type video.movie),
+        %w(og:url http://www.imdb.com/title/tt0117500/),
+        %w(og:image http://ia.media-imdb.com/images/rock.jpg),
+        ['og:description', 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.']
+      ]
     end
 
     its(:title) { should == 'The Rock' }
@@ -47,13 +47,18 @@ describe Hotmeal::OpenGraph do
       end
     end
 
-    context 'structured properties' do
-      it { should respond_to(:image) }
-      it { should respond_to(:image_url) }
-      it { should respond_to(:image_secure_url) }
-      it { should respond_to(:image_type) }
-      it { should respond_to(:image_width) }
-      it { should respond_to(:image_height) }
+    it { should respond_to(:image) }
+    context 'structured properties#image' do
+      subject(:image) do
+        pending 'structured properties are not implemented'
+        og.image
+      end
+
+      it { should respond_to(:url) }
+      it { should respond_to(:secure_url) }
+      it { should respond_to(:type) }
+      it { should respond_to(:width) }
+      it { should respond_to(:height) }
     end
   end
 

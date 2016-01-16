@@ -1,13 +1,16 @@
 require 'hotmeal'
 require 'hotmeal/node'
 require 'hotmeal/methods_module'
+require 'hotmeal/inspectable'
 require 'active_support/concern'
+require 'active_support/core_ext/array/wrap'
 
 module Hotmeal
   module ElementMapper
     extend ActiveSupport::Concern
     include Hotmeal::Node
     include Hotmeal::MethodsModule
+    include Hotmeal::Inspectable
 
     module ClassMethods
       def define_mapper(method, query, &block)
@@ -16,10 +19,10 @@ module Hotmeal
       end
 
       def map(query, options = {}, &block)
+        block = Hotmeal::Node::CONTENT_GETTER unless block_given?
         extending_query_by(query) do |query|
           if options.key?(:as)
-            block = Hotmeal::Node::CONTENT_GETTER unless block_given?
-            define_mapper(options.delete(:as), query, &block)
+            define_mapper(options[:as], query, &block)
           else
             block.call
           end
@@ -27,34 +30,35 @@ module Hotmeal
       end
 
       def collect(query, options = {}, &block)
-        extending_query_by(query) do |query|
-          if options.key?(:as)
-            attr_reader(options[:as])
-            block = Hotmeal::Node::CONTENT_GETTER unless block_given?
+        block = Hotmeal::Node::CONTENT_GETTER unless block_given?
+        fail 'No :as option' unless options[:as]
+        define_reader(options[:as]) do
+          extending_query_by(query) do |query|
             value = search(query)
-            value = if options[:by] && options[:use]
-                      result = Hash.new { |hash, key| hash[key] = [] }
-                      value.each do |element|
-                        result[element[options[:by]]] << element[options[:use]]
-                      end
-                      result
-                    else
-                      value.map(&block)
-                    end
-            instance_variable_set("@#{options[:as]}", value)
+            if options[:use]
+              if options[:by]
+                result = Hash.new { |hash, key| hash[key] = [] }
+                value.each do |element|
+                  result[element[options[:by]]] << element[options[:use]]
+                end
+                result
+              else
+                use = Array.wrap(options[:use])
+                value.map do |node|
+                  use.map { |property| node[property] }
+                end
+              end
+            else
+              value.map(&block)
+            end
           end
         end
       end
 
       def use(query, options = {}, &block)
+        block = Hotmeal::Node::CONTENT_GETTER unless block_given?
         extending_query_by(query) do |query|
-          if options.key?(:as)
-            method = options.delete(:as)
-            attr_reader(method)
-            block = Hotmeal::Node::CONTENT_GETTER unless block_given?
-            value = block.call(at(query))
-            instance_variable_set("@#{method}", value)
-          end
+          define_reader(options[:as]) { block.call(at(query)) } if options.key?(:as)
         end
       end
 
