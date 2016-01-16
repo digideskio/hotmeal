@@ -2,6 +2,7 @@ require 'active_support'
 module Hotmeal
   extend ActiveSupport::Autoload
 
+  autoload :Body
   autoload :CollectionMapper
   autoload :Document
   autoload :ElementMapper

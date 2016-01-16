@@ -9,10 +9,6 @@ module Hotmeal
     self.inspectable_attributes += [:document_title, :html_prefix, :meta, :open_graph]
     self.query = '/'
 
-    def initialize(html)
-      self.html = html
-    end
-
     map '/head/title/text()', as: :document_title
     map 'html[@prefix]/@prefix', as: :html_prefix do |prefix|
       prefix.content.scan(/([\w]+): ([^ ]+)/).each_with_object({}) do |(prefix, href), result|
@@ -53,15 +49,7 @@ module Hotmeal
     end
 
     def body
-      body = at('body')
-      body.search('script, style, noscript, [@onclick]/@onclick, [@style]/@style').each { |node| node.remove }
-      %w(body div span nobr).each do |query|
-        body.search(query).each do |node|
-          node.after(node.children)
-          node.remove
-        end
-      end
-      body.children
+      Body.new(at('body'))
     end
 
     # @return [String] document's inner html
@@ -71,13 +59,13 @@ module Hotmeal
 
     def to_s
       <<-END
-head:
-  title: #{document_title}
-      #{indent(meta)}
-  open_graph:
+head
+  title #{document_title}
+  meta
+    #{indent(meta, 4)}
+  open_graph
     #{indent(open_graph, 4)}
-body:
-  #{indent(body)}
+#{body}
       END
     end
   end

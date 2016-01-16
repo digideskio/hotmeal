@@ -16,6 +16,10 @@ module Hotmeal
       self.query = ''
     end
 
+    def initialize(html)
+      self.html = html
+    end
+
     # @return [Nokogiri::XML::Node]
     attr_reader :html
 
