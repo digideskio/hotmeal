@@ -6,6 +6,7 @@ module Hotmeal
   autoload :CollectionMapper
   autoload :Document
   autoload :ElementMapper
+  autoload :Inspectable
   autoload :Meta
   autoload :MethodsModule
   autoload :MicroData
