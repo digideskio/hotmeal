@@ -7,6 +7,7 @@ module Hotmeal
   autoload :Document
   autoload :ElementMapper
   autoload :Inspectable
+  autoload :Links
   autoload :Meta
   autoload :MethodsModule
   autoload :MicroData
@@ -20,6 +21,6 @@ require 'hotmeal/version'
 require 'hotmeal/base'
 require 'hotmeal/schema'
 
-def Hotmeal(html)
-  Hotmeal::Document.new(html)
+def Hotmeal(html, base_uri = nil)
+  Hotmeal::Document.new(html, base_uri)
 end

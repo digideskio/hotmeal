@@ -18,6 +18,7 @@ module Hotmeal
       end
 
       def attr_reader(*args)
+        self.inspectable_attributes += args
         methods_module.send(:attr_reader, *args)
       end
 
@@ -41,7 +42,7 @@ module Hotmeal
         instance_variable = "@#{name}"
         define_method("#{name}=") do |value|
           remove_instance_variable(instance_variable)
-          block.call(value)
+          instance_exec(value, &block)
         end
       end
 

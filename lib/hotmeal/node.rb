@@ -34,6 +34,7 @@ module Hotmeal
     def at(query = self.query)
       html.at(query)
     end
+    alias_method :__at__, :at
 
     # @param [String, nil] query
     # @return [Nokogiri::XML::Node]
@@ -52,6 +53,7 @@ module Hotmeal
     def search(query = self.query)
       html.search(query)
     end
+    alias_method :__search__, :search
 
     # @param [String, nil] query
     # @return [<Nokogiri::XML::Node>]

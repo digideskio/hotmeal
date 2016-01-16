@@ -8,6 +8,10 @@ module Hotmeal
     included do
       class_attribute :inspectable_attributes
       self.inspectable_attributes = []
+      class_attribute :attribute_glue
+      self.attribute_glue = ' '
+      class_attribute :attributes_glue
+      self.attributes_glue = "\n"
     end
 
     def inspect
@@ -17,8 +21,8 @@ module Hotmeal
     def to_s
       inspectable_attributes.map do |attribute|
         value = public_send(attribute)
-        '%s %s' % [attribute, value.to_s] if value
-      end.compact.join("\n")
+        "#{attribute}#{attribute_glue}#{value.inspect}" if value
+      end.compact.join(attributes_glue)
     end
 
     private

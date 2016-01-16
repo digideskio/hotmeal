@@ -15,7 +15,7 @@ module Hotmeal
     module ClassMethods
       def define_mapper(method, query, &block)
         define_reader(method) { read_node_content(query, &block) }
-        define_writer(method) { write_node_content(query, value) }
+        define_writer(method) { |value| write_node_content(query, value) }
       end
 
       def map(query, options = {}, &block)
@@ -34,19 +34,17 @@ module Hotmeal
         fail 'No :as option' unless options[:as]
         define_reader(options[:as]) do
           extending_query_by(query) do |query|
-            value = search(query)
+            value = __search__(query)
             if options[:use]
               if options[:by]
                 result = Hash.new { |hash, key| hash[key] = [] }
-                value.each do |element|
-                  result[element[options[:by]]] << element[options[:use]]
-                end
+                value.each { |element| result[element[options[:by]]] << element[options[:use]] }
                 result
+              elsif options[:use].is_a?(Proc)
+                value.map { |node| options[:use].call(node) }
               else
                 use = Array.wrap(options[:use])
-                value.map do |node|
-                  use.map { |property| node[property] }
-                end
+                value.map { |node| use.map { |property| node[property] } }
               end
             else
               value.map(&block)
