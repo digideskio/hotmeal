@@ -7,6 +7,6 @@ describe Hotmeal do
     let(:hotmeal) { Hotmeal(fixture(:basic)) }
     subject { hotmeal }
 
-    it { should be_kind_of(Hotmeal::Base) }
+    it { should be_kind_of(Hotmeal::Document) }
   end
 end

@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe Hotmeal::Meta do
   let(:html) { fixture(:basic) }
-  let(:hotmeal) { Hotmeal::Base.new(html) }
-  subject { hotmeal }
+  subject(:hotmeal) { Hotmeal::Document.new(html) }
 
   it { should respond_to(:meta) }
 

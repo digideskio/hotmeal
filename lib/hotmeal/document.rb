@@ -6,6 +6,7 @@ module Hotmeal
   class Document
     include Hotmeal::ElementMapper
 
+    self.inspectable_attributes += [:document_title, :html_prefix, :meta, :open_graph]
     self.query = '/'
 
     def initialize(html)
@@ -13,7 +14,6 @@ module Hotmeal
     end
 
     map '/head/title/text()', as: :document_title
-
     map 'html[@prefix]/@prefix', as: :html_prefix do |prefix|
       prefix.content.scan(/([\w]+): ([^ ]+)/).each_with_object({}) do |(prefix, href), result|
         result[href] = prefix
@@ -21,17 +21,66 @@ module Hotmeal
     end
 
     map_each '/meta', as: :meta, class: Hotmeal::Meta
+    map_each '/meta[@property and boolean(@content)]', as: :open_graph, class: Hotmeal::OpenGraph
+    alias_method :og, :open_graph
 
+    # @return [String] title either from OpenGraph data or from <title> element
     def title
-      document_title
+      open_graph.title || document_title
     end
 
+    # @return [Array<String>] array of keywords
+    delegate :keywords, to: :meta
+
+    # @return [String] page description either from OpenGraph or MetaData
+    def description
+      open_graph.description || meta.description
+    end
+
+    # @return [Hash]
     def html_prefix
       super || {}
     end
 
+    # @return [String]
     def meta_charset
-      meta.charset
+      meta.charset || 'UTF-8'
+    end
+
+    # @return [String] document's inner text
+    def inner_text
+      at('body').inner_text.to_s.strip
+    end
+
+    def body
+      body = at('body')
+      body.search('script, style, noscript, [@onclick]/@onclick, [@style]/@style').each { |node| node.remove }
+      %w(body div span nobr).each do |query|
+        body.search(query).each do |node|
+          node.after(node.children)
+          node.remove
+        end
+      end
+      body.children
+    end
+
+    # @return [String] document's inner html
+    def inner_html
+      at('body').inner_html.to_s.strip
+    end
+
+    def to_s
+      <<-END
+head:
+  title: #{document_title}
+      #{indent(meta)}
+  open_graph:
+    #{indent(open_graph, 4)}
+body:
+  #{indent(body)}
+      END
     end
   end
 end
+require 'hotmeal/meta'
+require 'hotmeal/open_graph'

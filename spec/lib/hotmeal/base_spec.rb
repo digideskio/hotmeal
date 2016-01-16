@@ -1,9 +1,8 @@
 require 'spec_helper'
 
-describe Hotmeal::Base do
+describe Hotmeal::Document do
   let(:html) { fixture(:basic) }
-  let(:hotmeal) { Hotmeal::Base.new(html) }
-  subject { hotmeal }
+  subject(:hotmeal) { described_class.new(html) }
 
   its(:document_title) { should == 'HTML file' }
   its(:inner_text) { should == 'HTML file' }
