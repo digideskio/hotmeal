@@ -3,15 +3,22 @@ require 'hotmeal/collection_mapper'
 
 module Hotmeal
   class Meta < Hotmeal::CollectionMapper
-    map '[@charset]/@charset', as: :charset
+    self.inspectable_attributes = [:charset, :keywords, :description]
 
-    def process
-      collect('[@name and boolean(@content)]', as: :name, use: :content, by: :name)
-      collect('[@http-equiv and boolean(@content)]', as: :http_equiv, use: :content, by: :'http-equiv')
-      collect('[@property and boolean(@content)]', as: :properties, use: :content, by: :property)
-      @properties.each do |key, value|
-        @properties[key] = value.first
+    map '[@charset]/@charset', as: :charset
+    collect('[@name and boolean(@content)]', as: :name, use: :content, by: :name)
+    collect('[@http-equiv and boolean(@content)]', as: :http_equiv, use: :content, by: :'http-equiv')
+    collect('[@property and boolean(@content)]', as: :properties, use: :content, by: :property)
+
+    def properties
+      unless @_properties_processed
+        @properties = super
+        @properties.each do |key, value|
+          @properties[key] = value.first
+        end
+        @_properties_processed = true
       end
+      @properties
     end
 
     # @return [<String>]
@@ -21,7 +28,7 @@ module Hotmeal
 
     # @return [String]
     def description
-      @keywords ||= name['description'].flatten.join(' ')
+      @description ||= name['description'].flatten.join(' ')
     end
   end
 end
