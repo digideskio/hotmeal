@@ -3,7 +3,7 @@ require 'hotmeal/element_mapper'
 require 'active_support/core_ext/class/attribute'
 
 module Hotmeal
-  class Document
+  class Document < Hotmeal::Mapper::Document
     include Hotmeal::ElementMapper
 
     self.inspectable_attributes += [:document_title, :html_prefix, :meta, :open_graph]
