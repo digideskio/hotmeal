@@ -44,7 +44,7 @@ module Hotmeal
 
     # @return [String] title either from OpenGraph data or from <title> element
     def title
-      open_graph.title || document_title
+      open_graph.title.presence || document_title
     end
 
     # @return [Array<String>] array of keywords
@@ -52,7 +52,7 @@ module Hotmeal
 
     # @return [String] page description either from OpenGraph or MetaData
     def description
-      open_graph.description || meta.description
+      open_graph.description.presence || meta.description
     end
 
     # @return [Hash]

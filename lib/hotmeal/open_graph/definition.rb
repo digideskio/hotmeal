@@ -93,7 +93,12 @@ module Hotmeal
 
       # @return [String]
       def writer
-        options[:writer] ||= "@#{reader}"
+        options[:writer] ||= "#{reader}="
+      end
+
+      # @return [String]
+      def variable
+        options[:variable] ||= "@#{reader}"
       end
 
       # @return [String]

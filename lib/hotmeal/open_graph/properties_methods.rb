@@ -1,11 +1,16 @@
 require 'hotmeal/open_graph'
+require 'hotmeal/inspectable'
 require 'active_support/concern'
 
 module Hotmeal
   class OpenGraph
     module PropertiesMethods
       extend ActiveSupport::Concern
-      include Inspectable
+      include Hotmeal::Inspectable
+
+      def property_for(attribute)
+        properties[attribute]
+      end
 
       def properties
         @properties ||= Hash.new do |hash, key|
@@ -14,8 +19,24 @@ module Hotmeal
         end
       end
 
-      def property_for(property)
-        properties[property]
+      def to_s
+        attributes_for_inspection.map do |attribute|
+          value = read_attribute_for_inspection(attribute)
+          inspect_attribute(attribute, value) { |value| value.to_s }
+        end.compact.join(attributes_glue)
+      end
+
+      private
+
+      def inspect_attributes
+        attributes_for_inspection.map do |attribute|
+          value = read_attribute_for_inspection(attribute)
+          inspect_attribute(attribute, value)
+        end.compact.join(' ')
+      end
+
+      def read_attribute_for_inspection(property)
+        property_for(property)
       end
 
       module ClassMethods
@@ -39,7 +60,7 @@ module Hotmeal
           definition = Definition.new(name, options, &block)
           definitions[definition.property] = definition
 
-          self.inspectable_attributes += [definition.reader]
+          self.inspectable_attributes += [definition.property]
 
           if definition.array?
             define_method(definition.plural) do
