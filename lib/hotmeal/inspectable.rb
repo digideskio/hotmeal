@@ -41,8 +41,8 @@ module Hotmeal
     end
 
     def inspectable?(property)
-      property.respond_to?(:any?) && property.any? ||
-        property.respond_to?(:inspectable?) && property.inspectable?
+      (property.respond_to?(:any?) && property.any?) ||
+        (property.respond_to?(:inspectable?) && property.inspectable?)
     end
 
     def inspect_attributes

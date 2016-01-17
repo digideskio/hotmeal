@@ -63,16 +63,9 @@ module Hotmeal
           self.inspectable_attributes += [definition.property]
 
           if definition.array?
-            define_method(definition.plural) do
-              puts "#{self.class}##{definition.plural}"
-              properties[definition.property] ||= []
-            end
-            define_method(definition.reader) do
-              puts "#{self.class}##{definition.reader}"
-              public_send(definition.plural).first
-            end
+            define_method(definition.plural) { properties[definition.property] ||= [] }
+            define_method(definition.reader) { public_send(definition.plural).first }
             define_method(definition.writer) do |value|
-              puts "#{self.class}##{definition.writer}"
               if public_send(definition.plural).any?
                 public_send(definition.reader).try(:content=, value)
               else
@@ -80,14 +73,8 @@ module Hotmeal
               end
             end
           else
-            define_method(definition.reader) do
-              puts "#{self.class}##{definition.reader}"
-              properties[definition.property]
-            end
-            define_method(definition.writer) do |value|
-              puts "#{self.class}##{definition.writer}"
-              publc_send(definition.reader).try(:content=, value)
-            end
+            define_method(definition.reader) { properties[definition.property] }
+            define_method(definition.writer) { |value| publc_send(definition.reader).try(:content=, value) }
           end
         end
 

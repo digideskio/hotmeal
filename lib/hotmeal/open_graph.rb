@@ -100,7 +100,9 @@ module Hotmeal
         property :height, type: Integer
       end
     end
-
+    ns :fb, 'http://ogp.me/ns/fb#' do
+      property :app_id
+    end
 
     # @!group Object Types
     object_type(:music, :song) do

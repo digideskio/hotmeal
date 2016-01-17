@@ -35,10 +35,7 @@ module Hotmeal
           property_class.class_eval do
             with_options(ns: property, module: self) do
               instance_eval(&block) if block
-              if options[:value]
-                puts "property(#{options[:value]})"
-                # property(options[:value])
-              end
+              # property(options[:value]) if options[:value]
             end
           end
         end
