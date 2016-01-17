@@ -33,10 +33,6 @@ module Hotmeal
 
       delegate :at, :search, :at_css, :css, :at_xpath, :xpath, to: :html, allow_nil: true
 
-      def __getobj__
-        @html ? @html.content : nil
-      end
-
       # @return [String]
       def path
         @path ||= @html.respond_to?(:path) ? @html.path : self.class.path
@@ -44,13 +40,41 @@ module Hotmeal
 
       attr_writer :path
 
+      def __getobj__
+        value
+      end
+
+      def value
+        html_content
+      end
+
+      def value=(value)
+        self.html_content = value
+      end
+
+      # @return [String]
+      def html_content
+        if @html
+          if @html.children.any? { |child| child.is_a?(Nokogiri::XML::Element) }
+            @html.inner_html
+          else
+            @html.content
+          end
+        else
+          nil
+        end
+      end
+
+      def html_content=(content)
+        @html ? @html.content = content : nil
+      end
 
       def to_html
-        if @html.respond_to?(:to_html)
-          @html.to_html
-        else
-          __getobj__.to_s
-        end
+        @html ? @html.to_html : __getobj__.to_s
+      end
+
+      def to_s
+        to_html
       end
 
       module ClassMethods

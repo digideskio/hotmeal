@@ -12,6 +12,7 @@ module Hotmeal
     autoload :Decorator
     autoload :Document
     autoload :Html
+    autoload :Inspectable
     autoload :Mapping
     autoload :Head, 'hotmeal/mapper/document'
     autoload :Body, 'hotmeal/mapper/document'
@@ -20,16 +21,6 @@ module Hotmeal
 
     def self.new(html = nil, path = nil, &block)
       Decorator.new(html, path, &block)
-    end
-  end
-end
-
-require 'hotmeal/mapper/attributes'
-
-module Hotmeal
-  module Mapper
-    class Decorator
-      include Hotmeal::Mapper::Attributes
     end
   end
 end
