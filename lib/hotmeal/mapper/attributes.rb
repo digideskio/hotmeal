@@ -16,17 +16,21 @@ module Hotmeal
       def attributes
         mappings.each_with_object({}) do |mapping, attributes|
           value = read_attribute(mapping)
-          attributes[mapping.path] = value if value != nil
+          attributes[mapping.as] = value if value != nil
         end
       end
 
+      alias_method :to_hash, :attributes
+      #
+      # def inspect
+      #   '#<%s:0x%x %s>' % [self.class, object_id, inspect_attributes]
+      # end
 
-      def inspect
-        '#<%s:0x%x %s>' % [self.class, object_id, inspect_attributes]
+      def __getobj__
+        has_attributes? ? attributes : super
       end
 
       private
-
 
       def inspect_attributes
         if has_attributes?
@@ -40,7 +44,6 @@ module Hotmeal
 
       def read_attribute(path)
         mapping = path.is_a?(Mapping) ? path : mapping_for(path)
-        puts [:read_attribute, mapping].inspect
         mapping.decorate(self)
       end
 
@@ -83,11 +86,11 @@ module Hotmeal
           mapping.define_accessors(self)
         end
 
-        # @param [Mapping] path
-        def mapping_for(path)
-          mapping = mappings.find { |mapping| mapping.path == path }
+        # @param [Mapping] name
+        def mapping_for(name)
+          mapping = mappings.find { |mapping| mapping.as == name }
           unless mapping
-            mapping = Hotmeal::Mapper::Mapping.new(path)
+            mapping = Hotmeal::Mapper::Mapping.new(name)
             self.mappings += [mapping]
           end
           mapping

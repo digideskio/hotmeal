@@ -20,6 +20,16 @@ module Hotmeal
         options[:class] ||= Decorator
       end
 
+      def collection_mapper_class
+        if mapper_class < CollectionDecorator
+          mapper_class
+        else
+          collection_class = Class.new(CollectionDecorator)
+          collection_class.item(class: mapper_class)
+          collection_class
+        end
+      end
+
       def as
         options[:as] ||= path.to_sym
       end
@@ -39,14 +49,10 @@ module Hotmeal
 
       def define_accessors(mod)
         mapping = self
-        puts "Defining #{[mapping.reader, mapping.writer].inspect}"
-        # if array?
-        # else
         mod.module_eval do
-          define_method(mapping.reader) { read_attribute(mapping.path) }
-          define_method(mapping.writer) { |value| write_attribute(mapping.path, value) }
+          define_method(mapping.reader) { read_attribute(mapping.as) }
+          define_method(mapping.writer) { |value| write_attribute(mapping.as, value) }
         end
-        # end
       end
 
       # def decorate(node, path = nil)
@@ -54,8 +60,11 @@ module Hotmeal
         path = path + self.path
         html = array? ? doc.search(path) : doc.at(path)
         fail if html == doc
-        puts [:decorate, path, doc.to_s].inspect
-        mapper_class.new(html, path)
+        if array?
+          collection_mapper_class.new(html, path)
+        else
+          mapper_class.new(html, path)
+        end
       end
     end
   end
