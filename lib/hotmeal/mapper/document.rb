@@ -33,8 +33,9 @@ module Hotmeal
 
     class Head < Decorator
       element :title
-      elements :meta, class: MetaData
-      elements :link, class: Links, as: :links
+      attribute '/base/@href', as: :base_uri
+      elements :meta, class: Hotmeal::Mapper::MetaData
+      elements :link, class: Hotmeal::Mapper::Links, as: :links
     end
 
     class Body < Decorator
@@ -42,12 +43,11 @@ module Hotmeal
 
     class Document < Decorator
       self.path = '/html'
-      # self.path = '/'
 
-      attribute :prefix
+      attribute 'html[@prefix]/@prefix', as: :prefix
 
-      element :head, class: Head
-      element :body, class: Body
+      element :head, class: Hotmeal::Mapper::Head
+      element :body, class: Hotmeal::Mapper::Body
     end
   end
 end

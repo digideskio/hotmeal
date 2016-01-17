@@ -49,6 +49,7 @@ module Hotmeal
 
       def define_accessors(mod)
         mapping = self
+        mod = mod.generated_attribute_methods if mod.respond_to?(:generated_attribute_methods)
         mod.module_eval do
           define_method(mapping.reader) { read_attribute(mapping.as) }
           define_method(mapping.writer) { |value| write_attribute(mapping.as, value) }
@@ -59,7 +60,7 @@ module Hotmeal
       def decorate(doc, path = doc.path)
         path = path + self.path
         html = array? ? doc.search(path) : doc.at(path)
-        fail if html == doc
+        # fail if html == doc
         if array?
           collection_mapper_class.new(html, path)
         else

@@ -15,24 +15,28 @@ module Hotmeal
         @options[:class] || Hotmeal::Mapper::Decorator
       end
 
+      def self.decorator=(decorator)
+        @options[:class] = decorator || Hotmeal::Mapper::Decorator
+      end
+
       def each(&block)
         value.each(&block)
       end
 
+      # @return [<Hotmeal::Mapper::Decorator>]
       def value
         decorated_nodes.map { |item| self.class.decorator.new(item) }
       end
 
       def value=(values)
-        raise NotImplementedError, "#{self.class}#values= is not implemented. Setting of values for multiple elements mapping is not supported yet"
-        decorated_nodes.map { |item| self.class.decorator.new(item) }
+        values.each_with_index do |item, index|
+          value[index].value = item
+        end
       end
 
       def decorated_nodes
-        search(path)
+        @decorated_nodes ||= @html ? @html.search(path) : []
       end
-
-      delegate :size, to: :__getobj__
     end
   end
 end

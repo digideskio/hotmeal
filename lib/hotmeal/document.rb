@@ -14,16 +14,22 @@ module Hotmeal
       self.url = base_uri || self.base_uri if base_uri || self.base_uri.present?
     end
 
-    map 'html[@prefix]/@prefix', as: :html_prefix do |prefix|
-      prefix.content.scan(/([\w]+): ([^ ]+)/).each_with_object({}) do |(prefix, href), result|
+    def html_prefix
+      prefixes = prefix.value.to_s
+      prefixes = prefixes.scan(/([^:]+):\s+([^\s]+)\s*/)
+      prefixes.each_with_object({}) do |(prefix, href), result|
         result[href] = prefix
       end
     end
-    map '/head/title/text()', as: :document_title
-    map '/head/base/@href', as: :base_uri
+
+    def document_title
+      head.title
+    end
+
+    delegate :base_uri, to: :head
 
     def base_uri=(uri)
-      super(uri)
+      head.base_uri = uri
       self.url = uri
     end
 
@@ -53,11 +59,6 @@ module Hotmeal
     # @return [String] page description either from OpenGraph or MetaData
     def description
       open_graph.description.presence || meta.description
-    end
-
-    # @return [Hash]
-    def html_prefix
-      super || {}
     end
 
     # @return [String]

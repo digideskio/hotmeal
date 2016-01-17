@@ -1,40 +1,51 @@
 require 'hotmeal/mapper'
 require 'active_support/concern'
 require 'active_support/core_ext/class/attribute'
+require 'active_model/attribute_methods'
 
 module Hotmeal
   module Mapper
     module Attributes
       extend ActiveSupport::Concern
 
+      include ActiveModel::AttributeMethods
+
       included do
         # @return [<Mapping>]
         class_attribute :mappings
         self.mappings = []
+        attribute_method_suffix '_mapping'
       end
 
+      # @return [Hash{String => Hotmeal::Mapper::Decorator}]
       def attributes
-        mappings.each_with_object({}) do |mapping, attributes|
+        @attributes ||= mappings.each_with_object({}) do |mapping, attributes|
           value = read_attribute(mapping)
           attributes[mapping.as] = value if value != nil
         end
       end
 
       alias_method :to_hash, :attributes
-      #
-      # def inspect
-      #   '#<%s:0x%x %s>' % [self.class, object_id, inspect_attributes]
-      # end
 
-      def __getobj__
-        has_attributes? ? attributes : super
+      # @param [Hash{String => Object}] attributes
+      def assign_attributes(attributes = {})
+        attributes.each do |name, value|
+          mapping = attribute_mapping(name.to_s)
+          write_attribute(mapping, value)
+        end
       end
+
+      def value
+        attributes.any? ? attributes : html_content
+      end
+
+      alias_method :attributes=, :assign_attributes
 
       private
 
       def inspect_attributes
         if has_attributes?
-          attributes.map {|key, value| "#{key.inspect}=#{value.inspect}"}.join(' ')
+          attributes.map { |key, value| "#{key.inspect}=#{value.inspect}" }.join(' ')
         end
       end
 
@@ -43,19 +54,27 @@ module Hotmeal
       end
 
       def read_attribute(path)
-        mapping = path.is_a?(Mapping) ? path : mapping_for(path)
+        mapping = path.is_a?(Mapping) ? path : attribute_mapping(path)
         mapping.decorate(self)
       end
 
+      alias_method :[], :read_attribute
+      alias_method :attribute, :read_attribute
+
       def write_attribute(path, value)
-        mapping = mapping_for(path)
-        decorator = mapping.decorate(self)
-        decorator.value = value
+        decorated_attribute = read_attribute(path)
+        decorated_attribute.value = value if decorated_attribute
       end
 
+      alias_method :attribute=, :write_attribute
+
       # @param [Mapping] path
-      def mapping_for(path)
-        self.class.mapping_for(path)
+      def attribute_mapping(path)
+        self.class.attribute_mapping(path)
+      end
+
+      def attribute?(path)
+        read_attribute(path).present?
       end
 
       module ClassMethods
@@ -82,18 +101,37 @@ module Hotmeal
             path = "[@#{path}]/@#{path}"
           end
           mapping = Hotmeal::Mapper::Mapping.new(path, options)
-          self.mappings += [mapping]
+          define_attribute(mapping)
           mapping.define_accessors(self)
         end
 
         # @param [Mapping] name
-        def mapping_for(name)
+        def attribute_mapping(name)
+          name == name.to_sym
           mapping = mappings.find { |mapping| mapping.as == name }
           unless mapping
             mapping = Hotmeal::Mapper::Mapping.new(name)
-            self.mappings += [mapping]
+            define_attribute(mapping)
           end
           mapping
+        end
+
+        def define_attribute(mapping)
+          self.mappings += [mapping]
+          define_attribute_method mapping.as
+        end
+
+        private
+
+        # @return [Module]
+        def generated_attribute_methods
+          @generated_attribute_methods ||=
+            begin
+              accessors = Module.new { extend Mutex_m }
+              const_set(:GeneratedAttributeMethods, accessors)
+              include(accessors)
+              accessors
+            end
         end
       end
     end

@@ -19,7 +19,7 @@ module Hotmeal
 end
 
 require 'hotmeal/version'
-require 'hotmeal/base'
+require 'hotmeal/document'
 require 'hotmeal/schema'
 
 def Hotmeal(html, base_uri = nil)
