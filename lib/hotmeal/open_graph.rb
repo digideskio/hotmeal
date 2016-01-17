@@ -4,70 +4,106 @@ require 'active_support/core_ext/object/with_options'
 
 module Hotmeal
   class OpenGraph < Hotmeal::CollectionMapper
-    autoload :GraphObject, 'hotmeal/open_graph/graph_object'
-    autoload :PropertiesMethods, 'hotmeal/open_graph/properties_methods'
-    autoload :Property, 'hotmeal/open_graph/property'
+    extend ActiveSupport::Autoload
+
+    autoload :Definition
+    autoload :PropertiesMethods
+    autoload :Property
+    autoload :StructuredProperty
 
     collect('[@property and boolean(@content)]', as: :og_properties, use: [:property, :content])
 
     def process
       og_properties.each do |key, value|
-        writer = "#{key}="
-        if self.respond_to?(writer)
-          public_send(writer, value)
+        definition = self.class.definitions[key]
+        if definition
+          if definition.array?
+            properties[key] << definition.property_class.new(definition, value)
+          else
+            property = properties[key]
+            property.content = value
+          end
+        elsif key =~ /(?<parent>[\w_]+(:[\w_]+)+):(?<property>[\w_]+)/
+          parent = Regexp.last_match[:parent]
+          definition = self.class.definitions[parent]
+          if definition
+            property = properties[parent].last
+            if property
+              reader = Regexp.last_match[:property]
+              writer = "#{reader}="
+              property.public_send(writer, value) if property.respond_to?(writer)
+            else
+              properties[parent]
+            end
+          else
+            fail "No Definition for #{parent}"
+          end
+        else
+          fail "No Definition for #{key}"
         end
-        if key =~ /([\w_]+:([\w_]+)):([\w_]+)/
-          public_send($2).public_send("#{$3}=", value)
-        end
+        # if property.definition.array?
+        #   property.last.content = value if property.last
+        # else
+        #   property.content = value
+        # end
+        # writer = "#{key}="
+        # if self.respond_to?(writer)
+        #   public_send(writer, value)
+        # end
+        # if key =~ /([\w_]+:([\w_]+)):([\w_]+)/
+        #   object_name = $2
+        #   reader = $3
+        #   writer = "#{reader}="
+        #   object = public_send(object_name)
+        #   unless object.respond_to?(writer)
+        #     object.singleton_class.class_eval do
+        #       attr_accessor reader
+        #     end
+        #     # public_send("#{object_name}=", object)
+        #   end
+        #   # object.public_send(writer, value)
       end
     end
 
-    def object
-      @object ||= GraphObject.new(self)
-    end
+    delegate :const_set, to: 'self.class'
 
-    def to_s
-      inspectable_attributes.map do |attribute|
-        value = public_send(attribute)
-        '%s: %s' % [attribute, value.to_s] if value
-      end.compact.join("\n")
-    end
+    include PropertiesMethods
 
-    extend Hotmeal::OpenGraph::PropertiesMethods
+    ns :og, 'http://ogp.me/ns#' do
+      property :title, required: true
+      property :type, required: true
+      property :image, required: true, array: true, value: :url do
+        property :url
+        property :secure_url
+        property :type
+        property :width, type: Integer
+        property :height, type: Integer
+      end
+      property :url, required: true
 
-    property :title, required: true
-    property :type, required: true
-    property :image, required: true do
-      property :url
-      property :secure_url
-      property :type
-      property :width, type: Integer
-      property :height, type: Integer
-    end
-    property :url, required: true
-
-    property :audio do
-      property :url
-      property :secure_url
-      property :type
-    end
-    property :description
-    property :determiner
-    property :locale do
-      property :alternate, type: Array
-    end
-    property :site_name
-    property :video do
-      property :url
-      property :secure_url
-      property :type
-      property :width, type: Integer
-      property :height, type: Integer
+      property :audio, value: :url do
+        property :url
+        property :secure_url
+        property :type
+      end
+      property :description
+      property :determiner
+      property :locale do
+        property :alternate, array: true
+      end
+      property :site_name
+      property :video do
+        property :url
+        property :secure_url
+        property :type
+        property :width, type: Integer
+        property :height, type: Integer
+      end
     end
 
 
     # @!group Object Types
-    object_type :music, :song do
+    object_type(:music, :song) do
       property :duration, type: Integer
       property :album, type: Array do
         property :disc, type: Integer

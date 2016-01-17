@@ -49,6 +49,7 @@ module Hotmeal
       def classes
         classes = html_classes.join('.')
         ".#{classes}" if classes.present?
+        nil
       end
 
       def html_classes

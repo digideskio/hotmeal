@@ -1,21 +1,41 @@
 require 'hotmeal/open_graph'
-require 'hotmeal/inspectable'
+require 'delegate'
 
 module Hotmeal
   class OpenGraph
-    class Property
-      include Hotmeal::Inspectable
+    class Property < SimpleDelegator
+      class << self
+        # @return [String]
+        attr_accessor :property_name
 
-      # @param [String] name
-      # @param [Hash] options
-      def initialize(name, options = {})
-        @name = name
-        @options = options
+        # @return [String]
+        attr_accessor :property
+
+        # @return [Hotmeal::OpenGraph::PropertyDefinition]
+        attr_accessor :parent
       end
 
-      def ns!(name, uri = nil, &block)
-        extend Hotmeal::OpenGraph::PropertiesMethods
-        ns(name, uri, &block)
+      def initialize(definition, node = nil)
+        @definition = definition
+        super(node)
+      end
+
+      attr_reader :definition
+
+      def content
+        __getobj__.respond_to?(:content) ? __getobj__.content : __getobj__
+      end
+
+      def content=(value)
+        __getobj__.respond_to?(:content=) ? __getobj__.content = value : __setobj__(value)
+      end
+
+      def inspect
+        '#(%s=%s)' % [definition.property, __getobj__.inspect]
+      end
+
+      def to_s
+        '%s=%s' % [definition.property, __getobj__] if __getob__
       end
     end
   end

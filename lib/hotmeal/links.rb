@@ -30,7 +30,7 @@ module Hotmeal
       (KNOWN_RELATIONS + ['others']).map do |relation|
         links = public_send(relation)
         if links.any?
-          "#{relation}\n  #{indent(links.map(&:to_s).join("\n"))}"
+          "#{relation}:\n  #{indent(links.map(&:to_s).join("\n"))}"
         end
       end.compact.join("\n")
     end
@@ -55,6 +55,10 @@ module Hotmeal
         others.any? do |other|
           rels.any? { rel == other }
         end
+      end
+
+      def url
+        URI(href)
       end
     end
   end

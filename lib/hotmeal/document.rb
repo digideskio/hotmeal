@@ -33,7 +33,7 @@ module Hotmeal
     def url=(uri)
       uri = URI(uri.to_s) unless uri.is_a?(URI::Generic)
       search('[@href]/@href, form[@action]/@action, img[@src]/@src').each do |node|
-        node.content = (uri + node.content).to_s
+        node.content = (uri + URI(node.content)).to_s
       end
       @url = uri
     end
@@ -41,7 +41,6 @@ module Hotmeal
     map_each '/meta', as: :meta, class: Hotmeal::Meta
     map_each '/meta[@property and boolean(@content)]', as: :open_graph, class: Hotmeal::OpenGraph
     map_each '/link', as: :links, class: Hotmeal::Links
-    alias_method :og, :open_graph
 
     # @return [String] title either from OpenGraph data or from <title> element
     def title
@@ -90,7 +89,7 @@ head
     #{indent(open_graph, 4)}
   links
     #{indent(links, 4)}
-      #{body}
+#{body}
       END
     end
   end
