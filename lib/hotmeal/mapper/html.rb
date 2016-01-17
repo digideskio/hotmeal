@@ -6,6 +6,11 @@ module Hotmeal
     module Html
       extend ActiveSupport::Concern
 
+      def initialize(html = nil, path = nil)
+        self.html = html
+        self.path = path
+      end
+
       # @return [Nokogiri::XML::Node, nil]
       def html
         @html
@@ -26,6 +31,11 @@ module Hotmeal
         @html = value
       end
 
+      delegate :at, :search, :at_css, :css, :at_xpath, :xpath, to: :html, allow_nil: true
+
+      def __getobj__
+        @html ? @html.content : nil
+      end
 
       # @return [String]
       def path
@@ -41,6 +51,10 @@ module Hotmeal
         else
           __getobj__.to_s
         end
+      end
+
+      module ClassMethods
+        attr_accessor :path
       end
     end
   end
