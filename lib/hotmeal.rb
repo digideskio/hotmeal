@@ -8,6 +8,7 @@ module Hotmeal
   autoload :ElementMapper
   autoload :Inspectable
   autoload :Links
+  autoload :Mapper
   autoload :Meta
   autoload :MethodsModule
   autoload :MicroData
