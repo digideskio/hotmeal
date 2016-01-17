@@ -16,10 +16,15 @@ module Hotmeal
       end
 
       def each(&block)
-        __getobj__.each(&block)
+        value.each(&block)
       end
 
-      def __getobj__
+      def value
+        decorated_nodes.map { |item| self.class.decorator.new(item) }
+      end
+
+      def value=(values)
+        raise NotImplementedError, "#{self.class}#values= is not implemented. Setting of values for multiple elements mapping is not supported yet"
         decorated_nodes.map { |item| self.class.decorator.new(item) }
       end
 

@@ -10,30 +10,16 @@ module Hotmeal
 
       autoload :Attributes
 
-      class << self
-        attr_accessor :path
-      end
-
-      def initialize(html = nil, path = nil)
-        self.html = html
-        self.path = path
-      end
-
       def __getobj__
-        @html ? @html.content : nil
+        value
       end
-
-      delegate :at, :search,
-               :at_css, :css,
-               :at_xpath, :xpath,
-               to: :html, allow_nil: true
 
       def value
-        content
+        @html.try(:content)
       end
 
       def value=(value)
-        self.content = value if self.respond_to?()
+        @html.try(:content=, value) if @html.respond_to?(:content=)
       end
 
       def to_s

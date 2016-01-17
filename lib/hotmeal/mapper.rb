@@ -18,8 +18,8 @@ module Hotmeal
     autoload :Meta, 'hotmeal/mapper/document'
     autoload :Link, 'hotmeal/mapper/document'
 
-    def self.new(*args, &block)
-      Decorator.new(*args, &block)
+    def self.new(html = nil, path = nil, &block)
+      Decorator.new(html, path, &block)
     end
   end
 end
