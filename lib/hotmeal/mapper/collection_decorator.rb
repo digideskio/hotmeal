@@ -20,7 +20,11 @@ module Hotmeal
       end
 
       def __getobj__
-        search(path).map { |item| self.class.decorator.new(item) }
+        decorated_nodes.map { |item| self.class.decorator.new(item) }
+      end
+
+      def decorated_nodes
+        search(path)
       end
 
       delegate :size, to: :__getobj__

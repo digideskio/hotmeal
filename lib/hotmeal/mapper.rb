@@ -6,12 +6,13 @@ module Hotmeal
   module Mapper
     extend ActiveSupport::Autoload
 
+    autoload :AbstractDecorator
     autoload :Attributes
     autoload :CollectionDecorator
     autoload :Decorator
     autoload :Document
+    autoload :Html
     autoload :Mapping
-    autoload :NodeDecorator
     autoload :Head, 'hotmeal/mapper/document'
     autoload :Body, 'hotmeal/mapper/document'
     autoload :Meta, 'hotmeal/mapper/document'

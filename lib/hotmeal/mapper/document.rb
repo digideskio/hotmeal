@@ -44,6 +44,8 @@ module Hotmeal
       self.path = '/html'
       # self.path = '/'
 
+      attribute :prefix
+
       element :head, class: Head
       element :body, class: Body
     end
