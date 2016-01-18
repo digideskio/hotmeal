@@ -13,6 +13,11 @@ module Hotmeal
       # @return [String] description
       delegate :description, to: :meta
 
+      def process
+        super
+        self.base_uri = base_uri if head.base_uri?
+      end
+
       def document_title
         head.title
       end

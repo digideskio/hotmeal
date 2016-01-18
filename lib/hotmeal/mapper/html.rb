@@ -9,6 +9,10 @@ module Hotmeal
       def initialize(html = nil, path = nil)
         self.html = html
         self.path = path
+        process
+      end
+
+      def process
       end
 
       # @return [Nokogiri::XML::Node, nil]
