@@ -1,36 +1,41 @@
 require 'spec_helper'
 
-describe Hotmeal::Html::Meta do
-  let(:html) { fixture(:basic) }
-  subject(:hotmeal) { Hotmeal::Document.new(html) }
+RSpec.describe 'basic.html', type: :functional do
+  let(:fixture_name) { :basic }
 
-  it { should respond_to(:meta) }
+  its(:document_title) { should == 'HTML file' }
+  its(:title) { should == 'HTML file' }
+  its(:html_prefix) { should == {} }
 
+  its(:meta_charset) { should == 'utf-8' }
   its(:keywords) { should == %w(HTML Basic keyword another) }
   its(:description) { should == 'This is a basic HTML file.' }
 
-  describe Hotmeal::Html::Meta do
-    subject(:meta) { hotmeal.meta }
+  describe 'body' do
+    subject(:body) { document.body }
+
+    its(:inner_text) { should == 'HTML file' }
+    its(:inner_html) { should == '<h1>HTML file</h1>' }
+  end
+
+  describe 'meta' do
+    subject(:meta) { document.meta }
 
     its(:charset) { should == 'utf-8' }
 
     describe 'name' do
       subject(:name) { meta.name }
 
-      it { should be_a(Enumerable) }
-      it { should respond_to('keywords') }
-      it { should respond_to('description') }
       its(:keywords) { should == ['HTML, Basic, keyword, another'] }
       its(:description) { should == ['This is a basic HTML file.'] }
     end
     its(:keywords) { should == %w(HTML Basic keyword another) }
     its(:description) { should == 'This is a basic HTML file.' }
 
-    context '#properties' do
+    context 'properties' do
       let(:html) { fixture(:open_graph) }
       subject(:properties) { meta.properties }
 
-      it { should respond_to(:[]) }
       it { should have_key('og:title') }
       it { should have_key('og:type') }
       it { should have_key('og:url') }

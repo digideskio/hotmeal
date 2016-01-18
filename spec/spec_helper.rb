@@ -4,11 +4,24 @@ require 'rspec'
 require 'rspec/its'
 require 'hotmeal'
 
-Dir[File.join(SPEC_ROOT, 'spec/support/**/*.rb')].each { |f| require f }
+require 'support/fixtures'
+require 'support/functional'
+require 'support/collection_decorator'
 
 RSpec.configure do |config|
-  config.run_all_when_everything_filtered = true
+  config.expect_with :rspec do |expectations|
+    expectations.syntax = [:expect, :should]
+    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+  end
+  config.mock_with :rspec do |mocks|
+    mocks.verify_partial_doubles = true
+  end
   config.filter_run :focus
-  config.mock_with :rspec
-  config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
+  config.run_all_when_everything_filtered = true
+  config.example_status_persistence_file_path = 'spec/examples.txt'
+  config.disable_monkey_patching!
+  config.default_formatter = 'doc' if config.files_to_run.one?
+  config.profile_examples = 10
+  config.order = :random
+  Kernel.srand config.seed
 end

@@ -10,6 +10,8 @@ module Hotmeal
       delegate :meta, to: :head
       # @return [Array<String>] array of keywords
       delegate :keywords, to: :meta
+      # @return [String] description
+      delegate :description, to: :meta
 
       def document_title
         head.title
