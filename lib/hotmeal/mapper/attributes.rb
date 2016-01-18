@@ -17,6 +17,15 @@ module Hotmeal
         attribute_method_suffix '_mapping'
       end
 
+      module Delegation
+        def initialize(html = nil, path = nil)
+          super(html, path)
+          __setobj__(attributes) if has_attributes?
+        end
+      end
+
+      include Delegation
+
       # @return [Hash{String => Hotmeal::Mapper::Decorator}]
       def attributes
         @attributes ||= mappings.each_with_object({}) do |mapping, attributes|
@@ -103,7 +112,7 @@ module Hotmeal
           options[:handler] ||= self
           mapping = Hotmeal::Mapper::Mapping.new(path, options, &block)
           define_attribute(mapping)
-          mapping.define_accessors(self)
+          mapping.define_accessors(generated_attribute_methods)
         end
 
         # @param [Mapping] name
@@ -120,10 +129,6 @@ module Hotmeal
         def define_attribute(mapping)
           self.mappings += [mapping]
           define_attribute_method mapping.as
-          unless @_delegate_to_attributes
-            define_method(:value) { attributes } unless is_a?(CollectionDecorator)
-            @_delegate_to_attributes = true
-          end
         end
 
         private
@@ -134,7 +139,7 @@ module Hotmeal
             begin
               accessors = Module.new { extend Mutex_m }
               const_set(:GeneratedAttributeMethods, accessors)
-              include(accessors)
+              prepend(accessors)
               accessors
             end
         end

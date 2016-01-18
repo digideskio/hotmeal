@@ -3,7 +3,7 @@ require 'hotmeal/mapper/decorator'
 
 module Hotmeal
   module Html
-    class Document < Html
+    class Document < Hotmeal::Html::Html
       # @return [String]
       delegate :title, to: :head
       # @return [Hotmeal::Html::MetaData]
