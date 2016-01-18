@@ -6,14 +6,14 @@ module Hotmeal
   class OpenGraph < Hotmeal::Mapper::CollectionDecorator
     extend ActiveSupport::Autoload
 
-    autoload :AudioProperty
+    autoload :Audio
     autoload :Collection
     autoload :DSL, 'hotmeal/open_graph/dsl'
-    autoload :ImageProperty
-    autoload :LocaleProperty
+    autoload :Image
+    autoload :Locale
     autoload :Property
     autoload :StructuredProperty
-    autoload :VideoProperty
+    autoload :Video
 
     extend DSL
 
@@ -30,15 +30,15 @@ module Hotmeal
     ns :og, 'http://ogp.me/ns#' do
       property :title, required: true
       property :type, required: true
-      property :image, required: true, array: true, value: :url, as: :images, class: Collection.of(ImageProperty)
+      property :image, required: true, array: true, value: :url, as: :images, class: Collection.of(Image)
       property :url, required: true
 
-      property :audio, value: :url, class: AudioProperty
+      property :audio, value: :url, class: Audio
       property :description
       property :determiner
-      property :locale, class: LocaleProperty
+      property :locale, class: Locale
       property :site_name
-      property :video, class: VideoProperty do
+      property :video, class: Video do
         property :url
         property :secure_url
         property :type

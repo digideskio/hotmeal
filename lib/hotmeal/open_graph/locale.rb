@@ -2,7 +2,7 @@ require 'hotmeal/open_graph/structured_property'
 
 module Hotmeal
   class OpenGraph
-    class LocaleProperty < StructuredProperty
+    class Locale < StructuredProperty
       property :alternate, array: true
     end
   end

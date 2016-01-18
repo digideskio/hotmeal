@@ -43,7 +43,7 @@ module Hotmeal
         def definitions
           @definitions ||= {}
         end
-        
+
         # @macro [attach] object_types
         #   @method $1?()
         #   @return [Boolean] is graph object $1?
