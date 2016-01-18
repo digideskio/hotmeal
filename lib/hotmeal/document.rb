@@ -11,29 +11,12 @@ module Hotmeal
 
     def initialize(html = nil, base_uri = nil)
       super(html)
-      self.url = base_uri
-      # uri = head.base_uri
-      # uri = uri.__getobj__ while uri.respond_to?(:__getobj__)
-      # self.url = uri if uri
+      self.base_uri = base_uri
     end
 
     alias_method :charset, :meta_charset
 
-    # @return [URI::Generic]
-    attr_reader :url
-
-    def url=(uri)
-      return unless uri.is_a?(URI::Generic)
-      if uri
-        puts uri.class
-        puts uri.inspect
-        uri = URI(uri)
-        search('a[@href]/@href, link[@href]/@href, form[@action]/@action, img[@src]/@src').each do |node|
-          node.content = (uri + URI(node.content)).to_s if node.respond_to?(:content=)
-        end
-      end
-      @url = uri ? URI(uri.to_s) : nil
-    end
+    alias_method :url, :base_uri
 
     map_each '/meta[@property and boolean(@content)]', as: :open_graph, class: Hotmeal::OpenGraph
 

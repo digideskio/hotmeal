@@ -6,7 +6,7 @@ RSpec.describe 'base_uri.html', type: :functional do
   describe :head do
     subject(:head) { document.head }
 
-    its(:base_uri) { should == 'http://example.com/blog/' }
+    its(:base_uri) { should == URI('http://example.com/blog/') }
   end
 
   describe :body do
@@ -16,7 +16,7 @@ RSpec.describe 'base_uri.html', type: :functional do
       subject(:links) { body.links }
 
       its(:size) { should == 1 }
-      # its('first.href') { should == 'http://example.com/blog/basic.html' }
+      its('first.href') { should == 'http://example.com/blog/basic.html' }
     end
   end
 end
