@@ -9,12 +9,13 @@ module Hotmeal
     self.inspectable_attributes += [:document_title, :html_prefix, :meta, :open_graph]
     self.query = '/'
 
-    def initialize(html, base_uri = nil)
+    def initialize(html = nil, base_uri = nil)
       super(html)
       self.url = base_uri || self.base_uri if base_uri || self.base_uri.present?
     end
 
     delegate :base_uri, to: :head
+    alias_method :charset, :meta_charset
 
     def base_uri=(uri)
       head.base_uri = uri
@@ -53,7 +54,7 @@ head
   open_graph
     #{indent(open_graph, 4)}
   links
-    #{indent(links, 4)}
+    #{indent(head.links, 4)}
 #{body}
       END
     end
