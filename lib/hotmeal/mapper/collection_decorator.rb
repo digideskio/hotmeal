@@ -19,6 +19,11 @@ module Hotmeal
         @options[:class] = decorator || Hotmeal::Mapper::Decorator
       end
 
+      def initialize(html = nil, path = nil)
+        super(html, path)
+        __setobj__(collection)
+      end
+
       def value
         @value ||= collection
       end
@@ -38,7 +43,7 @@ module Hotmeal
 
       # @return [<Nokogiri::XML::Node>]
       def nodes
-        @decorated_nodes ||= @html ? @html.search(path) : []
+        @nodes ||= @html ? @html.search(path) : []
       end
     end
   end
