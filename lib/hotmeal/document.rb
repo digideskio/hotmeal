@@ -44,9 +44,10 @@ module Hotmeal
       @url = uri
     end
 
+    delegate :meta, to: :head
     map_each '/meta', as: :meta, class: Hotmeal::Meta
+
     map_each '/meta[@property and boolean(@content)]', as: :open_graph, class: Hotmeal::OpenGraph
-    map_each '/link', as: :links, class: Hotmeal::Links
 
     # @return [String] title either from OpenGraph data or from <title> element
     def title

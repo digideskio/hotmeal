@@ -6,8 +6,8 @@ module Hotmeal
   autoload :CollectionMapper
   autoload :Document
   autoload :ElementMapper
+  autoload :Html
   autoload :Inspectable
-  autoload :Links
   autoload :Mapper
   autoload :Meta
   autoload :MethodsModule

@@ -82,25 +82,30 @@ module Hotmeal
           child.mappings = child.mappings
         end
 
-        def element(path, options = {})
+        def element(path, options = {}, &block)
           if path.is_a?(Symbol)
             options[:as] ||= path
             path = "/#{path}"
           end
-          attribute(path, options)
+          map(path, options, &block)
         end
 
-        def elements(path, options = {})
+        def elements(path, options = {}, &block)
           options[:array] = true
-          element(path, options)
+          element(path, options, &block)
         end
 
-        def attribute(path, options = {})
+        def attribute(path, options = {}, &block)
           if path.is_a?(Symbol)
             options[:as] ||= path
             path = "[@#{path}]/@#{path}"
           end
-          mapping = Hotmeal::Mapper::Mapping.new(path, options)
+          map(path, options, &block)
+        end
+
+        def map(path, options = {}, &block)
+          options[:handler] ||= self
+          mapping = Hotmeal::Mapper::Mapping.new(path, options, &block)
           define_attribute(mapping)
           mapping.define_accessors(self)
         end
