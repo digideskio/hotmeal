@@ -15,11 +15,11 @@ module Hotmeal
       elements '[@http-equiv and boolean(@content)]', class: Meta, as: :http_equiv
 
       def keywords
-        name.select { |meta| meta.name == 'keywords' }.map(&:content).compact.join(', ').split(/,\s*/)
+        name.keywords.compact.join(', ').split(/,\s*/)
       end
 
       def description
-        name.select { |meta| meta.name == 'description' }.map(&:content).compact.join(' ')
+        name.description.compact.join(' ')
       end
 
       def properties
