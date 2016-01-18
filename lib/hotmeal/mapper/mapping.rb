@@ -1,13 +1,18 @@
 require 'hotmeal/mapper'
+require 'active_support/core_ext/string/inflections'
 
 module Hotmeal
   module Mapper
     class Mapping
       # @param [String] path
       # @param [Hash] options
-      def initialize(path, options = {})
+      def initialize(path, options = {}, &block)
         @path = path
         @options = options
+        if block_given?
+          puts 'Block given'
+          collection_mapper_class.instance_eval(&block)
+        end
       end
 
       # @return [String]
@@ -20,13 +25,21 @@ module Hotmeal
         options[:class] ||= Decorator
       end
 
+      def handler
+        options[:handler]
+      end
+
       def collection_mapper_class
         if mapper_class < CollectionDecorator
           mapper_class
         else
-          collection_class = Class.new(CollectionDecorator)
-          collection_class.item(class: mapper_class)
-          collection_class
+          class_name = "#{as}CollectionDecorator".classify
+          unless handler.const_defined?(class_name)
+            collection_class = Class.new(CollectionDecorator)
+            handler.const_set(class_name, collection_class) if handler
+            collection_class.item(class: mapper_class)
+          end
+          handler.const_get(class_name)
         end
       end
 

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe Hotmeal::Mapper::Document do
+RSpec.describe Hotmeal::Html::Document do
   let(:html) { fixture(:open_graph) }
   subject(:document) do
-    Hotmeal::Mapper::Document.new(html).tap do |doc|
+    Hotmeal::Html::Document.new(html).tap do |doc|
       # Preload charset by Nokogiri
       doc.head.meta.charset
     end
@@ -14,12 +14,12 @@ RSpec.describe Hotmeal::Mapper::Document do
     subject(:head) { document.head }
     its(:title) { should == 'The Rock (1996)' }
 
-    it { should be_a(Hotmeal::Mapper::Head) }
+    it { should be_a(Hotmeal::Html::Head) }
 
     describe :meta do
       subject(:meta) { head.meta }
 
-      it { should be_a(Hotmeal::Mapper::MetaData)}
+      it { should be_a(Hotmeal::Html::MetaData)}
       its(:size) { should == 9 }
       its(:charset) { should == 'utf-8' }
       its(:name) { should be_a(Enumerable) }
@@ -46,10 +46,10 @@ RSpec.describe Hotmeal::Mapper::Document do
         its(:size) { should == 6 }
       end
 
-      describe Hotmeal::Mapper::Meta do
+      describe Hotmeal::Html::Meta do
         subject { meta.first }
 
-        it { should be_a(Hotmeal::Mapper::Meta) }
+        it { should be_a(Hotmeal::Html::Meta) }
         it { should respond_to?(:name) }
         it { should respond_to?(:charset) }
         it { should respond_to?(:content) }
@@ -60,12 +60,12 @@ RSpec.describe Hotmeal::Mapper::Document do
     describe :links do
       subject(:links) { head.links }
 
-      it { should be_a(Hotmeal::Mapper::Links)}
+      it { should be_a(Hotmeal::Html::Links)}
 
-      describe Hotmeal::Mapper::Links do
+      describe Hotmeal::Html::Links do
         subject(:link) { links.first }
 
-        it { should be_a(Hotmeal::Mapper::Link) }
+        it { should be_a(Hotmeal::Html::Link) }
         it { should respond_to(:rel) }
         it { should respond_to(:href) }
 
@@ -76,13 +76,13 @@ RSpec.describe Hotmeal::Mapper::Document do
   end
 end
 
-RSpec.describe Hotmeal::Mapper::Head do
+RSpec.describe Hotmeal::Html::Head do
   it { should respond_to(:title) }
   it { should respond_to(:meta) }
   it { should respond_to(:links) }
 end
 
-RSpec.describe Hotmeal::Mapper::Meta do
+RSpec.describe Hotmeal::Html::Meta do
   it { should respond_to(:charset) }
   it { should respond_to(:name) }
   it { should respond_to(:property) }
@@ -90,7 +90,7 @@ RSpec.describe Hotmeal::Mapper::Meta do
   it { should respond_to(:http_equiv) }
 end
 
-RSpec.describe Hotmeal::Mapper::Link do
+RSpec.describe Hotmeal::Html::Link do
   it { should respond_to(:rel) }
   it { should respond_to(:href) }
   it { should respond_to(:hreflang) }

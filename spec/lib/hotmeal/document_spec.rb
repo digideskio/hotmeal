@@ -8,6 +8,5 @@ describe Hotmeal::Document do
   its(:title) { should == 'HTML file' }
 
   it { should respond_to?(:meta) }
-  its(:meta) { should be_an(Hotmeal::Meta) }
   its(:meta_charset) { should == 'utf-8' }
 end

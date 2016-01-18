@@ -12,21 +12,25 @@ describe Hotmeal::Meta do
   describe Hotmeal::Meta do
     subject(:meta) { hotmeal.meta }
 
-    its(:query) { should == '//meta' }
     its(:charset) { should == 'utf-8' }
 
-    its(:name) { should have_key('keywords') }
-    it { meta.name['keywords'].should == ['HTML, Basic, keyword, another'] }
-    its(:keywords) { should == %w(HTML Basic keyword another) }
+    describe 'name' do
+      subject(:name) { meta.name }
 
-    its(:name) { should have_key('description') }
-    it { meta.name['description'].should == ['This is a basic HTML file.'] }
+      it { should be_a(Enumerable) }
+      it { should respond_to('keywords') }
+      it { should respond_to('description') }
+      its(:keywords) { should == ['HTML, Basic, keyword, another'] }
+      its(:description) { should == ['This is a basic HTML file.'] }
+    end
+    its(:keywords) { should == %w(HTML Basic keyword another) }
     its(:description) { should == 'This is a basic HTML file.' }
 
     context '#properties' do
       let(:html) { fixture(:open_graph) }
       subject(:properties) { meta.properties }
 
+      it { should respond_to(:[]) }
       it { should have_key('og:title') }
       it { should have_key('og:type') }
       it { should have_key('og:url') }
