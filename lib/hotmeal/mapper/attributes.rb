@@ -26,6 +26,14 @@ module Hotmeal
 
       include Delegation
 
+      def __getobj__
+        if has_attributes?
+          attributes
+        else
+          super
+        end
+      end
+
       # @return [Hash{String => Hotmeal::Mapper::Decorator}]
       def attributes
         @attributes ||= mappings.each_with_object({}) do |mapping, attributes|
