@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Hotmeal::Meta do
+describe Hotmeal::Html::Meta do
   let(:html) { fixture(:basic) }
   subject(:hotmeal) { Hotmeal::Document.new(html) }
 
@@ -9,7 +9,7 @@ describe Hotmeal::Meta do
   its(:keywords) { should == %w(HTML Basic keyword another) }
   its(:description) { should == 'This is a basic HTML file.' }
 
-  describe Hotmeal::Meta do
+  describe Hotmeal::Html::Meta do
     subject(:meta) { hotmeal.meta }
 
     its(:charset) { should == 'utf-8' }
