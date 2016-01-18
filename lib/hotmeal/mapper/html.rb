@@ -9,7 +9,7 @@ module Hotmeal
       def initialize(html = nil, path = nil)
         self.html = html
         self.path = path
-        process
+        process if @html
       end
 
       def process

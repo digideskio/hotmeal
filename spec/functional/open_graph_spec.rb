@@ -22,10 +22,10 @@ RSpec.describe 'open_graph.html', type: :functional do
     describe :meta do
       subject(:meta) { head.meta }
 
-      its(:size) { should == 8 }
+      its(:size) { should == 9 }
       its('name.size') { should == 1 }
       its('http_equiv.size') { should == 1 }
-      its('property.size') { should == 6 }
+      its('property.size') { should == 7 }
     end
 
     describe :links do
@@ -53,15 +53,32 @@ RSpec.describe 'open_graph.html', type: :functional do
         %w(og:type video.movie),
         %w(og:url http://www.imdb.com/title/tt0117500/),
         %w(og:image http://ia.media-imdb.com/images/rock.jpg),
+        %w(og:image:secure_url https://ia.media-imdb.com/images/rock.jpg),
         ['og:description', 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.'],
         %w(fb:app_id 123456)
       ]
     end
 
+    its(:to_hash) do
+      should == {
+        title: 'The Rock',
+        type: 'video.movie',
+        url: 'http://www.imdb.com/title/tt0117500/',
+        image: 'http://ia.media-imdb.com/images/rock.jpg',
+        description: 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.',
+        app_id: '123456'
+      }
+    end
+
     its(:title) { should == 'The Rock' }
     its(:type) { should == 'video.movie' }
     its(:url) { should == 'http://www.imdb.com/title/tt0117500/' }
-    its(:image) { should == 'http://ia.media-imdb.com/images/rock.jpg' }
+    describe :image do
+      subject(:image) { open_graph.image }
+
+      it { should == 'http://ia.media-imdb.com/images/rock.jpg' }
+      its(:secure_url) { should == 'https://ia.media-imdb.com/images/rock.jpg' }
+    end
     its(:description) { should == 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.' }
   end
 end
