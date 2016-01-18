@@ -14,7 +14,6 @@ module Hotmeal
     autoload :Links
     autoload :Meta
     autoload :MetaData
-    autoload :OpenGraph
     autoload :SlimRepresentation
   end
 end

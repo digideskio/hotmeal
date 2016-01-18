@@ -7,7 +7,7 @@ module Hotmeal
       delegate_attribute :title, :meta, to: :head
       delegate_attribute :keywords, :description, to: :meta
 
-      elements '/head/meta[@property and boolean(@content)]', as: :open_graph, class: Hotmeal::Html::OpenGraph
+      elements '/head/meta[@property and boolean(@content)]', as: :open_graph, class: Hotmeal::OpenGraph
 
       def process
         super

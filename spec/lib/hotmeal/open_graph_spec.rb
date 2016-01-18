@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Hotmeal::Html::OpenGraph do
+RSpec.describe Hotmeal::OpenGraph do
   let(:html) { fixture(:open_graph) }
   let(:document) { Hotmeal::Document.new(html) }
   subject(:open_graph) { document.open_graph }
