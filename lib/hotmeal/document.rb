@@ -17,13 +17,7 @@ module Hotmeal
       # self.url = uri if uri
     end
 
-    delegate :base_uri, to: :head
     alias_method :charset, :meta_charset
-
-    def base_uri=(uri)
-      head.base_uri = uri
-      self.url = uri
-    end
 
     # @return [URI::Generic]
     attr_reader :url
