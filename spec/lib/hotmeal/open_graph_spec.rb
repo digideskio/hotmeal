@@ -5,7 +5,7 @@ RSpec.describe Hotmeal::OpenGraph do
   let(:document) { Hotmeal::Document.new(html) }
   subject(:open_graph) { document.open_graph }
 
-  context 'object types' do
+  pending 'object types' do
     {
       music: %w(song album playlist radio_station),
       video: %w(movie episode tv_show other),

@@ -4,290 +4,151 @@ require 'active_support/core_ext/object/with_options'
 
 module Hotmeal
   class OpenGraph < Hotmeal::Mapper::CollectionDecorator
-    class Property < Hotmeal::Mapper::Decorator
-      def name
-        html_element[:property]
-      end
+    extend ActiveSupport::Autoload
 
-      private
+    autoload :AudioProperty
+    autoload :Collection
+    autoload :DSL, 'hotmeal/open_graph/dsl'
+    autoload :ImageProperty
+    autoload :LocaleProperty
+    autoload :Property
+    autoload :StructuredProperty
+    autoload :VideoProperty
 
-      def html_element
-        @html.parent
-      end
-    end
-
-    class StructuredProperty < Property
-      def self.property(*args)
-        attribute(*args)
-      end
-
-
-      def read_attribute(name)
-        @attributes[name]
-      end
-
-      def write_attribute(name, value)
-        @attributes[name] = value
-      end
-
-      def attributes
-        @attributes ||= {}
-      end
-
-      def process
-        super
-        @attributes = {}
-        element = @html.parent
-        while property?(element = element.next_element)
-          attribute = element[:property].to_s.gsub(property_regexp, '')
-          public_send("#{attribute}=", element[:content])
-        end
-      end
-
-      def property?(element)
-        return unless html_content
-        element[:property].to_s =~ property_regexp
-      end
-
-      def property_regexp
-        @property_regexp ||= /#{name}:/
-      end
-
-      def __getobj__
-        html_content
-      end
-    end
-
-    class ImageProperty < StructuredProperty
-      property :url
-      property :secure_url
-      property :type
-      property :width, type: Integer
-      property :height, type: Integer
-    end
-
-    class AudioProperty < StructuredProperty
-      property :url
-      property :secure_url
-      property :type
-    end
+    extend DSL
 
     item class: Html::Meta
 
-    %i(title description url type).each do |property|
-      attribute "[@property='og:#{property}']/@content", as: property, class: Property
+    def image
+      images.first
     end
-    {
-      image: ImageProperty,
-      audio: AudioProperty
-    }.each do |property, mapper|
-      attribute "[@property='og:#{property}']/@content", as: property, class: mapper
-    end
-    attribute "[@property='fb:app_id']/@content", as: :app_id, class: Property
 
     def og_properties
       collection.map { |node| [node.property, node.content] }
     end
+
+    ns :og, 'http://ogp.me/ns#' do
+      property :title, required: true
+      property :type, required: true
+      property :image, required: true, array: true, value: :url, as: :images, class: Collection.of(ImageProperty)
+      property :url, required: true
+
+      property :audio, value: :url, class: AudioProperty
+      property :description
+      property :determiner
+      property :locale, class: LocaleProperty
+      property :site_name
+      property :video, class: VideoProperty do
+        property :url
+        property :secure_url
+        property :type
+        property :width, type: Integer
+        property :height, type: Integer
+      end
+    end
+
+    ns :fb, 'http://ogp.me/ns/fb#' do
+      property :app_id
+    end
+
+    #   # @!group Object Types
+    #   object_type(:music, :song) do
+    #     property :duration, type: Integer
+    #     property :album, type: Array do
+    #       property :disc, type: Integer
+    #       property :track, type: Integer
+    #     end
+    #     property :musician, type: Array
+    #   end
+    #
+    #   object_type :music, :album do
+    #     property :song do
+    #       property :disc, type: Integer
+    #       property :track, type: Integer
+    #     end
+    #     property :musician, type: Array
+    #     property :release_date, type: DateTime
+    #   end
+    #
+    #   object_type :music, :playlist do
+    #     property :song do
+    #       property :disc, type: Integer
+    #       property :track, type: Integer
+    #     end
+    #     property :creator, type: :profile
+    #   end
+    #
+    #   object_type :music, :radio_station do
+    #     property :creator, type: :profile
+    #   end
+    #
+    #   object_type :video, :movie do
+    #     property :actor, type: Array do
+    #       property :role
+    #     end
+    #     property :director, type: Array
+    #     property :writer, type: Array
+    #     property :duration, type: Integer
+    #     property :release_date, type: DateTime
+    #     property :tag, type: Array
+    #   end
+    #
+    #   object_type :video, :episode do
+    #     property :actor, type: Array do
+    #       property :role
+    #     end
+    #     property :director, type: Array
+    #     property :writer, type: Array
+    #     property :duration, type: Integer
+    #     property :release_date, type: DateTime
+    #     property :tag, type: Array
+    #     property :series, type: 'video.tv_show'
+    #   end
+    #
+    #   object_type :video, :tv_show do
+    #     property :actor, type: Array do
+    #       property :role
+    #     end
+    #     property :director, type: Array
+    #     property :writer, type: Array
+    #     property :duration, type: Integer
+    #     property :release_date, type: DateTime
+    #     property :tag, type: Array
+    #   end
+    #
+    #   object_type :video, :other do
+    #     property :actor, type: Array do
+    #       property :role
+    #     end
+    #     property :director, type: Array
+    #     property :writer, type: Array
+    #     property :duration, type: Integer
+    #     property :release_date, type: DateTime
+    #     property :tag, type: Array
+    #   end
+    #
+    #   object_type :article do
+    #     property :published_time, type: DateTime
+    #     property :modified_time, type: DateTime
+    #     property :expiration_time, type: DateTime
+    #     property :author, type: Array
+    #     property :section
+    #     property :tag, type: Array
+    #   end
+    #
+    #   object_type :book do
+    #     property :author, type: Array
+    #     property :isbn
+    #     property :release_date, type: DateTime
+    #     property :tag, type: Array
+    #   end
+    #
+    #   object_type :profile do
+    #     property :first_name
+    #     property :last_name
+    #     property :username
+    #     property :gender
+    #   end
+    #   object_type :website
   end
-  # class OpenGraph < Hotmeal::CollectionMapper
-  #   extend ActiveSupport::Autoload
-  #
-  #   autoload :Definition
-  #   autoload :PropertiesMethods
-  #   autoload :Property
-  #   autoload :StructuredProperty
-  #
-  #   collect('[@property and boolean(@content)]', as: :og_properties, use: [:property, :content])
-  #
-  #   def process
-  #     og_properties.each do |key, value|
-  #       definition = self.class.definitions[key]
-  #       if definition
-  #         if definition.array?
-  #           properties[key] << definition.property_class.new(definition, value)
-  #         else
-  #           property = properties[key]
-  #           property.content = value
-  #         end
-  #       elsif key =~ /(?<parent>[\w_]+(:[\w_]+)+):(?<property>[\w_]+)/
-  #         parent = Regexp.last_match[:parent]
-  #         definition = self.class.definitions[parent]
-  #         if definition
-  #           property = properties[parent].last
-  #           if property
-  #             reader = Regexp.last_match[:property]
-  #             writer = "#{reader}="
-  #             property.public_send(writer, value) if property.respond_to?(writer)
-  #           else
-  #             properties[parent]
-  #           end
-  #         else
-  #           fail "No Definition for #{parent}"
-  #         end
-  #       else
-  #         fail "No Definition for #{key}"
-  #       end
-  #       # if property.definition.array?
-  #       #   property.last.content = value if property.last
-  #       # else
-  #       #   property.content = value
-  #       # end
-  #       # writer = "#{key}="
-  #       # if self.respond_to?(writer)
-  #       #   public_send(writer, value)
-  #       # end
-  #       # if key =~ /([\w_]+:([\w_]+)):([\w_]+)/
-  #       #   object_name = $2
-  #       #   reader = $3
-  #       #   writer = "#{reader}="
-  #       #   object = public_send(object_name)
-  #       #   unless object.respond_to?(writer)
-  #       #     object.singleton_class.class_eval do
-  #       #       attr_accessor reader
-  #       #     end
-  #       #     # public_send("#{object_name}=", object)
-  #       #   end
-  #       #   # object.public_send(writer, value)
-  #     end
-  #   end
-  #
-  #   delegate :const_set, to: 'self.class'
-  #
-  #   include PropertiesMethods
-  #
-  #   ns :og, 'http://ogp.me/ns#' do
-  #     property :title, required: true
-  #     property :type, required: true
-  #     property :image, required: true, array: true, value: :url do
-  #       property :url
-  #       property :secure_url
-  #       property :type
-  #       property :width, type: Integer
-  #       property :height, type: Integer
-  #     end
-  #     property :url, required: true
-  #
-  #     property :audio, value: :url do
-  #       property :url
-  #       property :secure_url
-  #       property :type
-  #     end
-  #     property :description
-  #     property :determiner
-  #     property :locale do
-  #       property :alternate, array: true
-  #     end
-  #     property :site_name
-  #     property :video do
-  #       property :url
-  #       property :secure_url
-  #       property :type
-  #       property :width, type: Integer
-  #       property :height, type: Integer
-  #     end
-  #   end
-  #   ns :fb, 'http://ogp.me/ns/fb#' do
-  #     property :app_id
-  #   end
-  #
-  #   # @!group Object Types
-  #   object_type(:music, :song) do
-  #     property :duration, type: Integer
-  #     property :album, type: Array do
-  #       property :disc, type: Integer
-  #       property :track, type: Integer
-  #     end
-  #     property :musician, type: Array
-  #   end
-  #
-  #   object_type :music, :album do
-  #     property :song do
-  #       property :disc, type: Integer
-  #       property :track, type: Integer
-  #     end
-  #     property :musician, type: Array
-  #     property :release_date, type: DateTime
-  #   end
-  #
-  #   object_type :music, :playlist do
-  #     property :song do
-  #       property :disc, type: Integer
-  #       property :track, type: Integer
-  #     end
-  #     property :creator, type: :profile
-  #   end
-  #
-  #   object_type :music, :radio_station do
-  #     property :creator, type: :profile
-  #   end
-  #
-  #   object_type :video, :movie do
-  #     property :actor, type: Array do
-  #       property :role
-  #     end
-  #     property :director, type: Array
-  #     property :writer, type: Array
-  #     property :duration, type: Integer
-  #     property :release_date, type: DateTime
-  #     property :tag, type: Array
-  #   end
-  #
-  #   object_type :video, :episode do
-  #     property :actor, type: Array do
-  #       property :role
-  #     end
-  #     property :director, type: Array
-  #     property :writer, type: Array
-  #     property :duration, type: Integer
-  #     property :release_date, type: DateTime
-  #     property :tag, type: Array
-  #     property :series, type: 'video.tv_show'
-  #   end
-  #
-  #   object_type :video, :tv_show do
-  #     property :actor, type: Array do
-  #       property :role
-  #     end
-  #     property :director, type: Array
-  #     property :writer, type: Array
-  #     property :duration, type: Integer
-  #     property :release_date, type: DateTime
-  #     property :tag, type: Array
-  #   end
-  #
-  #   object_type :video, :other do
-  #     property :actor, type: Array do
-  #       property :role
-  #     end
-  #     property :director, type: Array
-  #     property :writer, type: Array
-  #     property :duration, type: Integer
-  #     property :release_date, type: DateTime
-  #     property :tag, type: Array
-  #   end
-  #
-  #   object_type :article do
-  #     property :published_time, type: DateTime
-  #     property :modified_time, type: DateTime
-  #     property :expiration_time, type: DateTime
-  #     property :author, type: Array
-  #     property :section
-  #     property :tag, type: Array
-  #   end
-  #
-  #   object_type :book do
-  #     property :author, type: Array
-  #     property :isbn
-  #     property :release_date, type: DateTime
-  #     property :tag, type: Array
-  #   end
-  #
-  #   object_type :profile do
-  #     property :first_name
-  #     property :last_name
-  #     property :username
-  #     property :gender
-  #   end
-  #   object_type :website
-  # end
 end

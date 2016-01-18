@@ -40,44 +40,10 @@ module Hotmeal
       end
 
       module ClassMethods
-        def ns(name, uri = nil, &block)
-          if block.arity == 1
-            with_options(ns: name, uri: uri, &block)
-          else
-            with_options(ns: name, uri: uri) { |wo| wo.instance_eval(&block) }
-          end
-        end
-
         def definitions
           @definitions ||= {}
         end
-
-        # @macro [attach] properties
-        #   @method $1()
-        #   @return [String] OpenGraph $1 property
-        def property(name, options = {}, &block)
-          options[:structured] = true if block || block_given?
-          definition = Definition.new(name, options, &block)
-          definitions[definition.property] = definition
-
-          self.inspectable_attributes += [definition.property]
-
-          if definition.array?
-            define_method(definition.plural) { properties[definition.property] ||= [] }
-            define_method(definition.reader) { public_send(definition.plural).first }
-            define_method(definition.writer) do |value|
-              if public_send(definition.plural).any?
-                public_send(definition.reader).try(:content=, value)
-              else
-                properties[definition.property]
-              end
-            end
-          else
-            define_method(definition.reader) { properties[definition.property] }
-            define_method(definition.writer) { |value| publc_send(definition.reader).try(:content=, value) }
-          end
-        end
-
+        
         # @macro [attach] object_types
         #   @method $1?()
         #   @return [Boolean] is graph object $1?
