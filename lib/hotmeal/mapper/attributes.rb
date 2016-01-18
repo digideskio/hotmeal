@@ -147,7 +147,7 @@ module Hotmeal
             begin
               accessors = Module.new { extend Mutex_m }
               const_set(:GeneratedAttributeMethods, accessors)
-              prepend(accessors)
+              include(accessors)
               accessors
             end
         end
