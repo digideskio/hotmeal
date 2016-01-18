@@ -19,14 +19,11 @@ module Hotmeal
         @options[:class] = decorator || Hotmeal::Mapper::Decorator
       end
 
-      def each(&block)
-        value.each(&block)
+      def value
+        @value ||= collection
       end
 
-      # @return [<Hotmeal::Mapper::Decorator>]
-      def value
-        decorated_nodes.map { |item| self.class.decorator.new(item) }
-      end
+      delegate :first, :last, :size, :each, to: :collection
 
       def value=(values)
         values.each_with_index do |item, index|
@@ -34,7 +31,13 @@ module Hotmeal
         end
       end
 
-      def decorated_nodes
+      # @return [<Hotmeal::Mapper::Decorator>]
+      def collection
+        @collection ||= nodes.map { |item| self.class.decorator.new(item) }
+      end
+
+      # @return [<Nokogiri::XML::Node>]
+      def nodes
         @decorated_nodes ||= @html ? @html.search(path) : []
       end
     end
