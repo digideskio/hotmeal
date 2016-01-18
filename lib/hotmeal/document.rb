@@ -18,8 +18,6 @@ module Hotmeal
 
     alias_method :url, :base_uri
 
-    map_each '/meta[@property and boolean(@content)]', as: :open_graph, class: Hotmeal::OpenGraph
-
     # @return [String] title either from OpenGraph data or from <title> element
     def title
       open_graph.title.presence || super
