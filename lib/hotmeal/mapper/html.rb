@@ -29,6 +29,7 @@ module Hotmeal
                 end
         @path = nil
         @html = value
+        __setobj__(value.content) if value && value.respond_to?(:content)
       end
 
       delegate :at, :search, :at_css, :css, :at_xpath, :xpath, :inner_html, :inner_text,
@@ -66,30 +67,37 @@ module Hotmeal
 
       # @return [String]
       def html_content
-        if @html
-          if @html.children.any? { |child| child.is_a?(Nokogiri::XML::Element) }
-            @html.inner_html
-          else
-            @html.content
-          end
-        else
-          nil
-        end
+        return unless @html
+        @html.content
       end
 
       def html_content=(content)
-        @html ? @html.content = content : nil
+        return unless @html
+        @html.content = content
       end
 
+      # @return [String]
       def to_html
-        @html ? @html.to_html : __getobj__.to_s
+        @html ? @html.to_html : ''
       end
 
+      # @return [String]
       def to_s
-        to_html
+        element? ? to_html : html_content.to_s
+      end
+
+      # @return [Boolean]
+      def element?
+        @html.is_a?(Nokogiri::XML::Element)
+      end
+
+      # @return [Boolean]
+      def attribute?
+        @html.is_a?(Nokogiri::XML::Attr)
       end
 
       module ClassMethods
+        # @return [String]
         attr_accessor :path
       end
     end
