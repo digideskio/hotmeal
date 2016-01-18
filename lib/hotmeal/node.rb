@@ -8,6 +8,8 @@ module Hotmeal
   module Node
     extend ActiveSupport::Concern
 
+    include Hotmeal::Mapper::Html
+
     CONTENT_GETTER = ->(node) { node.content }
     CONTENT_SETTER = ->(node, value) { node.content = value }
 
@@ -15,57 +17,7 @@ module Hotmeal
       class_attribute :query
       self.query = ''
     end
-
-    def initialize(html)
-      self.html = html
-    end
-
-    # @return [Nokogiri::XML::Node]
-    attr_reader :html
-
-    # @param [String, Nokogiri::XML::Node] html
-    def html=(html)
-      html = Nokogiri::HTML(html) unless html.is_a?(Nokogiri::XML::Node)
-      @html = html
-    end
-
-    # @param [String, nil] query
-    # @return [Nokogiri::XML::Node]
-    def at(query = self.query)
-      html.at(query)
-    end
-    alias_method :__at__, :at
-
-    # @param [String, nil] query
-    # @return [Nokogiri::XML::Node]
-    def at_xpath(query = self.query)
-      html.at_xpath(query)
-    end
-
-    # @param [String, nil] query
-    # @return [Nokogiri::XML::Node]
-    def at_css(query = self.query)
-      html.at_css(query)
-    end
-
-    # @param [String, nil] query
-    # @return [<Nokogiri::XML::Node>]
-    def search(query = self.query)
-      html.search(query)
-    end unless instance_methods.include?(:search)
-    alias_method :__search__, :search
-
-    # @param [String, nil] query
-    # @return [<Nokogiri::XML::Node>]
-    def xpath(query = self.query)
-      html.xpath(query)
-    end
-
-    # @param [String, nil] query
-    def css(query = self.query)
-      html.css(query)
-    end
-
+    
     # @param [String] query
     def read_node_content(query, &block)
       block ||= CONTENT_GETTER

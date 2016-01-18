@@ -29,7 +29,7 @@ module Hotmeal
                 end
         @path = nil
         @html = value
-        __setobj__(value.content) if value && value.respond_to?(:content)
+        __setobj__(value.content) if value && value.respond_to?(:content) && respond_to?(:__setobj__)
       end
 
       delegate :at, :search, :at_css, :css, :at_xpath, :xpath, :inner_html, :inner_text,
