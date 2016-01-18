@@ -28,6 +28,23 @@ module Hotmeal
       def meta_charset
         meta.charset || 'UTF-8'
       end
+
+      # @return [URI::Generic, nil]
+      def base_uri
+        @base_uri || head.base_uri
+      end
+
+      # @param [URI::Generic] uri
+      def base_uri=(uri)
+        return unless uri.is_a?(URI::Generic)
+        return unless uri.absolute?
+        @base_uri = uri
+        manipulate_each('a[@href]/@href, link[@href]/@href, form[@action]/@action, img[@src]/@src') do |node|
+          relative_url = URI.parse(node.content.to_s)
+          absolute_url = uri + relative_url
+          node.content = absolute_url.to_s
+        end
+      end
     end
   end
 end

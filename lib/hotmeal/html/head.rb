@@ -9,7 +9,7 @@ module Hotmeal
       elements :link, class: Links, as: :links
 
       def base_uri
-        @base_uri ||= (uri = super) ? URI(uri.to_s) : nil
+        @base_uri || base_uri? ? @base_uri = URI.parse(super.to_s) : nil
       end
 
       def base_uri=(uri)
