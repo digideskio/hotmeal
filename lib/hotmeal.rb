@@ -9,7 +9,6 @@ module Hotmeal
   autoload :Html
   autoload :Inspectable
   autoload :Mapper
-  autoload :Meta
   autoload :MethodsModule
   autoload :MicroData
   autoload :Node

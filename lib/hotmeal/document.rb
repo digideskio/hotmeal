@@ -3,7 +3,7 @@ require 'hotmeal/element_mapper'
 require 'active_support/core_ext/class/attribute'
 
 module Hotmeal
-  class Document < Hotmeal::Mapper::Document
+  class Document < Hotmeal::Html::Document
     include Hotmeal::ElementMapper
 
     self.inspectable_attributes += [:document_title, :html_prefix, :meta, :open_graph]
@@ -44,18 +44,12 @@ module Hotmeal
       @url = uri
     end
 
-    delegate :meta, to: :head
-    map_each '/meta', as: :meta, class: Hotmeal::Meta
-
     map_each '/meta[@property and boolean(@content)]', as: :open_graph, class: Hotmeal::OpenGraph
 
     # @return [String] title either from OpenGraph data or from <title> element
     def title
-      open_graph.title.presence || document_title
+      open_graph.title.presence || super
     end
-
-    # @return [Array<String>] array of keywords
-    delegate :keywords, to: :meta
 
     # @return [String] page description either from OpenGraph or MetaData
     def description
@@ -96,6 +90,5 @@ head
     end
   end
 end
-require 'hotmeal/meta'
 require 'hotmeal/open_graph'
 require 'hotmeal/links'
