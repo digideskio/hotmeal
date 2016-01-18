@@ -9,6 +9,8 @@ module Hotmeal
       )
       WRAPPERS = %w(div span nobr)
 
+      elements :a, class: Hotmeal::Html::A, as: :links
+
       def to_s
         body = html.dup
         (INVISIBLE_ELEMENTS + INVISIBLE_ATTRIBUTES).each do |query|

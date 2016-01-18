@@ -5,6 +5,7 @@ module Hotmeal
   module Html
     extend ActiveSupport::Autoload
 
+    autoload :A
     autoload :Body
     autoload :Document
     autoload :Head
