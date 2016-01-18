@@ -5,7 +5,7 @@ require 'active_support/core_ext/module/delegation'
 require 'nokogiri'
 
 module Hotmeal
-  module Node
+  module Queryable
     extend ActiveSupport::Concern
 
     include Hotmeal::Mapper::Html
@@ -17,7 +17,7 @@ module Hotmeal
       class_attribute :query
       self.query = ''
     end
-    
+
     # @param [String] query
     def read_node_content(query, &block)
       block ||= CONTENT_GETTER

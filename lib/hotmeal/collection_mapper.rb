@@ -1,12 +1,12 @@
 require 'hotmeal'
 require 'hotmeal/element_mapper'
 require 'hotmeal/methods_module'
-require 'hotmeal/node'
+require 'hotmeal/queryable'
 
 module Hotmeal
   class CollectionMapper
     include Hotmeal::MethodsModule::ClassMethods
-    include Hotmeal::Node
+    include Hotmeal::Queryable
     include Hotmeal::ElementMapper
     include Hotmeal::ElementMapper::ClassMethods
 
