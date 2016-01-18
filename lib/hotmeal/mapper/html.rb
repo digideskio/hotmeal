@@ -40,6 +40,16 @@ module Hotmeal
                to: :html, allow_nil: true
       alias_method :__search__, :search # TODO: remove. Now for backward compatibility
 
+      def manipulate(query)
+        return unless @html
+        yield @html.at(query)
+      end
+
+      def manipulate_each(query)
+        return unless @html
+        @html.search(query).each { |node| yield(node) }
+      end
+
       def inner_text
         return unless @html
         @html.inner_text.to_s.strip
