@@ -13,5 +13,6 @@ module Hotmeal
     autoload :Links
     autoload :Meta
     autoload :MetaData
+    autoload :SlimRepresentation
   end
 end

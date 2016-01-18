@@ -1,8 +1,8 @@
-require 'hotmeal/body'
+require 'hotmeal/html'
 require 'nokogiri'
 
 module Hotmeal
-  class Body
+  module Html
     module SlimRepresentation
       def to_s
         case self

@@ -5,8 +5,13 @@ describe Hotmeal::Document do
   subject(:hotmeal) { described_class.new(html) }
 
   its(:document_title) { should == 'HTML file' }
-  its(:inner_text) { should == 'HTML file' }
-  its(:inner_html) { should == '<h1>HTML file</h1>' }
+
+  describe '#body' do
+    subject(:body) { hotmeal.body }
+
+    its(:inner_text) { should == 'HTML file' }
+    its(:inner_html) { should == '<h1>HTML file</h1>' }
+  end
 
   its(:title) { should == 'HTML file' }
 

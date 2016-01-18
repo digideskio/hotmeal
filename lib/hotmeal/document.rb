@@ -14,18 +14,6 @@ module Hotmeal
       self.url = base_uri || self.base_uri if base_uri || self.base_uri.present?
     end
 
-    def html_prefix
-      prefixes = prefix.value.to_s
-      prefixes = prefixes.scan(/([^:]+):\s+([^\s]+)\s*/)
-      prefixes.each_with_object({}) do |(prefix, href), result|
-        result[href] = prefix
-      end
-    end
-
-    def document_title
-      head.title
-    end
-
     delegate :base_uri, to: :head
 
     def base_uri=(uri)
@@ -39,7 +27,7 @@ module Hotmeal
     def url=(uri)
       uri = URI(uri.to_s) unless uri.is_a?(URI::Generic)
       search('[@href]/@href, form[@action]/@action, img[@src]/@src').each do |node|
-        node.content = (uri + URI(node.content)).to_s
+        node.content = (uri + URI(node.content)).to_s if node.respond_to?(:content=)
       end
       @url = uri
     end
@@ -54,25 +42,6 @@ module Hotmeal
     # @return [String] page description either from OpenGraph or MetaData
     def description
       open_graph.description.presence || meta.description
-    end
-
-    # @return [String]
-    def meta_charset
-      meta.charset || 'UTF-8'
-    end
-
-    # @return [String] document's inner text
-    def inner_text
-      at('body').inner_text.to_s.strip
-    end
-
-    def body
-      Body.new(at('body'))
-    end
-
-    # @return [String] document's inner html
-    def inner_html
-      at('body').inner_html.to_s.strip
     end
 
     def to_s
@@ -91,4 +60,3 @@ head
   end
 end
 require 'hotmeal/open_graph'
-require 'hotmeal/links'

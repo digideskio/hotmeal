@@ -52,7 +52,7 @@ module Hotmeal
     # @return [<Nokogiri::XML::Node>]
     def search(query = self.query)
       html.search(query)
-    end
+    end unless instance_methods.include?(:search)
     alias_method :__search__, :search
 
     # @param [String, nil] query

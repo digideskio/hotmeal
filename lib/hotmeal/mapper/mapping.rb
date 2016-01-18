@@ -9,10 +9,7 @@ module Hotmeal
       def initialize(path, options = {}, &block)
         @path = path
         @options = options
-        if block_given?
-          puts 'Block given'
-          collection_mapper_class.instance_eval(&block)
-        end
+        collection_mapper_class.instance_eval(&block) if block_given?
       end
 
       # @return [String]
