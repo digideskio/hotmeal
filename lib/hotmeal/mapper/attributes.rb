@@ -35,10 +35,6 @@ module Hotmeal
         end
       end
 
-      def value
-        attributes.any? ? attributes : html_content
-      end
-
       alias_method :attributes=, :assign_attributes
 
       private
@@ -124,6 +120,10 @@ module Hotmeal
         def define_attribute(mapping)
           self.mappings += [mapping]
           define_attribute_method mapping.as
+          unless @_delegate_to_attributes
+            define_method(:value) { attributes } unless is_a?(CollectionDecorator)
+            @_delegate_to_attributes = true
+          end
         end
 
         private
