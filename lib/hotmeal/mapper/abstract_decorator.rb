@@ -6,7 +6,7 @@ require 'active_support/core_ext/module/delegation'
 module Hotmeal
   module Mapper
     class AbstractDecorator < SimpleDelegator
-      include Inspectable
+      include Hotmeal::Mapper::Inspectable
 
       alias_method :decorated, :__getobj__
     end
