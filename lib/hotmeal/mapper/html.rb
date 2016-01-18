@@ -31,7 +31,19 @@ module Hotmeal
         @html = value
       end
 
-      delegate :at, :search, :at_css, :css, :at_xpath, :xpath, to: :html, allow_nil: true
+      delegate :at, :search, :at_css, :css, :at_xpath, :xpath, :inner_html, :inner_text,
+               to: :html, allow_nil: true
+      alias_method :__search__, :search # TODO: remove. Now for backward compatibility
+
+      def inner_text
+        return unless @html
+        @html.inner_text.to_s.strip
+      end
+
+      def inner_html
+        return unless @html
+        @html.inner_html.to_s.strip
+      end
 
       # @return [String]
       def path
