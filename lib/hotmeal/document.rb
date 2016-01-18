@@ -11,7 +11,10 @@ module Hotmeal
 
     def initialize(html = nil, base_uri = nil)
       super(html)
-      self.url = base_uri || self.base_uri if base_uri || self.base_uri.present?
+      self.url = base_uri
+      # uri = head.base_uri
+      # uri = uri.__getobj__ while uri.respond_to?(:__getobj__)
+      # self.url = uri if uri
     end
 
     delegate :base_uri, to: :head
@@ -26,11 +29,16 @@ module Hotmeal
     attr_reader :url
 
     def url=(uri)
-      uri = URI(uri.to_s) unless uri.is_a?(URI::Generic)
-      search('[@href]/@href, form[@action]/@action, img[@src]/@src').each do |node|
-        node.content = (uri + URI(node.content)).to_s if node.respond_to?(:content=)
+      return unless uri.is_a?(URI::Generic)
+      if uri
+        puts uri.class
+        puts uri.inspect
+        uri = URI(uri)
+        search('a[@href]/@href, link[@href]/@href, form[@action]/@action, img[@src]/@src').each do |node|
+          node.content = (uri + URI(node.content)).to_s if node.respond_to?(:content=)
+        end
       end
-      @url = uri
+      @url = uri ? URI(uri.to_s) : nil
     end
 
     map_each '/meta[@property and boolean(@content)]', as: :open_graph, class: Hotmeal::OpenGraph
