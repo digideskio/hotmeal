@@ -1,5 +1,5 @@
 require 'hotmeal'
-require 'hotmeal/node'
+require 'hotmeal/queryable'
 require 'hotmeal/methods_module'
 require 'hotmeal/inspectable'
 require 'active_support/concern'
@@ -8,7 +8,7 @@ require 'active_support/core_ext/array/wrap'
 module Hotmeal
   module ElementMapper
     extend ActiveSupport::Concern
-    include Hotmeal::Node
+    include Hotmeal::Queryable
     include Hotmeal::MethodsModule
     include Hotmeal::Inspectable
 
@@ -19,7 +19,7 @@ module Hotmeal
       end
 
       def map(query, options = {}, &block)
-        block = Hotmeal::Node::CONTENT_GETTER unless block_given?
+        block = Hotmeal::Queryable::CONTENT_GETTER unless block_given?
         extending_query_by(query) do |query|
           if options.key?(:as)
             define_mapper(options[:as], query, &block)
@@ -30,7 +30,7 @@ module Hotmeal
       end
 
       def collect(query, options = {}, &block)
-        block = Hotmeal::Node::CONTENT_GETTER unless block_given?
+        block = Hotmeal::Queryable::CONTENT_GETTER unless block_given?
         fail 'No :as option' unless options[:as]
         define_reader(options[:as]) do
           extending_query_by(query) do |query|
@@ -54,7 +54,7 @@ module Hotmeal
       end
 
       def use(query, options = {}, &block)
-        block = Hotmeal::Node::CONTENT_GETTER unless block_given?
+        block = Hotmeal::Queryable::CONTENT_GETTER unless block_given?
         extending_query_by(query) do |query|
           define_reader(options[:as]) { block.call(at(query)) } if options.key?(:as)
         end

@@ -11,7 +11,7 @@ module Hotmeal
   autoload :Mapper
   autoload :MethodsModule
   autoload :MicroData
-  autoload :Node
+  autoload :Queryable
   autoload :OpenGraph
   autoload :Schema
   autoload :SchemaGenerator
