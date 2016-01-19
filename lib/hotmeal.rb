@@ -6,19 +6,19 @@ module Hotmeal
   autoload :CollectionMapper
   autoload :Document
   autoload :ElementMapper
+  autoload :Html
   autoload :Inspectable
-  autoload :Links
-  autoload :Meta
+  autoload :Mapper
   autoload :MethodsModule
   autoload :MicroData
-  autoload :Node
+  autoload :Queryable
   autoload :OpenGraph
   autoload :Schema
   autoload :SchemaGenerator
 end
 
 require 'hotmeal/version'
-require 'hotmeal/base'
+require 'hotmeal/document'
 require 'hotmeal/schema'
 
 def Hotmeal(html, base_uri = nil)
