@@ -1,4 +1,4 @@
-require 'hotmeal/open_graph/url'
+require 'hotmeal/open_graph'
 
 module Hotmeal
   class OpenGraph

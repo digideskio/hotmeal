@@ -20,17 +20,7 @@ RSpec.describe 'open_graph/music_song.html', type: :functional do
       ]
     end
 
-    its(:to_hash) do
-      should == {
-        app_id: '302184056577324',
-        type: 'music.song',
-        url: 'http://example.com/music/song',
-        title: 'Sample Song',
-        images: ['https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png'],
-        album: 'http://example.com/music/album',
-      }
-    end
-
+    its(:app_id) { should == '302184056577324' }
     its(:title) { should == 'Sample Song' }
     its(:type) { should == 'music.song' }
     its(:music?) { should be true }
@@ -42,6 +32,18 @@ RSpec.describe 'open_graph/music_song.html', type: :functional do
       it { should == 'https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png' }
       its(:url) { should == 'https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png' }
       its(:secure_url) { should == nil }
+    end
+    describe :song do
+      subject(:song) { open_graph.song }
+
+      it { should == 'http://example.com/music/album' }
+      its(:url) { should == 'http://example.com/music/album' }
+    end
+    describe :album do
+      subject(:album) { open_graph.album }
+
+      it { should == 'http://example.com/music/album' }
+      its(:url) { should == 'http://example.com/music/album' }
     end
   end
 end

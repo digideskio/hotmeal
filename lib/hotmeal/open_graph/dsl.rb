@@ -3,7 +3,12 @@ require 'hotmeal/open_graph'
 module Hotmeal
   class OpenGraph
     module DSL
+      def namespaces
+        @namespaces ||= {}
+      end
+
       def ns(name, uri = nil, &block)
+        namespaces[uri] ||= name
         if block.arity == 1
           with_options(ns: name, uri: uri, &block)
         else
@@ -33,12 +38,10 @@ module Hotmeal
         reader = [ns, name].compact.join('_')
         checker = reader + '?'
         type = [ns, name].compact.join('.')
-        prefix = [ns, name].compact.join(':')
         define_method(ns_checker) { !!(self.type =~ /^#{ns}/) } unless instance_methods.include?(ns_checker)
         define_method(checker) { self.type == type } unless instance_methods.include?(checker)
-        ns(ns, options[:url], &block) if block_given?
-        # attribute "[@property='#{prefix}']/@content", { as: reader, class: Property }.merge(options)
-        attribute "[starts-with(@property, '#{prefix}')]/@content", { as: (name || reader).to_sym, class: Property }.merge(options)
+        ns(ns, options[:url]) {}
+        attribute "[starts-with(@property, '#{ns}:')]/@content", { as: (name || reader).to_sym, class: Property }.merge(options)
       end
 
       def attribute(*args, &block)
