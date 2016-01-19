@@ -12,10 +12,15 @@ module Hotmeal
       end
 
       def self.decorator
-        @options[:class] || Hotmeal::Mapper::Decorator
+        @decorator ||=
+          begin
+            @options[:class] = @options[:class].constantize if @options[:class].is_a?(String)
+            @options[:class] || Hotmeal::Mapper::Decorator
+          end
       end
 
       def self.decorator=(decorator)
+        decorator = decorator.constantize if decorator.is_a?(String)
         @options[:class] = decorator || Hotmeal::Mapper::Decorator
       end
 

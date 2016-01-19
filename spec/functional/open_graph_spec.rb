@@ -31,7 +31,7 @@ RSpec.describe 'open_graph.html', type: :functional do
     describe :links do
       subject(:links) { head.links }
 
-      it { should be_a(Hotmeal::Html::Links)}
+      it { should be_a(Hotmeal::Html::Links) }
 
       describe :first do
         subject(:link) { links.first }
@@ -72,13 +72,16 @@ RSpec.describe 'open_graph.html', type: :functional do
 
     its(:title) { should == 'The Rock' }
     its(:type) { should == 'video.movie' }
+    its(:video?) { should be true }
+    its(:video_movie?) { should be true }
     its(:url) { should == 'http://www.imdb.com/title/tt0117500/' }
+    its(:description) { should == 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.' }
     describe :image do
       subject(:image) { open_graph.image }
 
       it { should == 'http://ia.media-imdb.com/images/rock.jpg' }
+      its(:url) { should == 'http://ia.media-imdb.com/images/rock.jpg' }
       its(:secure_url) { should == 'https://ia.media-imdb.com/images/rock.jpg' }
     end
-    its(:description) { should == 'A renegade general and his group of U.S. Marines take over Alcatraz and threaten San Francisco Bay with biological weapons. A chemical weapons specialist and the only man to have ever escaped from the Rock attempt to prevent chaos.' }
   end
 end

@@ -2,8 +2,7 @@ require 'hotmeal/open_graph/struct'
 
 module Hotmeal
   class OpenGraph
-    class Locale < Struct
-      property :alternate, array: true
+    class Website < Struct
     end
   end
 end

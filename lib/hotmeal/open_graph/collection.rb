@@ -4,9 +4,10 @@ module Hotmeal
   class OpenGraph
     class Collection < Hotmeal::Mapper::CollectionDecorator
       def self.of(mapper)
-        full_class_name = "#{mapper.name}Collection"
+        full_class_name = "#{mapper}Collection"
         class_name = full_class_name.demodulize
-        container = full_class_name.deconstantize.constantize
+        container_name = full_class_name.deconstantize
+        container = container_name.constantize
         unless container.const_defined?(class_name)
           collection_class = Class.new(self)
           collection_class.item class: mapper

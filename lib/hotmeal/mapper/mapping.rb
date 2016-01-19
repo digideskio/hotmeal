@@ -24,7 +24,11 @@ module Hotmeal
       attr_reader :options
 
       def mapper_class
-        options[:class] ||= Decorator
+        @mapper_class ||=
+          begin
+            options[:class] = options[:class].constantize if options[:class].is_a?(String)
+            options[:class] || Decorator
+          end
       end
 
       def handler

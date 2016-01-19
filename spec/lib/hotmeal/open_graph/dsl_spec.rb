@@ -5,4 +5,5 @@ RSpec.describe Hotmeal::OpenGraph::DSL do
 
   it { should respond_to(:ns) }
   it { should respond_to(:property) }
+  it { should respond_to(:object_type) }
 end
