@@ -5,17 +5,17 @@ RSpec.describe Hotmeal::OpenGraph do
   let(:document) { Hotmeal::Document.new(html) }
   subject(:open_graph) { document.open_graph }
 
-  pending 'object types' do
+  context 'object types' do
     {
       music: %w(song album playlist radio_station),
       video: %w(movie episode tv_show other),
       nil => %w(article book profile website)
     }.each do |ns, names|
       if ns
-        pending { should respond_to("#{ns}?") }
-        names.each { |name| pending { should respond_to("#{ns}_#{name}?") } }
+        it { should respond_to("#{ns}?") }
+        names.each { |name| it { should respond_to("#{ns}_#{name}?") } }
       else
-        names.each { |name| pending { should respond_to("#{name}?") } }
+        names.each { |name| it { should respond_to("#{name}?") } }
       end
     end
   end

@@ -2,9 +2,22 @@ require 'hotmeal/open_graph/property'
 
 module Hotmeal
   class OpenGraph
-    class StructuredProperty < Property
+    class Struct < Property
       def self.property(*args)
         attribute(*args)
+      end
+
+      def self.alias_property(name)
+        @alias_attribute = name
+      end
+
+      def self.aliased
+        @alias_attribute
+      end
+
+      def initialize(html = nil, path = nil)
+        super(html, path)
+        write_attribute(self.class.aliased, self) if self.class.aliased
       end
 
       def read_attribute(name)

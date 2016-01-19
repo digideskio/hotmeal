@@ -1,13 +1,15 @@
-require 'hotmeal/open_graph/structured_property'
+require 'hotmeal/open_graph/struct'
 
 module Hotmeal
   class OpenGraph
-    class Image < StructuredProperty
+    class Image < Struct
       property :url
       property :secure_url
       property :type
       property :width, type: Integer
       property :height, type: Integer
+
+      alias_property :url
     end
   end
 end
