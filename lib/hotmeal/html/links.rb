@@ -2,8 +2,8 @@ require 'hotmeal/html'
 
 module Hotmeal
   module Html
-    class Links < Hotmeal::Mapper::CollectionDecorator
-      item class: Link
+    class Links < Hotmeal::Mapper::Collection
+      decorate_items_with Link
     end
   end
 end

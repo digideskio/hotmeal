@@ -36,16 +36,10 @@ module Hotmeal
       end
 
       def collection_mapper_class
-        if mapper_class < CollectionDecorator
+        if mapper_class < Collection
           mapper_class
         else
-          class_name = "#{as}CollectionDecorator".classify
-          unless handler.const_defined?(class_name)
-            collection_class = Class.new(CollectionDecorator)
-            handler.const_set(class_name, collection_class) if handler
-            collection_class.item(class: mapper_class)
-          end
-          handler.const_get(class_name)
+          Collection.of(mapper_class, container: handler)
         end
       end
 

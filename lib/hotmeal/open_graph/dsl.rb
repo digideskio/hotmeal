@@ -24,7 +24,11 @@ module Hotmeal
       end
 
       def object_type(ns, name = nil, options = {}, &block)
-        options[:url] ||= "http://ogp.me/ns/#{ns}#"
+        if name.is_a?(Hash)
+          options = name
+          name = nil
+        end
+        options[:uri] ||= "http://ogp.me/ns/#{ns}#"
         ns_checker = "#{ns}?"
         reader = [ns, name].compact.join('_')
         checker = reader + '?'
@@ -33,7 +37,13 @@ module Hotmeal
         define_method(ns_checker) { !!(self.type =~ /^#{ns}/) } unless instance_methods.include?(ns_checker)
         define_method(checker) { self.type == type } unless instance_methods.include?(checker)
         ns(ns, options[:url], &block) if block_given?
-        attribute "[@property='#{prefix}']/@content", { as: reader, class: Property }.merge(options)
+        # attribute "[@property='#{prefix}']/@content", { as: reader, class: Property }.merge(options)
+        attribute "[starts-with(@property, '#{prefix}')]/@content", { as: (name || reader).to_sym, class: Property }.merge(options)
+      end
+
+      def attribute(*args, &block)
+        puts args.inspect
+        super(*args, &block)
       end
     end
   end
