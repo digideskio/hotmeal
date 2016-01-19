@@ -8,7 +8,7 @@ module Hotmeal
 
     autoload :AbstractDecorator
     autoload :Attributes
-    autoload :CollectionDecorator
+    autoload :Collection
     autoload :Decorator
     autoload :Html
     autoload :Inspectable

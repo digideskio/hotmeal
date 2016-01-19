@@ -9,6 +9,7 @@ module Hotmeal
           property :disc, type: Integer
           property :track, type: Integer
         end
+        property :preview_url, class: Url
         property :musician, class: Collection.of(Profile), array: true
       end
 

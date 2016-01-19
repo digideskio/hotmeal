@@ -10,6 +10,7 @@ RSpec.describe 'basic.html', type: :functional do
   its(:meta_charset) { should == 'utf-8' }
   its(:keywords) { should == %w(HTML Basic keyword another) }
   its(:description) { should == 'This is a basic HTML file.' }
+  its(:open_graph?) { should == false }
 
   describe 'body' do
     subject(:body) { document.body }

@@ -3,13 +3,12 @@ require 'hotmeal/collection_mapper'
 require 'active_support/core_ext/object/with_options'
 
 module Hotmeal
-  class OpenGraph < Hotmeal::Mapper::CollectionDecorator
+  class OpenGraph < Hotmeal::Mapper::Collection
     extend ActiveSupport::Autoload
 
     autoload :Article
     autoload :Audio
     autoload :Book
-    autoload :Collection
     autoload :DSL, 'hotmeal/open_graph/dsl'
     autoload :Image
     autoload :Locale
@@ -22,7 +21,8 @@ module Hotmeal
 
     extend DSL
 
-    item class: Html::Meta
+    Collection = Hotmeal::Mapper::Collection
+    decorate_items_with Html::Meta
 
     def image
       images.first
@@ -30,6 +30,10 @@ module Hotmeal
 
     def og_properties
       collection.map { |node| [node.property, node.content] }
+    end
+
+    def present?
+      og_properties.any?
     end
 
     ns :og, 'http://ogp.me/ns#' do

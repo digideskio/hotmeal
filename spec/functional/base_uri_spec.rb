@@ -19,4 +19,5 @@ RSpec.describe 'base_uri.html', type: :functional do
       its('first.href') { should == 'http://example.com/blog/basic.html' }
     end
   end
+  its(:open_graph?) { should == false }
 end

@@ -44,6 +44,7 @@ RSpec.describe 'open_graph.html', type: :functional do
     end
   end
 
+  its(:open_graph?) { should == true }
   describe :open_graph do
     subject(:open_graph) { document.open_graph }
 

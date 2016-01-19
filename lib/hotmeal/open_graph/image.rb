@@ -1,11 +1,8 @@
-require 'hotmeal/open_graph/struct'
+require 'hotmeal/open_graph/url'
 
 module Hotmeal
   class OpenGraph
-    class Image < Struct
-      property :url
-      property :secure_url
-      property :type
+    class Image < Url
       property :width, type: Integer
       property :height, type: Integer
 

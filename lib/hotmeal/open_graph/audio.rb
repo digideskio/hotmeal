@@ -1,13 +1,8 @@
-require 'hotmeal/open_graph/struct'
+require 'hotmeal/open_graph/url'
 
 module Hotmeal
   class OpenGraph
-    class Audio < Struct
-      property :url
-      property :secure_url
-      property :type
-
-      alias_property :url
+    class Audio < Url
     end
   end
 end

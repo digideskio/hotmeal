@@ -2,8 +2,9 @@ require 'hotmeal/html'
 
 module Hotmeal
   module Html
-    class MetaData < Hotmeal::Mapper::CollectionDecorator
-      item class: Meta
+    class MetaData < Hotmeal::Mapper::Collection
+      decorate_items_with(Meta)
+
       attribute '[@charset]/@charset', as: :charset
       elements '[@name and boolean(@content)]', class: Meta, as: :name do
         %w(keywords description).each do |name|
