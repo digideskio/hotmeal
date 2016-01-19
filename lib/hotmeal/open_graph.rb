@@ -7,22 +7,32 @@ module Hotmeal
     extend ActiveSupport::Autoload
 
     autoload :Article
-    autoload :Audio
     autoload :Book
     autoload :DSL, 'hotmeal/open_graph/dsl'
-    autoload :Image
     autoload :Locale
     autoload :Music
+    autoload :Object
     autoload :Profile
     autoload :Property
     autoload :Struct
     autoload :Video
     autoload :Website
 
+    Url = Struct::Url
+    Image = Struct::Image
+
     extend DSL
 
     Collection = Hotmeal::Mapper::Collection
     decorate_items_with Html::Meta
+
+    def process
+      Kernel.puts at('meta[@property="og:type"]/@content')
+    end
+
+    def object
+      @object ||= Object.new(html, path)
+    end
 
     def image
       images.first
@@ -41,7 +51,7 @@ module Hotmeal
       property :type, required: true
       property :image, required: true, array: true, value: :url, as: :images, class: Collection.of(Image)
       property :url, required: true
-      property :audio, value: :url, class: Audio
+      property :audio, class: Struct::Audio
       property :description
       property :determiner
       property :locale, class: Locale

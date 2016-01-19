@@ -1,9 +1,10 @@
 require 'hotmeal/open_graph/struct'
+require 'hotmeal/open_graph'
 
 module Hotmeal
   class OpenGraph
     module Music
-      class Song < Struct
+      class Song < Url
         property :duration, type: Integer
         property :album, class: Collection.of('Hotmeal::OpenGraph::Music::Album'), array: true do
           property :disc, type: Integer
@@ -13,7 +14,7 @@ module Hotmeal
         property :musician, class: Collection.of(Profile), array: true
       end
 
-      class Album < Struct
+      class Album < Url
         property :song, class: Song do
           property :disc, type: Integer
           property :track, type: Integer
