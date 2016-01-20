@@ -7,7 +7,7 @@ module Hotmeal
       INVISIBLE_ATTRIBUTES = %w(
         [@onclick]/@onclick [@style]/@style [@onload]/@onload [@nowrap]/@nowrap
       )
-      WRAPPERS = %w(div span nobr)
+      WRAPPERS = %w(div span nobr center)
 
       elements '//a', class: Hotmeal::Html::A, as: :links
 
