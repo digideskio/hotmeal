@@ -2,17 +2,12 @@ require 'hotmeal/open_graph'
 
 module Hotmeal
   class OpenGraph
-    class Video < Url
-      property :width, type: Integer
-      property :height, type: Integer
-
-      alias_property :url
-
+    module Video
       class Actor < Profile
         property :role
       end
 
-      class Movie < Struct
+      class Movie < Object
         property :actor, array: true, class: Collection.of(Actor)
         property :director, array: true, class: Collection.of(Profile)
         property :writer, array: true, class: Collection.of(Profile)

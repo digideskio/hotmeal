@@ -20,30 +20,28 @@ RSpec.describe 'open_graph/music_song.html', type: :functional do
       ]
     end
 
-    its(:app_id) { should == '302184056577324' }
-    its(:title) { should == 'Sample Song' }
-    its(:type) { should == 'music.song' }
-    its(:music?) { should be true }
-    its(:music_song?) { should be true }
-    its(:url) { should == 'http://example.com/music/song' }
-    describe :image do
-      subject(:image) { open_graph.image }
+    describe :object do
+      subject(:object) { open_graph.object }
 
-      it { should == 'https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png' }
-      its(:url) { should == 'https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png' }
-      its(:secure_url) { should == nil }
-    end
-    describe :song do
-      subject(:song) { open_graph.song }
+      its(:app_id) { should == '302184056577324' }
+      its(:title) { should == 'Sample Song' }
+      its(:type) { should == 'music.song' }
+      xit(:music?) { should be true }
+      xit(:music_song?) { should be true }
+      its(:url) { should == 'http://example.com/music/song' }
+      describe :image do
+        subject(:image) { object.image }
 
-      it { should == 'http://example.com/music/album' }
-      its(:url) { should == 'http://example.com/music/album' }
-    end
-    describe :album do
-      subject(:album) { open_graph.album }
+        it { should == 'https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png' }
+        its(:url) { should == 'https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png' }
+        its(:secure_url) { should == nil }
+      end
+      describe :album do
+        subject(:album) { object.album }
 
-      it { should == 'http://example.com/music/album' }
-      its(:url) { should == 'http://example.com/music/album' }
+        it { should == 'http://example.com/music/album' }
+        its(:url) { should == 'http://example.com/music/album' }
+      end
     end
   end
 end

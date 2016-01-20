@@ -2,7 +2,7 @@ require 'hotmeal/open_graph/struct'
 
 module Hotmeal
   class OpenGraph
-    class Article < Struct
+    class Article < Object
       property :published_time, type: DateTime
       property :modified_time, type: DateTime
       property :expiration_time, type: DateTime
