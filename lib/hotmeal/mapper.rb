@@ -13,6 +13,7 @@ module Hotmeal
     autoload :Html
     autoload :Inspectable
     autoload :Mapping
+    autoload :SlimRepresentation
 
     def self.new(html = nil, path = nil, &block)
       Decorator.new(html, path, &block)

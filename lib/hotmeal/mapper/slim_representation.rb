@@ -2,7 +2,7 @@ require 'hotmeal/html'
 require 'nokogiri'
 
 module Hotmeal
-  module Html
+  module Mapper
     module SlimRepresentation
       class Slim < SimpleDelegator
         HIDDEN_ATTRIBUTES = %i(align bgcolor cellpadding cellspasing clear width)

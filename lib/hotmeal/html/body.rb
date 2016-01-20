@@ -33,8 +33,7 @@ module Hotmeal
             end
           end
         end
-        body.extend(SlimRepresentation)
-        body.to_s
+        Slim.decorate(body).to_slim
       end
     end
   end

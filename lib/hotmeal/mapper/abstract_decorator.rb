@@ -7,6 +7,7 @@ module Hotmeal
   module Mapper
     class AbstractDecorator < SimpleDelegator
       include Hotmeal::Mapper::Inspectable
+      include Hotmeal::Mapper::SlimRepresentation
 
       alias_method :decorated, :__getobj__
 
