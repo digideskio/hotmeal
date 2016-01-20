@@ -1,9 +1,9 @@
 require 'hotmeal'
-require 'hotmeal/collection_mapper'
-require 'active_support/core_ext/object/with_options'
 
 module Hotmeal
   class OpenGraph < Hotmeal::Mapper::Collection
+    NAMESPACE_URI = 'http://ogp.me/ns#'
+
     extend ActiveSupport::Autoload
 
     autoload :Article
@@ -18,20 +18,17 @@ module Hotmeal
     autoload :Video
     autoload :Website
 
-    Url = Struct::Url
-    Image = Struct::Image
-
-    extend DSL
+    include DSL
 
     Collection = Hotmeal::Mapper::Collection
     decorate_items_with Html::Meta
 
-    def process
-      Kernel.puts at('meta[@property="og:type"]/@content')
+    ns :og, NAMESPACE_URI do
+      property :type, required: true
     end
 
     def object
-      @object ||= Object.new(html, path)
+      @object ||= Object.decorate(type, html, path)
     end
 
     def image
@@ -46,35 +43,41 @@ module Hotmeal
       og_properties.any?
     end
 
-    ns :og, 'http://ogp.me/ns#' do
+    ns :og, NAMESPACE_URI do
       property :title, required: true
       property :type, required: true
-      property :image, required: true, array: true, value: :url, as: :images, class: Collection.of(Image)
+      property :image, required: true, array: true, value: :url, as: :images, class: Collection.of(Struct::Image)
       property :url, required: true
       property :audio, class: Struct::Audio
       property :description
       property :determiner
-      property :locale, class: Locale
+      property :locale, class: Struct::Locale
       property :site_name
-      property :video, class: Video
+      property :video, class: Struct::Video
     end
 
     ns :fb, 'http://ogp.me/ns/fb#' do
       property :app_id
     end
+    #
+    # # @!group Object Types
+    # object_type :music, :song, class: Music::Song
+    # object_type :music, :album, class: Music::Album
+    # object_type :music, :playlist, class: Music::Playlist
+    # object_type :music, :radio_station, class: Music::RadioStation
+    # object_type :video, :movie, class: Video::Movie
+    # object_type :video, :episode, class: Video::Episode
+    # object_type :video, :tv_show, class: Video::TvShow
+    # object_type :video, :other, class: Video::Other
+    # object_type :article, class: Article
+    # object_type :book, class: Book
+    # object_type :profile, class: Profile
+    # object_type :website, class: Website
+  end
 
-    # @!group Object Types
-    object_type :music, :song, class: Music::Song
-    object_type :music, :album, class: Music::Album
-    object_type :music, :playlist, class: Music::Playlist
-    object_type :music, :radio_station, class: Music::RadioStation
-    object_type :video, :movie, class: Video::Movie
-    object_type :video, :episode, class: Video::Episode
-    object_type :video, :tv_show, class: Video::TvShow
-    object_type :video, :other, class: Video::Other
-    object_type :article, class: Article
-    object_type :book, class: Book
-    object_type :profile, class: Profile
-    object_type :website, class: Website
+  class Namespace
+    def self.og
+      @og ||= new(uri: OpenGraph::NAMESPACE_URI, ns: :og)
+    end
   end
 end

@@ -8,24 +8,15 @@ module Hotmeal
 
       autoload :Audio
       autoload :Image
+      autoload :Locale
+      autoload :Music
       autoload :Url
+      autoload :Video
 
       class_attribute :aliased_attribute
 
       def self.ns(ns, uri, &block)
 
-      end
-
-      def self.prefix
-        @prefix ||= "#{semantic_name.first.underscore}:"
-      end
-
-      def self.property_class
-        @property_class ||= semantic_name.map(&:underscore).join('.')
-      end
-
-      def self.semantic_name
-        name.gsub(/Hotmeal::OpenGraph::/, '').split('::')
       end
 
       # @example
