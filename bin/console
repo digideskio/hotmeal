@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+RUBY_MIME_TYPES_CACHE = File.join(Dir.pwd, 'tmp', 'mime_types.marshal')
+
+require 'bundler/setup'
+require 'hotmeal'
+require 'pry'
+require 'fileutils'
+
+require './spec/support/fixtures'
+
+tmp_dir = File.join(Dir.pwd, 'tmp')
+FileUtils.mkdir_p(tmp_dir)
+Pry.config.history.file = File.join(tmp_dir, 'pry-history.txt')
+Pry.start

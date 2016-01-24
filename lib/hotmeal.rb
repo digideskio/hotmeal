@@ -1,4 +1,5 @@
 require 'active_support'
+
 module Hotmeal
   extend ActiveSupport::Autoload
 

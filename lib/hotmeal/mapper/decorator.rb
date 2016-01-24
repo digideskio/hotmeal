@@ -11,6 +11,7 @@ module Hotmeal
 
       include Hotmeal::Mapper::Html
       include Hotmeal::Mapper::Attributes
+      include Hotmeal::Mapper::Scrubber
     end
   end
 end
