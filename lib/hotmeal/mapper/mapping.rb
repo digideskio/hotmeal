@@ -76,7 +76,7 @@ module Hotmeal
       # def decorate(node, path = nil)
       # @param [Nokogiri::XML::Node] doc
       def decorate(doc)
-        path = doc.path.to_s + self.path
+        path = doc.path.to_s + self.path.to_s
         if array?
           collection_mapper_class.new(doc.search(path), path)
         else

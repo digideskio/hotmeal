@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
 
   gem.add_dependency 'nokogiri', '~> 1.6.7.1'
+  gem.add_dependency 'loofah', '~> 2.0.3'
   gem.add_dependency 'activesupport', '~> 4.2.5'
   gem.add_dependency 'activemodel'
   gem.add_dependency 'thor'
@@ -26,4 +27,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 3.4'
   gem.add_development_dependency 'rspec-its'
   gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'pry'
 end

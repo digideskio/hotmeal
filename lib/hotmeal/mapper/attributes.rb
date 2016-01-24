@@ -83,6 +83,7 @@ module Hotmeal
 
       # @param [Mapping] path
       def attribute_mapping(path)
+        raise if path == 'class'
         self.class.attribute_mapping(path)
       end
 

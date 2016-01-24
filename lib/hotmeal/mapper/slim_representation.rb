@@ -10,7 +10,7 @@ module Hotmeal
         @@mappings = {
           id: ->(element) { "##{element[:id]}" },
           class: ->(element) { '.' + element.classes.join('.') },
-          role: ->(element) { "@#{element[:role]}" + element.classes.join('.') }
+          role: ->(element) { "@#{element[:role]}" }
         }
 
         def self.decorate(node)
@@ -18,21 +18,26 @@ module Hotmeal
         end
 
         def classes
-          @classes ||= self[:class].to_s.split(/\s+/)
+          return unless xml?
+          @classes ||= __getobj__[:class].to_s.split(/\s+/)
         end
 
         def to_slim(options = {})
           case __getobj__
           when Nokogiri::XML::Text
             return unless text_content.present?
-            if self.next || self.previous
-              "| #{text_content}" if text_content.present?
-            else
+            if single?
               text_content
+            else
+              "| #{text_content}"
             end
           else
-            [options[:prefix], definition, attributes, contents].compact.join(' ')
+            [definition, attributes].compact.join(' ') + contents.to_s
           end
+        end
+
+        def single?
+          !self.next && !self.previous
         end
 
         private
@@ -42,21 +47,30 @@ module Hotmeal
         end
 
         def definition
-          [element_name, aliased_attributes].compact.join
+          [element_name, aliased_attributes].compact.join.presence
         end
 
         def element_name
-          name if element_name_visible?
+          name if respond_to?(:name) && element_name_visible?
         end
 
         def element_name_visible?
-          name != 'div' || aliased_attributes_present?
+          if xml?
+            name != 'div' || aliased_attributes_present?
+          else
+            false
+          end
         end
 
         def aliased_attributes
+          return unless xml?
           @aliased_attributes ||= @@mappings.map do |(attribute, mapping)|
-            mapping.call(self) if self[attribute]
-          end.compact.join
+            mapping.call(self) if __getobj__[attribute]
+          end.compact.join.presence
+        end
+
+        def xml?
+          __getobj__.is_a?(Nokogiri::XML::Node)
         end
 
         def aliased_attributes_present?
@@ -71,7 +85,7 @@ module Hotmeal
           attributes = visible_attributes.map do |name|
             "#{name}=#{self[name].inspect}"
           end.join(' ')
-          attributes
+          attributes.presence
         end
 
         def hidden_attribute?(name)
@@ -80,26 +94,27 @@ module Hotmeal
         end
 
         def contents
-          children = decorated_children
+          return unless xml?
+          children = decorated_children.to_slim.compact
+          return '' unless children.any?
           if children.size == 1
-            children.first.to_slim(prefix: ':')
-          elsif children.size == 0
-            nil
+            child = children.first.to_slim
+            if children.first.is_a?(Nokogiri::XML::Text)
+              child.to_s
+            elsif child.present?
+              ': ' + child
+            end
           else
             indent(children.map(&:to_slim).compact.join("\n"))
           end
         end
 
         def indent(text, indentation = ' ')
-          text.to_s.split("\n").map do |line|
-            "\n#{indentation}#{line}"
-          end.join
+          text.to_s.split("\n").map { |line| "\n#{indentation}#{line}" }.join
         end
 
         def decorated_children
-          children.map do |child|
-            Slim.decorate(child)
-          end
+          __getobj__.children.map { |child| Slim.decorate(child) }
         end
       end
 
