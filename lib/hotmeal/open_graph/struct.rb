@@ -5,6 +5,7 @@ module Hotmeal
   class OpenGraph
     class Struct < Property
       extend ActiveSupport::Concern
+      extend ActiveSupport::Autoload
 
       autoload :Audio
       autoload :Image

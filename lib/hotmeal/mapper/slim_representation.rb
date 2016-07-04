@@ -95,17 +95,17 @@ module Hotmeal
 
         def contents
           return unless xml?
-          children = decorated_children.to_slim.compact
+          children = decorated_children.map(&:to_slim).compact
           return '' unless children.any?
           if children.size == 1
-            child = children.first.to_slim
-            if children.first.is_a?(Nokogiri::XML::Text)
+            child = children.first
+            if decorated_children.first.is_a?(Nokogiri::XML::Text)
               child.to_s
             elsif child.present?
               ': ' + child
             end
           else
-            indent(children.map(&:to_slim).compact.join("\n"))
+            indent(children.join("\n"))
           end
         end
 

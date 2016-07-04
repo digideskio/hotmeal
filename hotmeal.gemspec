@@ -17,11 +17,12 @@ Gem::Specification.new do |gem|
   gem.require_paths = %w(lib)
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
 
-  gem.add_dependency 'nokogiri', '~> 1.6.8'
-  gem.add_dependency 'loofah', '~> 2.0.3'
-  gem.add_dependency 'activesupport', '~> 4.2.5'
-  gem.add_dependency 'activemodel'
-  gem.add_dependency 'thor'
+  gem.add_runtime_dependency 'nokogiri', '~> 1.6.8'
+  gem.add_runtime_dependency 'loofah', '~> 2.0.3'
+  gem.add_runtime_dependency 'activesupport', '~> 4.2.5'
+  gem.add_runtime_dependency 'activemodel'
+  gem.add_runtime_dependency 'thor'
+  gem.add_runtime_dependency 'rdf-microdata', '~> 2.0.2'
   gem.add_development_dependency 'yard', '~> 0.8.2'
   gem.add_development_dependency 'redcarpet'
   gem.add_development_dependency 'rspec', '~> 3.4'

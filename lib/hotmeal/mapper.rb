@@ -13,6 +13,7 @@ module Hotmeal
     autoload :Html
     autoload :Inspectable
     autoload :Mapping
+    autoload :Microdata
     autoload :Scrubber
     autoload :SlimRepresentation
 

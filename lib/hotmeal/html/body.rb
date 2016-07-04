@@ -10,6 +10,7 @@ module Hotmeal
       WRAPPERS = %w(div span nobr center)
 
       elements '//a', class: Hotmeal::Html::A, as: :links
+      microdata
 
       register_scrubber :remove_wrappers do |node|
         node.replace(node.children) if WRAPPERS.include?(node.name)

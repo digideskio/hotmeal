@@ -4,14 +4,10 @@ require 'hotmeal/mapper/abstract_decorator'
 module Hotmeal
   module Mapper
     class Decorator < AbstractDecorator
-      extend ActiveSupport::Autoload
-
-      autoload :Attributes
-      autoload :Html
-
       include Hotmeal::Mapper::Html
       include Hotmeal::Mapper::Attributes
       include Hotmeal::Mapper::Scrubber
+      include Hotmeal::Mapper::Microdata
     end
   end
 end
